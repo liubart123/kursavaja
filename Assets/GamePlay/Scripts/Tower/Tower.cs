@@ -55,7 +55,7 @@ namespace Assets.GamePlay.Scripts.Tower
         public BulletFactory BulletFactory { get; protected set; }
 
 
-        public void Update()
+        public void FixedUpdate()
         {
             Reload();
             TakeAim();

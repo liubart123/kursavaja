@@ -1,4 +1,5 @@
 ﻿using Assets.GamePlay.Scripts.Enemies;
+using Assets.GamePlay.Scripts.Other.TimeForLiving;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,9 +9,11 @@ using UnityEngine;
 
 namespace Assets.GamePlay.Scripts.Ammo
 {
-    public abstract class Bullet : MonoBehaviour
+    public abstract class Bullet : MonoBehaviour , IDeletable
     {
         public Vector3 directionOfMoving;
+
+        //public Enemy target;
         public float speedofMoving;
         public EffectDecorator decorator;
 
@@ -42,9 +45,14 @@ namespace Assets.GamePlay.Scripts.Ammo
         //destroing of itself 
         public abstract void SelfDestroy();
 
-        public void Update()
+        //public void Update()
+        //{
+        //    Move();
+        //}
+
+        public virtual void Delete()
         {
-            Move();
+            Destroy(this.gameObject);
         }
     }
 }

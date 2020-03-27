@@ -36,8 +36,11 @@ public class AutoStuffGeneration : MonoBehaviour
             float blue = 1 - red - green;
             //temp.transform.GetChild(0).GetComponent<SpriteRenderer>().color = new Color(red, green, blue);
 
-            temp.transform.GetChild(0).gameObject.GetComponent<Rotating>().angularSpeed = Random.Range(0.1f, 0.5f);
-            temp.transform.GetChild(1).gameObject.GetComponent<movingObj>().angularSpeed = Random.Range(80, 200);
+            if (temp.transform.childCount != 0)
+            {
+                temp.transform.GetChild(0).gameObject.GetComponent<Rotating>().angularSpeed = Random.Range(0.1f, 0.5f);
+                temp.transform.GetChild(1).gameObject.GetComponent<movingObj>().angularSpeed = Random.Range(80, 200);
+            }
             //temp.transform.GetChild(0).GetComponent<SpriteRenderer>().color = new Color(
             //        Random.Range(0, 1f),
             //        Random.Range(0, 1f),
