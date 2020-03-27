@@ -37,19 +37,20 @@ namespace Assets.GamePlay.Scripts.Tower
         public Shooter Shooter { get; protected set; }
         public virtual void Shoot()
         {
-            Bullet bullet = BulletFactory.CreateBullet(null);
+            Bullet bullet = BulletFactory.CreateBullet(new BulletFactoryParameters(transform));
             Shooter.Shoot(new ShooterParameters(CurrentTarget, bullet));
             ResetReloading();
         }
         public Reloader Reloader { get; protected set; }
-        protected bool isLoaded;
+        public Boolean isLoaded;
         public void Reload()
         {
-            Reloader.Reload(new ReloaderParameters(ref isLoaded));
+            isLoaded = Reloader.Reload(new ReloaderParameters(ref isLoaded));
         }   //call iteration of reloading, if reloading is finished "isLoaded" will turn true
         protected void ResetReloading()
         {
             Reloader.ResetReloading(new ReloaderParameters(ref isLoaded));
+            isLoaded = false;
         }
         public BulletFactory BulletFactory { get; protected set; }
 

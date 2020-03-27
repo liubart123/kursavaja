@@ -27,7 +27,7 @@ namespace Assets.GamePlay.Scripts.Tower.Interfaces.towerRotater
                 {
                     sign = -1;
                 }
-                args.towerTransform.rotation = Quaternion.Euler(new Vector3(0, 0, rotatingSpeed) * sign);
+                args.towerTransform.rotation = Quaternion.Euler(0, 0, args.towerTransform.eulerAngles.z + rotatingSpeed * sign);
                 return false;
             }
             else

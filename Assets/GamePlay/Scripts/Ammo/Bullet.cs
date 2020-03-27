@@ -10,22 +10,41 @@ namespace Assets.GamePlay.Scripts.Ammo
 {
     public abstract class Bullet : MonoBehaviour
     {
+        public Vector3 directionOfMoving;
+        public float speedofMoving;
+        public EffectDecorator decorator;
+
         //start moving to enemy
-        public Action<Enemy> DoShot { get; protected set; }
+        public abstract void DoShot(Enemy target);
         //move according to enemy position and speed
-        public Action Move { get; protected set; }
-        public Func<Vector3> CalculateNextPosition { get; protected set; }
-        public Action<Vector3> SetPosition { get; protected set; }
-        public Action<Quaternion> SetRotation { get; protected set; }
+        public abstract void Move();
+        public abstract Vector3 CalculateNextPosition();
+        public abstract void SetPosition(Vector3 pos);
+        public abstract void SetRotation(Quaternion rot);
+
+        public virtual void OnFly(Vector3 positionOfFlying, Quaternion rotation)
+        {
+            if (decorator != null)
+                decorator.OnFly(positionOfFlying, rotation);
+        }
+        public virtual void OnCollision(Enemy target)
+        {
+            if (decorator != null)
+                decorator.OnCollision(target);
+        }
+        public virtual void OnCollisionEve(Enemy target, Vector3 positionOfFlying)
+        {
+            if (decorator != null)
+                decorator.OnCollisionEve(target, positionOfFlying);
+
+        }
+
         //destroing of itself 
-        public Action SelfDestroy { get; protected set; }
-        //method for controll time of living of bullet
-        public Action Live { get; protected set; }
+        public abstract void SelfDestroy();
 
         public void Update()
         {
             Move();
-            Live();
         }
     }
 }

@@ -15,6 +15,11 @@ namespace Assets.GamePlay.Scripts.Tower.Interfaces
     }
     public class BulletFactoryParameters
     {
-        ICollection<Bonus> bonuses;
+        public Transform towerTransform;
+
+        public BulletFactoryParameters(Transform towerTransform)
+        {
+            this.towerTransform = towerTransform;
+        }
     }
 }

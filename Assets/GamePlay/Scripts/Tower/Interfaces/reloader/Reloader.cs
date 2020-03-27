@@ -10,14 +10,14 @@ namespace Assets.GamePlay.Scripts.Tower.Interfaces
 {
     public abstract class Reloader : MonoBehaviour
     {
-        public abstract void Reload(ReloaderParameters args);
+        public abstract bool Reload(ReloaderParameters args);
         public abstract void ResetReloading(ReloaderParameters args);
     }
     public class ReloaderParameters
     {
-        public bool isLoad;
+        public Boolean isLoad;
 
-        public ReloaderParameters(ref bool isLoad)
+        public ReloaderParameters(ref Boolean isLoad)
         {
             this.isLoad = isLoad;
         }

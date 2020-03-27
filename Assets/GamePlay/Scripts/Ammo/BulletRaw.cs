@@ -8,56 +8,52 @@ using UnityEngine;
 
 namespace Assets.GamePlay.Scripts.Ammo
 {
-    public class BulletRaw : Bullet
+    public class BulletRaw  : Bullet
     {
-        public BulletRaw()
+        public BulletRaw ()
         {
-            DoShot = DoShotRaw;
-            Move = MoveRaw;
-            SetPosition = SetPositionRaw;
-            SetRotation = SetRotationRaw;
-            SelfDestroy = SelfDestroyRaw;
-            Live = LiveRaw;
-            CalculateNextPosition = CalculateNextPositionRaw;
+            //DoShot = DoShot ;
+            //Move = Move ;
+            //SetPosition = SetPosition ;
+            //SetRotation = SetRotation ;
+            //SelfDestroy = SelfDestroy ;
+            //Live = Live ;
+            //CalculateNextPosition = CalculateNextPosition ;
         }
 
-        public void DoShotRaw(Enemy target) {
+        public override void DoShot (Enemy target) {
             directionOfMoving = target.transform.position - transform.position;
             directionOfMoving.z = 0;
             directionOfMoving.Normalize();
+            decorator.DoShot(target);
         }
-        protected Vector3 directionOfMoving;
-        public float speedofMoving;
-        public void MoveRaw()
+        public override void Move ()
         {
-            SetPositionRaw(CalculateNextPosition());
-
+            Vector3 positionOfFLying = CalculateNextPosition();
+            SetPosition(positionOfFLying);
+            OnFly(positionOfFLying, transform.rotation);
         }
-        public Vector3 CalculateNextPositionRaw()
+        public override Vector3 CalculateNextPosition ()
         {
             return directionOfMoving * speedofMoving + transform.position;
         }
-        public void SetPositionRaw(Vector3 pos)
+        public override void SetPosition (Vector3 pos)
         {
             transform.position = pos;
         }
-        public void SetRotationRaw(Quaternion pos)
+        public override void SetRotation (Quaternion pos)
         {
             transform.rotation = pos;
         }
-        public void SelfDestroyRaw()
+        public override void SelfDestroy ()
         {
-            Destroy(this.gameObject);
+            //Destroy(this.gameObject);
+            
         }
-        //count of frames for living
-        public const int timeOfLive = 100;
-        protected int currentTimeOfLive = 0;
-        public void LiveRaw()
+
+        private void Start()
         {
-            if (currentTimeOfLive++ > timeOfLive)
-            {
-                SelfDestroy();
-            }
         }
+
     }
 }

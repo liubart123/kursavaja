@@ -10,12 +10,13 @@ namespace Assets.GamePlay.Scripts.Tower.Interfaces.reloader
     {
         public short Cooldown;
         protected short currentTick = 0;
-        public override void Reload(ReloaderParameters args)
+        public override bool Reload(ReloaderParameters args)
         {
             if (currentTick++ > Cooldown)
             {
                 args.isLoad = true;
             }
+            return args.isLoad;
         }
 
         public override void ResetReloading(ReloaderParameters args)
