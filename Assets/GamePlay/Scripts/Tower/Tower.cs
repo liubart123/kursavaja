@@ -26,7 +26,7 @@ namespace Assets.GamePlay.Scripts.Tower
         public AimTaker AimTaker { get; protected set; }    //calculate direction for shooting
         public virtual void TakeAim()
         {
-            Vector3 directionOfShooting = AimTaker.TakeAim(new AimTakerParameters(CurrentTarget,transform.position));
+            Vector2 directionOfShooting = AimTaker.TakeAim(new AimTakerParameters(CurrentTarget,transform.position));
             bool aimed = TowerRotater.RotateTower(new TowerRotaterParameters(directionOfShooting, transform));
             if (aimed && isLoaded)
             {

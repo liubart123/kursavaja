@@ -19,7 +19,7 @@ namespace Assets.GamePlay.Scripts.Tower.Interfaces
             this.towerRotation = towerRotation;
         }
 
-        //public TargetChooserParameters(List<Enemy> possibleTargets, Vector3 towerRotation)
+        //public TargetChooserParameters(List<Enemy> possibleTargets, Vector2 towerRotation)
         //{
         //    this.possibleTargets = possibleTargets;
         //    this.towerRotation = towerRotation;

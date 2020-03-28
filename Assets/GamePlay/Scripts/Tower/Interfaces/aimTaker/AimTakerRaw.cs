@@ -10,11 +10,10 @@ namespace Assets.GamePlay.Scripts.Tower.Interfaces.aimRotater
 {
     public class AimTakerRaw : AimTaker
     {
-        public override Vector3 TakeAim(AimTakerParameters args)
+        public override Vector2 TakeAim(AimTakerParameters args)
         {
             var CurrentTarget = args.target;
-            Vector3 target = CurrentTarget.gameObject.transform.position - args.position;
-            target.z = 0;
+            Vector2 target = ((Vector2)CurrentTarget.gameObject.transform.position - args.position);
             return target;
         }
     }

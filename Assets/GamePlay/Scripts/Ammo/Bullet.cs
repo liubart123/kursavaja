@@ -11,21 +11,21 @@ namespace Assets.GamePlay.Scripts.Ammo
 {
     public abstract class Bullet : MonoBehaviour , IDeletable
     {
-        public Vector3 directionOfMoving;
+        public Vector2 directionOfMoving;
 
         //public Enemy target;
-        public float speedofMoving;
+        public float speedOfMoving;
         public EffectDecorator decorator;
 
         //start moving to enemy
         public abstract void DoShot(Enemy target);
         //move according to enemy position and speed
         public abstract void Move();
-        public abstract Vector3 CalculateNextPosition();
-        public abstract void SetPosition(Vector3 pos);
+        public abstract Vector2 CalculateNextPosition();
+        public abstract void SetPosition(Vector2 pos);
         public abstract void SetRotation(Quaternion rot);
 
-        public virtual void OnFly(Vector3 positionOfFlying, Quaternion rotation)
+        public virtual void OnFly(Vector2 positionOfFlying, Quaternion rotation)
         {
             if (decorator != null)
                 decorator.OnFly(positionOfFlying, rotation);
@@ -35,7 +35,7 @@ namespace Assets.GamePlay.Scripts.Ammo
             if (decorator != null)
                 decorator.OnCollision(target);
         }
-        public virtual void OnCollisionEve(Enemy target, Vector3 positionOfFlying)
+        public virtual void OnCollisionEve(Enemy target, Vector2 positionOfFlying)
         {
             if (decorator != null)
                 decorator.OnCollisionEve(target, positionOfFlying);

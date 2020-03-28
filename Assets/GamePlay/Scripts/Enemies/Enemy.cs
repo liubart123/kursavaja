@@ -13,8 +13,8 @@ namespace Assets.GamePlay.Scripts.Enemies
         public Action Move { get; protected set; }
         public Action CreateTargetForMoving { get; protected set; }
         public Action CreateDirectionForMoving { get; protected set; }
-        public Action<Vector3> SetPosition { get; protected set; }
-        public Action<Vector3> SetRotation { get; protected set; }
+        public Action<Vector2> SetPosition { get; protected set; }
+        public Action<Vector2> SetRotation { get; protected set; }
         public void Update()
         {
             CreateDirectionForMoving();

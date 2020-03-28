@@ -16,18 +16,18 @@ namespace Assets.GamePlay.Scripts.Enemies
             SetPosition = SetPositionRaw;
         }
 
-        protected Vector3 currentTarget;
-        protected Vector3 currentDirection;
+        protected Vector2 currentTarget;
+        protected Vector2 currentDirection;
         public float speed;
         public void MoveRaw()
         {
-            SetPosition(transform.position + currentDirection * speed);
+            SetPosition((Vector2)transform.position + currentDirection * speed);
         }
-        public void SetPositionRaw(Vector3 pos)
+        public void SetPositionRaw(Vector2 pos)
         {
             transform.position = pos;
         }
-        public void SetRotationRaw(Vector3 pos)
+        public void SetRotationRaw(Vector2 pos)
         {
             //transform.rotation = Quaternion;
         }
@@ -40,7 +40,7 @@ namespace Assets.GamePlay.Scripts.Enemies
         public void CreateDirectionForMovingRaw()
         {
             angleOfMoving += deltaAngle;
-            currentDirection = new Vector3(Mathf.Cos(angleOfMoving), Mathf.Sin(angleOfMoving), 0);
+            currentDirection = new Vector2(Mathf.Cos(angleOfMoving), Mathf.Sin(angleOfMoving));
         }
     }
 }

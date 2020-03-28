@@ -6,7 +6,7 @@ public class BlocksBuilder : MonoBehaviour
 {
     public static int widthOfMap = 60;
     public static int heightOfMap = 40;
-    public static Vector3 startPosOfMap = new Vector3(0, 0, 0);
+    public static Vector2 startPosOfMap = new Vector2(0, 0);
     public static float radiusOfBlock = 1;
     public static float zPositionOfBlocks = 0;
     public static float sqr3 = Mathf.Sqrt(3);
@@ -30,7 +30,7 @@ public class BlocksBuilder : MonoBehaviour
     public void DrawMapFromBlocks(){
         for (int i=0;i<widthOfMap;i++){
             for (int j=0;j<heightOfMap;j++){
-                Instantiate(prefab, new Vector3(radiusOfBlock * 3 / 2 * j, radiusOfBlock * i * sqr3 + (j%2==0?0:radiusOfBlock/2*sqr3), zPositionOfBlocks), transform.rotation);
+                Instantiate(prefab, new Vector2(radiusOfBlock * 3 / 2 * j, radiusOfBlock * i * sqr3 + (j%2==0?0:radiusOfBlock/2*sqr3)), transform.rotation);
             }
         }
     }
@@ -42,7 +42,7 @@ public class BlocksBuilder : MonoBehaviour
         {
             for (int j = 0; j < heightOfMap; j++)
             {
-                Instantiate(prefab, new Vector3(radiusOfBlock * i, radiusOfBlock * j, zPositionOfBlocks), transform.rotation);
+                Instantiate(prefab, new Vector2(radiusOfBlock * i, radiusOfBlock * j), transform.rotation);
             }
         }
     }

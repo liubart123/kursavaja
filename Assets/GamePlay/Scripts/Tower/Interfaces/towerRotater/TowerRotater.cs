@@ -13,10 +13,10 @@ namespace Assets.GamePlay.Scripts.Tower.Interfaces
     }
     public class TowerRotaterParameters
     {
-        public Vector3 direction;
+        public Vector2 direction;
         public Transform towerTransform;
         //public Action<float> RotateDelegate;
-        public TowerRotaterParameters(Vector3 direction, Transform towerTransform)
+        public TowerRotaterParameters(Vector2 direction, Transform towerTransform)
         {
             this.direction = direction;
             this.towerTransform = towerTransform;

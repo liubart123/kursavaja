@@ -8,8 +8,8 @@ public class AutoStuffGeneration : MonoBehaviour
 {
     public int countOfObjects;
     public List<GameObject> possibleObjects;
-    public Vector3 startPos;
-    public Vector3 endPos;
+    public Vector2 startPos;
+    public Vector2 endPos;
     // Start is called before the first frame update
     void Start()
     {
@@ -25,10 +25,9 @@ public class AutoStuffGeneration : MonoBehaviour
     private void Generate(){
         for (int i=0;i<countOfObjects;i++){
             int objIndex = Random.Range(0, possibleObjects.Count);
-            Vector3 pos = new Vector3(
+            Vector2 pos = new Vector2(
                     Random.Range(startPos.x, endPos.x),
-                    Random.Range(startPos.y, endPos.y),
-                    Random.Range(startPos.z, endPos.z));
+                    Random.Range(startPos.y, endPos.y));
             GameObject temp = Instantiate(possibleObjects[objIndex], pos, transform.rotation);
             temp.transform.SetParent(transform);
             float red = Random.Range(0, 1f);

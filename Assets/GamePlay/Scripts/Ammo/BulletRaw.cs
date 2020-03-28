@@ -30,26 +30,25 @@ namespace Assets.GamePlay.Scripts.Ammo
             //Destroy(this.gameObject, timeToLive);
             currentTarget = target;
             directionOfMoving = target.transform.position - transform.position;
-            directionOfMoving.z = 0;
             directionOfMoving.Normalize();
-            GetComponent<Rigidbody>().velocity=(directionOfMoving * force);
-            //Debug.Log(GetComponent<Rigidbody>().velocity);
-            //GetComponent<Rigidbody>().AddForce(directionOfMoving * force);
+            GetComponent<Rigidbody2D>().velocity=(directionOfMoving * force);
+            //Debug.Log(GetComponent<Rigidbody2D>().velocity);
+            //GetComponent<Rigidbody2D>().AddForce(directionOfMoving * force);
             decorator.DoShot(target);
         }
         public override void Move ()
         {
-            //Vector3 positionOfFLying = CalculateNextPosition();
+            //Vector2 positionOfFLying = CalculateNextPosition();
             //SetPosition(positionOfFLying);
             OnFly(transform.position, transform.rotation);
-            GetComponent<Rigidbody>().velocity = (directionOfMoving * force);
-            //GetComponent<Rigidbody>().AddForce(directionOfMoving * force);
+            GetComponent<Rigidbody2D>().velocity = (directionOfMoving * force);
+            //GetComponent<Rigidbody2D>().AddForce(directionOfMoving * force);
         }
-        public override Vector3 CalculateNextPosition ()
+        public override Vector2 CalculateNextPosition ()
         {
-            return directionOfMoving * speedofMoving + transform.position;
+            return directionOfMoving * speedOfMoving + (Vector2)transform.position;
         }
-        public override void SetPosition (Vector3 pos)
+        public override void SetPosition (Vector2 pos)
         {
             transform.position = pos;
         }
@@ -73,6 +72,10 @@ namespace Assets.GamePlay.Scripts.Ammo
         }
         private void OnTriggerEnter(Collider other)
         {
+            if (other.gameObject.tag != "testTag")
+            {
+                int a =2 + 2;
+            }
             Move();
         }
         //public void FixedUpdate()
