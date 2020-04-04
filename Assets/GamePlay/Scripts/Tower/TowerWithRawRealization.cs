@@ -31,7 +31,17 @@ namespace Assets.GamePlay.Scripts.Tower
             Shooter = GetComponent<Shooter>();
             Reloader = GetComponent<Reloader>();
             BulletFactory = GetComponent<BulletFactory>();
+            BulletFactory.Initialize(bullet);
             ChooseTarget();
+        }
+
+        public override void Shoot()
+        {
+            Bullet bullet = BulletFactory.CreateBullet(new BulletFactoryParameters(transform));
+            Shooter.Shoot(new ShooterParameters(
+                AimTaker.TakeAim(new AimTakerParameters(CurrentTarget, transform.position, bullet.speedOfMoving, true)),
+                bullet));
+            ResetReloading();
         }
     }
 }

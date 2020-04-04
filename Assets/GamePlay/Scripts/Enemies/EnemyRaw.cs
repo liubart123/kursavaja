@@ -1,4 +1,6 @@
-﻿using System;
+﻿using Assets.GamePlay.Scripts.Enemies.Interfaces.DirectionCreator;
+using Assets.GamePlay.Scripts.Enemies.Interfaces.MovingTargetChooser;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -9,38 +11,19 @@ namespace Assets.GamePlay.Scripts.Enemies
 {
     public class EnemyRaw : Enemy
     {
-        public EnemyRaw()
-        {
-            Move = MoveRaw;
-            CreateDirectionForMoving = CreateDirectionForMovingRaw;
-            SetPosition = SetPositionRaw;
-        }
+        protected Rigidbody2D rigidBody;
 
-        protected Vector2 currentTarget;
-        protected Vector2 currentDirection;
-        public float speed;
-        public void MoveRaw()
+        public override void Move()
         {
-            SetPosition((Vector2)transform.position + currentDirection * speed);
+            rigidBody.velocity = currentDirection * speed; 
+            
         }
-        public void SetPositionRaw(Vector2 pos)
+        protected override void Start()
         {
-            transform.position = pos;
-        }
-        public void SetRotationRaw(Vector2 pos)
-        {
-            //transform.rotation = Quaternion;
-        }
-        public void CreateTargetForMovingRaw()
-        {
-
-        }
-        public float angleOfMoving;
-        public float deltaAngle;
-        public void CreateDirectionForMovingRaw()
-        {
-            angleOfMoving += deltaAngle;
-            currentDirection = new Vector2(Mathf.Cos(angleOfMoving), Mathf.Sin(angleOfMoving));
+            DirectionCreator = GetComponent<DirectionCreator>();
+            EnemyMovingTargetChooser = GetComponent<EnemyMovingTargetChooser>();
+            rigidBody = GetComponent<Rigidbody2D>();
+            base.Start();
         }
     }
 }

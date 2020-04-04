@@ -17,10 +17,16 @@ namespace Assets.GamePlay.Scripts.Tower.Interfaces
     {
         public Enemy target;
         public Bullet bullet;
+        public Vector2 direction;
 
         public ShooterParameters(Enemy target, Bullet bullet)
         {
             this.target = target;
+            this.bullet = bullet;
+        }
+        public ShooterParameters(Vector2 direction, Bullet bullet)
+        {
+            this.direction = direction;
             this.bullet = bullet;
         }
     }

@@ -1,4 +1,5 @@
-﻿using Assets.GamePlay.Scripts.Enemies;
+﻿using Assets.GamePlay.Scripts.BulletEffects;
+using Assets.GamePlay.Scripts.Enemies;
 using Assets.GamePlay.Scripts.Other.TimeForLiving;
 using System;
 using System.Collections.Generic;
@@ -9,50 +10,51 @@ using UnityEngine;
 
 namespace Assets.GamePlay.Scripts.Ammo
 {
-    public abstract class Bullet : MonoBehaviour , IDeletable
+    public abstract class Bullet : MonoBehaviour, IDeletable
     {
+        public List<BulletEffect> ListOfEffects { get; set; }
+
         public Vector2 directionOfMoving;
 
         //public Enemy target;
         public float speedOfMoving;
-        public EffectDecorator decorator;
 
         //start moving to enemy
-        public abstract void DoShot(Enemy target);
+        public virtual void DoShot(Enemy target)
+        {
+            DoShot(target.transform.position - transform.position);
+        }
+        public abstract void DoShot(Vector2 direction);
         //move according to enemy position and speed
         public abstract void Move();
-        public abstract Vector2 CalculateNextPosition();
         public abstract void SetPosition(Vector2 pos);
         public abstract void SetRotation(Quaternion rot);
 
         public virtual void OnFly(Vector2 positionOfFlying, Quaternion rotation)
         {
-            if (decorator != null)
-                decorator.OnFly(positionOfFlying, rotation);
         }
         public virtual void OnCollision(Enemy target)
         {
-            if (decorator != null)
-                decorator.OnCollision(target);
+            ListOfEffects.ForEach(el => el.AffectOnce(target));
         }
         public virtual void OnCollisionEve(Enemy target, Vector2 positionOfFlying)
         {
-            if (decorator != null)
-                decorator.OnCollisionEve(target, positionOfFlying);
 
         }
 
-        //destroing of itself 
-        public abstract void SelfDestroy();
-
-        //public void Update()
-        //{
-        //    Move();
-        //}
 
         public virtual void Delete()
         {
-            Destroy(this.gameObject);
+            //Destroy(this.gameObject);
+        }
+
+        private void OnTriggerEnter2D(Collider2D collision)
+        {
+            Enemy enemy = collision.gameObject.GetComponent<Enemy>();
+            if (enemy != null)
+            {
+                ListOfEffects.ForEach(el => enemy.RecieveEffect(el));
+            }
         }
     }
 }

@@ -11,13 +11,11 @@ GameObject:
   - component: {fileID: 6955384501018932615}
   - component: {fileID: 1221499949620964077}
   - component: {fileID: 807579580049291395}
-  - component: {fileID: 7977776992574821049}
-  - component: {fileID: 8356451568228807497}
   - component: {fileID: -8876742612303487304}
   - component: {fileID: 497376961938626347}
   - component: {fileID: -1688675641214762696}
   - component: {fileID: 8172811721366478265}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: defaultBullet
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -101,42 +99,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   directionOfMoving: {x: 0, y: 0}
-  speedOfMoving: 0
-  decorator: {fileID: 8356451568228807497}
-  force: 30
-  timeToLive: 5
---- !u!114 &7977776992574821049
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4594389496379324046}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 09c77f3e607e205408a926784b0b7971, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  timeOfLive: 100
---- !u!114 &8356451568228807497
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4594389496379324046}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: af7d7ea8ae6d5f74c937d8b6c606873a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  decorator: {fileID: 0}
-  fireObjFromUnity: {fileID: 4990866695747578969, guid: 960ce9a71805f4946a78ab5c7679e009,
-    type: 3}
-  ticksBetweenFire: 20
-  ticksBetweenFireAmplitude: 10
-  currentTick: 0
-  maxRandomIncrement: 3
+  speedOfMoving: 15
+  intensity: 2
 --- !u!199 &-8876742612303487304
 ParticleSystemRenderer:
   serializedVersion: 6
@@ -210,7 +174,7 @@ ParticleSystem:
   m_GameObject: {fileID: 4594389496379324046}
   serializedVersion: 6
   lengthInSec: 30
-  simulationSpeed: 5
+  simulationSpeed: 10
   stopAction: 0
   cullingMode: 0
   ringBufferMode: 0
@@ -453,7 +417,7 @@ ParticleSystem:
     startSize:
       serializedVersion: 2
       minMaxState: 3
-      scalar: 1.4
+      scalar: 1.2
       minScalar: 0.5
       maxCurve:
         serializedVersion: 2
@@ -829,7 +793,7 @@ ParticleSystem:
     serializedVersion: 6
     enabled: 1
     type: 4
-    angle: 5
+    angle: 2
     length: 5
     boxThickness: {x: 0, y: 0, z: 0}
     radiusThickness: 1
@@ -1035,7 +999,7 @@ ParticleSystem:
       serializedVersion: 2
       minMaxState: 3
       scalar: 5
-      minScalar: 4
+      minScalar: 3
       maxCurve:
         serializedVersion: 2
         m_Curve:

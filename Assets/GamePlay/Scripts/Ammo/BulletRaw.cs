@@ -1,4 +1,5 @@
-﻿using Assets.GamePlay.Scripts.Enemies;
+﻿using Assets.GamePlay.Scripts.BulletEffects;
+using Assets.GamePlay.Scripts.Enemies;
 using Assets.GamePlay.Scripts.Other.ObjectPull;
 using System;
 using System.Collections.Generic;
@@ -13,40 +14,18 @@ namespace Assets.GamePlay.Scripts.Ammo
     {
         public BulletRaw ()
         {
-            //DoShot = DoShot ;
-            //Move = Move ;
-            //SetPosition = SetPosition ;
-            //SetRotation = SetRotation ;
-            //SelfDestroy = SelfDestroy ;
-            //Live = Live ;
-            //CalculateNextPosition = CalculateNextPosition ;
         }
-        [SerializeField]
-        protected float force;
-        [SerializeField]
-        protected float timeToLive;
         protected Enemy currentTarget;
-        public override void DoShot (Enemy target) {
-            //Destroy(this.gameObject, timeToLive);
-            currentTarget = target;
-            directionOfMoving = target.transform.position - transform.position;
+        public override void DoShot(Vector2 direction)
+        {
+            directionOfMoving = direction;
             directionOfMoving.Normalize();
-            GetComponent<Rigidbody2D>().velocity=(directionOfMoving * force);
-            //Debug.Log(GetComponent<Rigidbody2D>().velocity);
-            //GetComponent<Rigidbody2D>().AddForce(directionOfMoving * force);
-            decorator.DoShot(target);
+            Move();
         }
         public override void Move ()
         {
-            //Vector2 positionOfFLying = CalculateNextPosition();
-            //SetPosition(positionOfFLying);
             OnFly(transform.position, transform.rotation);
-            GetComponent<Rigidbody2D>().velocity = (directionOfMoving * force);
-            //GetComponent<Rigidbody2D>().AddForce(directionOfMoving * force);
-        }
-        public override Vector2 CalculateNextPosition ()
-        {
-            return directionOfMoving * speedOfMoving + (Vector2)transform.position;
+            GetComponent<Rigidbody2D>().velocity = (directionOfMoving * speedOfMoving);
         }
         public override void SetPosition (Vector2 pos)
         {
@@ -56,32 +35,29 @@ namespace Assets.GamePlay.Scripts.Ammo
         {
             transform.rotation = pos;
         }
-        public override void SelfDestroy ()
-        {
-            //Destroy(this.gameObject);
-            
-        }
 
         private void Start()
         {
+            CreateEffects();
         }
 
         public override void Delete()
         {
             //GetComponent<BulletForPull>().ReturnToPull();
         }
-        private void OnTriggerEnter(Collider other)
+        
+
+
+        [SerializeField]
+        private float intensity;
+        //attaching to this bullet effects. For test
+        private void CreateEffects()
         {
-            if (other.gameObject.tag != "testTag")
-            {
-                int a =2 + 2;
-            }
-            Move();
+            ListOfEffects = new List<BulletEffects.BulletEffect>();
+            ListOfEffects.Add(new BulletEffectSlowingRaw(intensity));
+            //ListOfEffects.Add(new BulletEffectImmidiateDamageRaw(intensity, Damage.DamageManager.EKindOfDamage.blue));
+            ListOfEffects.Add(new BulletEffectPeriodicDamageRaw(intensity, Damage.DamageManager.EKindOfDamage.blue));
         }
-        //public void FixedUpdate()
-        //{
-        //    Move();
-        //}
 
     }
 }

@@ -16,11 +16,15 @@ namespace Assets.GamePlay.Scripts.Tower.Interfaces
     {
         public Enemy target;
         public Vector2 position;
+        public float BulletSpeed;
+        public bool getActualValue;
 
-        public AimTakerParameters(Enemy target, Vector2 position)
+        public AimTakerParameters(Enemy target, Vector2 position, float BulletSpeed, bool getActualValue = false)
         {
             this.target = target;
             this.position = position;
+            this.BulletSpeed = BulletSpeed;
+            this.getActualValue = getActualValue;
         }
     }
 }

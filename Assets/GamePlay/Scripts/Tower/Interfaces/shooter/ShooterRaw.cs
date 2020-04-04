@@ -10,7 +10,13 @@ namespace Assets.GamePlay.Scripts.Tower.Interfaces.shooter
     {
         public override void Shoot(ShooterParameters args)
         {
-            args.bullet.DoShot(args.target);
+            if (args.target != null)
+            {
+                args.bullet.DoShot(args.target);
+            } else if (args.direction != null)
+            {
+                args.bullet.DoShot(args.direction);
+            }
         }
     }
 }

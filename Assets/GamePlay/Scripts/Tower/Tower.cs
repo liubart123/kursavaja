@@ -13,8 +13,10 @@ namespace Assets.GamePlay.Scripts.Tower
 {
     public abstract class Tower : Building.Building
     {
-        public List<Bullet> Ammunition = new List<Bullet>();
+        [SerializeField]
+        protected Bullet bullet;   //type of bullet, that is used by this tower
         public Enemy CurrentTarget { get; protected set; }
+        private Vector2 directionOfShooting;
 
         //objects and mehtods for most important tower functions
         //that can contain difficult logic
@@ -26,7 +28,7 @@ namespace Assets.GamePlay.Scripts.Tower
         public AimTaker AimTaker { get; protected set; }    //calculate direction for shooting
         public virtual void TakeAim()
         {
-            Vector2 directionOfShooting = AimTaker.TakeAim(new AimTakerParameters(CurrentTarget,transform.position));
+            directionOfShooting = AimTaker.TakeAim(new AimTakerParameters(CurrentTarget,transform.position, bullet.speedOfMoving));
             bool aimed = TowerRotater.RotateTower(new TowerRotaterParameters(directionOfShooting, transform));
             if (aimed && isLoaded)
             {

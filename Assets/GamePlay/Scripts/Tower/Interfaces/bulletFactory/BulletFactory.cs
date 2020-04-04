@@ -12,6 +12,12 @@ namespace Assets.GamePlay.Scripts.Tower.Interfaces
     public abstract class BulletFactory : MonoBehaviour
     {
         public abstract Bullet CreateBullet(BulletFactoryParameters args);
+
+        protected Bullet bullet;    //type of bullet, that will be created
+        public virtual void Initialize(Bullet bullet)
+        {
+            this.bullet = bullet;
+        }
     }
     public class BulletFactoryParameters
     {

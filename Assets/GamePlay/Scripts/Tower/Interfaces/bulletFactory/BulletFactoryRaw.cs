@@ -4,7 +4,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Assets.GamePlay.Scripts.Effect;
 using UnityEngine;
 using Assets.GamePlay.Scripts.Other.ObjectPull;
 
@@ -12,17 +11,18 @@ namespace Assets.GamePlay.Scripts.Tower.Interfaces.bulletFactory
 {
     class BulletFactoryRaw : BulletFactory
     {
-        protected BulletPull pull;
+        protected BulletPull pull;  //pull of bullets
         [SerializeField]
-        protected int pullSize;
-        public Bullet bulletFromUnityEditor;
-        //public GameObject fireFromUnityEditor;
+        protected int pullSize;     
         public void Start()
         {
-            //pull = gameObject.AddComponent<BulletPull>();
-            pull = GetComponent<BulletPull>();
-            pull.Initialize(bulletFromUnityEditor.gameObject, pullSize);
         }
+        public override void Initialize(Bullet bullet)
+        {
+            pull = GetComponent<BulletPull>();
+            this.bullet = bullet;
+            pull.Initialize(bullet.gameObject, pullSize);
+        }   
         public override Bullet CreateBullet(BulletFactoryParameters args)
         {
             Bullet bul = pull.GetObject();
