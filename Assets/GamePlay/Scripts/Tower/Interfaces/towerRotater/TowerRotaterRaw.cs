@@ -18,7 +18,7 @@ namespace Assets.GamePlay.Scripts.Tower.Interfaces.towerRotater
             zAngle *= Mathf.PI / 180;
             Vector2 rotation = new Vector2(Mathf.Cos(zAngle), Mathf.Sin(zAngle));
             float deltaAngle = Vector2.Angle(target, rotation);
-            if (deltaAngle > MINIMUM_DELTA_ANGLE)
+            if (deltaAngle > rotatingSpeed/2)
             {
                 int sign = 1;
                 Vector3 cross = Vector3.Cross((Vector3)target, (Vector3)rotation);

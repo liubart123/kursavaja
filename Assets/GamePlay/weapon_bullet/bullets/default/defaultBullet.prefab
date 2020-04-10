@@ -99,8 +99,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   directionOfMoving: {x: 0, y: 0}
-  speedOfMoving: 15
-  intensity: 2
+  speedOfMoving: 10
+  intensity: 1.5
 --- !u!199 &-8876742612303487304
 ParticleSystemRenderer:
   serializedVersion: 6

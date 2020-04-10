@@ -1,5 +1,6 @@
 ﻿using Assets.GamePlay.Scripts.Ammo;
 using Assets.GamePlay.Scripts.Bonuses;
+using Assets.GamePlay.Scripts.TowerClasses;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,10 +15,15 @@ namespace Assets.GamePlay.Scripts.Tower.Interfaces
         public abstract Bullet CreateBullet(BulletFactoryParameters args);
 
         protected Bullet bullet;    //type of bullet, that will be created
-        public virtual void Initialize(Bullet bullet)
+        public virtual void Initialize(Bullet bullet, ICollection<TowerClass> towerClasses)
         {
             this.bullet = bullet;
+            this.towerClasses = towerClasses;
         }
+
+
+        //TOWER_CLASSES
+        protected ICollection<TowerClass> towerClasses;    //classes that are got from other towers
     }
     public class BulletFactoryParameters
     {

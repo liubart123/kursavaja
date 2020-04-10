@@ -10,6 +10,7 @@ namespace Assets.GamePlay.Scripts.Tower.Interfaces.targetChooser
     class TargetChooserRaw : TargetChooser
     {
         public Enemy targetFromUnityEditor;
+
         public override Enemy ChooseTarget(TargetChooserParameters args)
         {
             return targetFromUnityEditor;

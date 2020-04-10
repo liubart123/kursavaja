@@ -38,7 +38,7 @@ namespace Assets.GamePlay.Scripts.Ammo
 
         private void Start()
         {
-            CreateEffects();
+            //CreateEffects();
         }
 
         public override void Delete()
@@ -54,10 +54,14 @@ namespace Assets.GamePlay.Scripts.Ammo
         private void CreateEffects()
         {
             ListOfEffects = new List<BulletEffects.BulletEffect>();
-            ListOfEffects.Add(new BulletEffectSlowingRaw(intensity));
+            //ListOfEffects.Add(new BulletEffectSlowingRaw(intensity));
             //ListOfEffects.Add(new BulletEffectImmidiateDamageRaw(intensity, Damage.DamageManager.EKindOfDamage.blue));
-            ListOfEffects.Add(new BulletEffectPeriodicDamageRaw(intensity, Damage.DamageManager.EKindOfDamage.blue));
+            //ListOfEffects.Add(new BulletEffectPeriodicDamageRaw(intensity, Damage.DamageManager.EKindOfDamage.blue));
         }
 
+        public override void Clone(Bullet t)
+        {
+            this.ListOfEffects = t.ListOfEffects;
+        }
     }
 }

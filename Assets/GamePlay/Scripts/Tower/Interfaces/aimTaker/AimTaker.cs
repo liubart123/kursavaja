@@ -11,6 +11,10 @@ namespace Assets.GamePlay.Scripts.Tower.Interfaces
     public abstract class AimTaker : MonoBehaviour
     {
         public abstract Vector2 TakeAim(AimTakerParameters args);
+        public virtual void ResetAimTaker()
+        {
+
+        }
     }
     public class AimTakerParameters
     {

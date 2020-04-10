@@ -6,21 +6,32 @@ using System.Text;
 using System.Threading.Tasks;
 using UnityEngine;
 using Assets.GamePlay.Scripts.Other.ObjectPull;
+using Assets.GamePlay.Scripts.TowerClasses;
 
 namespace Assets.GamePlay.Scripts.Tower.Interfaces.bulletFactory
 {
     class BulletFactoryRaw : BulletFactory
     {
-        protected BulletPull pull;  //pull of bullets
+        protected IObjectPull<Bullet> pull;  //pull of bullets
         [SerializeField]
         protected int pullSize;     
         public void Start()
         {
         }
-        public override void Initialize(Bullet bullet)
+        public override void Initialize(Bullet bullet, ICollection<TowerClass> towerClasses)
         {
+            base.Initialize(bullet, towerClasses);
+            bullet.ListOfEffects = new List<BulletEffects.BulletEffect>();
+
+            foreach (var cl in towerClasses)
+            {
+                foreach (var eff in cl.BulletEffects)
+                {
+                    bullet.ListOfEffects.Add(eff);
+                }
+            }
+
             pull = GetComponent<BulletPull>();
-            this.bullet = bullet;
             pull.Initialize(bullet.gameObject, pullSize);
         }   
         public override Bullet CreateBullet(BulletFactoryParameters args)
@@ -34,5 +45,15 @@ namespace Assets.GamePlay.Scripts.Tower.Interfaces.bulletFactory
             //bul.decorator = effect;
             return bul;
         }
+
+        //private void Update()
+        //{
+        //    if (Input.GetKeyDown(KeyCode.Space))
+        //    {
+        //        bullet.speedOfMoving = 50;
+        //        pull.ClearPool();
+        //        pull.Initialize(bullet.gameObject, pullSize);
+        //    }
+        //}
     }
 }

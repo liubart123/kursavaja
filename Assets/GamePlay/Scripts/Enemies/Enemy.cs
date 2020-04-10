@@ -15,6 +15,8 @@ namespace Assets.GamePlay.Scripts.Enemies
 {
     public abstract class Enemy : MonoBehaviour
     {
+        public event Action<Enemy> eventsWhenThisDie;
+
         //CHOOSING TARGET
         protected Building.Building targetToMove;   
         public EnemyMovingTargetChooser EnemyMovingTargetChooser { get; protected set; }
@@ -137,6 +139,7 @@ namespace Assets.GamePlay.Scripts.Enemies
 
         public virtual void Die()
         {
+            eventsWhenThisDie(this);
             Destroy(gameObject);
         }
     }

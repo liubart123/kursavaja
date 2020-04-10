@@ -21,7 +21,7 @@ namespace Assets.GamePlay.Scripts.Tower.Interfaces.aimRotater
                 if (cycleCount++ > maxCycleCountToForCalculating)
                 {
                     cycleCount = 0;
-                } else if (lastTarget != null)
+                } else if (lastTarget != null && lastTarget != Vector2.zero)
                 {
                     return lastTarget;
                 }
@@ -33,17 +33,26 @@ namespace Assets.GamePlay.Scripts.Tower.Interfaces.aimRotater
             float bulletSpeed = args.BulletSpeed;
             //Vector2 target = ((Vector2)CurrentTarget.gameObject.transform.position - args.position);
             Vector2 target;
-            tarPos -= args.position;    //changing target position to relative according to tower position
+            tarPos -= args.position;    //changing absolute target position to relative according to tower position
             float D; //discriminint
-            D = Mathf.Pow(2 * (tarSpeed.x * tarPos.x + tarSpeed.y * tarPos.y), 2);
-            float a = Mathf.Pow(tarSpeed.x,2) + Mathf.Pow(tarSpeed.y, 2) - Mathf.Pow(bulletSpeed, 2);
-            D -= 4 * (a) * (Mathf.Pow(tarPos.x, 2) + Mathf.Pow(tarPos.y, 2));
-            float t = - Mathf.Sqrt(D) - 2 * (tarSpeed.x * tarPos.x + tarSpeed.y * tarPos.y);
-            t /= 2 * a;
-            target = new Vector2(tarSpeed.x * t + args.target.GetPosition().x,
-                tarSpeed.y * t + args.target.GetPosition().y);
+            float a = Mathf.Pow(tarSpeed.x, 2) + Mathf.Pow(tarSpeed.y, 2) - Mathf.Pow(bulletSpeed, 2);
+            float b = 2 * (tarPos.x * tarSpeed.x + tarPos.y * tarSpeed.y);
+            float c = Mathf.Pow(tarPos.x, 2) + Mathf.Pow(tarPos.y, 2);
+            D = b * b - 4 * a * c;
+            float t;
+            t = -Mathf.Sqrt(D) - b;
+            t /= a * 2;
+            target = tarPos + tarSpeed * t;
+            //target += args.position;
+
+            //target = tarPos;
+
             lastTarget = target;
             return target;
+        }
+        public override void ResetAimTaker()
+        {
+            lastTarget = Vector2.zero;
         }
 
     }

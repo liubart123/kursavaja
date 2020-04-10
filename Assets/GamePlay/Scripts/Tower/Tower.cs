@@ -1,6 +1,8 @@
 ﻿using Assets.GamePlay.Scripts.Ammo;
 using Assets.GamePlay.Scripts.Enemies;
 using Assets.GamePlay.Scripts.Tower.Interfaces;
+using Assets.GamePlay.Scripts.TowerClasses;
+using Assets.GamePlay.Scripts.TowerClasses.TowerCombinations;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,19 +17,30 @@ namespace Assets.GamePlay.Scripts.Tower
     {
         [SerializeField]
         protected Bullet bullet;   //type of bullet, that is used by this tower
+
+        //AIMING
         public Enemy CurrentTarget { get; protected set; }
         private Vector2 directionOfShooting;
-
-        //objects and mehtods for most important tower functions
-        //that can contain difficult logic
         public TargetChooser TargetChooser{ get; protected set; }
         public virtual void ChooseTarget()
         {
-            CurrentTarget = TargetChooser.ChooseTarget(new TargetChooserParameters(transform.eulerAngles.z));
+            CurrentTarget = TargetChooser.ChooseTarget(
+                new TargetChooserParameters(
+                    transform.eulerAngles.z,
+                    (Vector2)transform.position));
+            AimTaker.ResetAimTaker();
+            if (CurrentTarget != null)
+            {
+                CurrentTarget.eventsWhenThisDie += en => ChooseTarget();
+            }
         }   //chose target among all possible enemies
         public AimTaker AimTaker { get; protected set; }    //calculate direction for shooting
         public virtual void TakeAim()
         {
+            if (CurrentTarget == null)
+            {
+                return;
+            }
             directionOfShooting = AimTaker.TakeAim(new AimTakerParameters(CurrentTarget,transform.position, bullet.speedOfMoving));
             bool aimed = TowerRotater.RotateTower(new TowerRotaterParameters(directionOfShooting, transform));
             if (aimed && isLoaded)
@@ -36,6 +49,8 @@ namespace Assets.GamePlay.Scripts.Tower
             }
         }   //calculate rigth direction and rotate tower accordingly
         public TowerRotater TowerRotater { get; protected set; }
+
+        //SHOOTING
         public Shooter Shooter { get; protected set; }
         public virtual void Shoot()
         {
@@ -43,6 +58,8 @@ namespace Assets.GamePlay.Scripts.Tower
             Shooter.Shoot(new ShooterParameters(CurrentTarget, bullet));
             ResetReloading();
         }
+
+        //RELOADING
         public Reloader Reloader { get; protected set; }
         public Boolean isLoaded;
         public void Reload()
@@ -55,6 +72,28 @@ namespace Assets.GamePlay.Scripts.Tower
             isLoaded = false;
         }
         public BulletFactory BulletFactory { get; protected set; }
+        protected virtual void InitializeBulletFactory()
+        {
+            List<TowerClass> towerClasses = new List<TowerClass>(otherTowerClasses);
+            towerClasses.Add(defaultTowerClass);
+            if (ownTowerClass != null) towerClasses.Add(ownTowerClass);
+            foreach (var comb in towerCombinations)
+            {
+                foreach (var cl in comb.towerClasses)
+                {
+                    towerClasses.Add(cl);
+                }
+            }
+            BulletFactory.Initialize(bullet, towerClasses);
+        }
+
+        //TOWER_CLASSES
+        [SerializeField]
+        protected int influenceRange;
+        protected TowerClass defaultTowerClass; //special class for every kind of tower
+        protected TowerClass ownTowerClass;     //class that is got from bonuses
+        protected ICollection<TowerClass> otherTowerClasses;    //classes that are got from other towers
+        protected ICollection<TowerCombination> towerCombinations;    //generated combinations
 
 
         public void FixedUpdate()

@@ -1,5 +1,6 @@
 ﻿using Assets.GamePlay.Scripts.BulletEffects;
 using Assets.GamePlay.Scripts.Enemies;
+using Assets.GamePlay.Scripts.Other.Cloneable;
 using Assets.GamePlay.Scripts.Other.TimeForLiving;
 using System;
 using System.Collections.Generic;
@@ -10,7 +11,7 @@ using UnityEngine;
 
 namespace Assets.GamePlay.Scripts.Ammo
 {
-    public abstract class Bullet : MonoBehaviour, IDeletable
+    public abstract class Bullet : MonoBehaviour, IDeletable, IMyCloneable<Bullet>
     {
         public List<BulletEffect> ListOfEffects { get; set; }
 
@@ -56,5 +57,7 @@ namespace Assets.GamePlay.Scripts.Ammo
                 ListOfEffects.ForEach(el => enemy.RecieveEffect(el));
             }
         }
+
+        public abstract void Clone(Bullet t);
     }
 }
