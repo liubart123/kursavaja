@@ -17,6 +17,11 @@ namespace Assets.GamePlay.Scripts.Enemies.Interfaces.MovingTargetChooser
     }
     public class EnemyMovingTargetChooserParameters
     {
+        public Vector2 enemyPos;
 
+        public EnemyMovingTargetChooserParameters(Vector2 enemyPos)
+        {
+            this.enemyPos = enemyPos;
+        }
     }
 }

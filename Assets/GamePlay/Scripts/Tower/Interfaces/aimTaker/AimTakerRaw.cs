@@ -31,6 +31,10 @@ namespace Assets.GamePlay.Scripts.Tower.Interfaces.aimRotater
             Vector2 tarDir = args.target.GetCurrentDirectionOfMoving();
             Vector2 tarSpeed = args.target.speed * tarDir;
             float bulletSpeed = args.BulletSpeed;
+            if (args.target.speed == 0 || tarDir == Vector2.zero)
+            {
+                return -args.position + tarPos;
+            }
             //Vector2 target = ((Vector2)CurrentTarget.gameObject.transform.position - args.position);
             Vector2 target;
             tarPos -= args.position;    //changing absolute target position to relative according to tower position

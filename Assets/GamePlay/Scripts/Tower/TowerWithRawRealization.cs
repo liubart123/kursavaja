@@ -28,6 +28,22 @@ namespace Assets.GamePlay.Scripts.Tower
 
         public void Start()
         {
+
+
+        }
+
+        public override void Shoot()
+        {
+            Bullet bullet = BulletFactory.CreateBullet(new BulletFactoryParameters(transform));
+            Shooter.Shoot(new ShooterParameters(
+                AimTaker.TakeAim(new AimTakerParameters(CurrentTarget, transform.position, bullet.speedOfMoving, true)),
+                bullet));
+            ResetReloading();
+        }
+
+        public override void Initialize()
+        {
+            base.Initialize();
             //tower's interfaces
             owner = FindObjectOfType<Player.Player>();
             TargetChooser = GetComponent<TargetChooser>();
@@ -43,17 +59,6 @@ namespace Assets.GamePlay.Scripts.Tower
 
             classCollection.Initialize();
             InitializeBulletFactory();
-
-
-        }
-
-        public override void Shoot()
-        {
-            Bullet bullet = BulletFactory.CreateBullet(new BulletFactoryParameters(transform));
-            Shooter.Shoot(new ShooterParameters(
-                AimTaker.TakeAim(new AimTakerParameters(CurrentTarget, transform.position, bullet.speedOfMoving, true)),
-                bullet));
-            ResetReloading();
         }
     }
 }

@@ -12,7 +12,6 @@ namespace Assets.GamePlay.Scripts.Enemies
     public class EnemyRaw : Enemy
     {
         protected Rigidbody2D rigidBody;
-
         public override void Move()
         {
             rigidBody.velocity = currentDirection * speed; 
@@ -20,10 +19,16 @@ namespace Assets.GamePlay.Scripts.Enemies
         }
         protected override void Start()
         {
+            Initialize();
+        }
+        public override void Initialize()
+        {
             DirectionCreator = GetComponent<DirectionCreator>();
             EnemyMovingTargetChooser = GetComponent<EnemyMovingTargetChooser>();
             rigidBody = GetComponent<Rigidbody2D>();
-            base.Start();
+            base.Initialize();
+
+            ChooseTargetForMoving();
         }
     }
 }

@@ -3,6 +3,7 @@ using Assets.GamePlay.Scripts.Damage;
 using Assets.GamePlay.Scripts.Enemies.Interfaces;
 using Assets.GamePlay.Scripts.Enemies.Interfaces.DirectionCreator;
 using Assets.GamePlay.Scripts.Enemies.Interfaces.MovingTargetChooser;
+using Assets.GamePlay.Scripts.Enemies.Interfaces.PathFinder;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -17,12 +18,16 @@ namespace Assets.GamePlay.Scripts.Enemies
     {
         public event Action<Enemy> eventsWhenThisDie;
 
+        protected ICollection<Block> currentPath;
+
         //CHOOSING TARGET
         protected Building.Building targetToMove;   
         public EnemyMovingTargetChooser EnemyMovingTargetChooser { get; protected set; }
-        protected virtual void ChooseTargetForMoving()
+        public virtual void ChooseTargetForMoving()
         {
-            EnemyMovingTargetChooser.ChooseTargetForMove(null);
+            targetToMove = EnemyMovingTargetChooser.ChooseTargetForMove(
+                new EnemyMovingTargetChooserParameters(GetPosition()));
+            CreatePath();
         }
 
         //MOVING
@@ -33,7 +38,19 @@ namespace Assets.GamePlay.Scripts.Enemies
         public DirectionCreator DirectionCreator { get; protected set; }
         protected virtual void CreateDirection()
         {
-            currentDirection = DirectionCreator.CreateDirection(null);
+            currentDirection = DirectionCreator.CreateDirection(
+                new DirectionCreatorParameters(currentPath,
+                GetPosition()));
+        }
+        protected virtual void CreatePath()
+        {
+            if (targetToMove != null)
+            {
+                PathFinder pf = new PathFinder();
+                currentPath = pf.GetPath(
+                    BlocksGenerator.GetBlock(GetPosition()),
+                    targetToMove.GetBlock());
+            }
         }
         public virtual void Move()
         {
@@ -92,6 +109,8 @@ namespace Assets.GamePlay.Scripts.Enemies
             }
         }
 
+
+        //CHANGING OF APPEARANCE DEPEND OF HEALTH
         //object that must change when health is changed
         protected GameObject[] childsOfGameobject;
         protected Color[] colorsOfChilds;
@@ -117,6 +136,8 @@ namespace Assets.GamePlay.Scripts.Enemies
             }
         }
 
+
+        //POSITION ROTATION
         public virtual Vector2 GetPosition()
         {
             return (Vector2)transform.position;
@@ -133,14 +154,17 @@ namespace Assets.GamePlay.Scripts.Enemies
         }
         protected virtual void Start()
         {
-            SetChildsOfGameobjects();
-            Health = maxHealth;
         }
 
         public virtual void Die()
         {
             eventsWhenThisDie(this);
             Destroy(gameObject);
+        }
+        public virtual void Initialize()
+        {
+            SetChildsOfGameobjects();
+            Health = maxHealth;
         }
     }
 }

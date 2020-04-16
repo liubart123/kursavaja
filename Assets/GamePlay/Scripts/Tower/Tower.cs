@@ -17,7 +17,6 @@ namespace Assets.GamePlay.Scripts.Tower
 {
     public abstract class Tower : Building.Building
     {
-        public Player.Player owner;
 
         [SerializeField]
         protected Bullet bullet;   //type of bullet, that is used by this tower
@@ -29,6 +28,8 @@ namespace Assets.GamePlay.Scripts.Tower
         public TargetChooser TargetChooser{ get; protected set; }
         public virtual void ChooseTarget()
         {
+            //if (TargetChooser == null)
+            //    return;
             CurrentTarget = TargetChooser.ChooseTarget(
                 new TargetChooserParameters(
                     transform.eulerAngles.z,
@@ -86,11 +87,18 @@ namespace Assets.GamePlay.Scripts.Tower
         //TOWER_CLASSES
         public ClassCollection classCollection;
 
-
+        private bool initialized = false;
+        public override void Initialize()
+        {
+            initialized = true;
+        }
         public void FixedUpdate()
         {
-            Reload();
-            TakeAim();
+            if (initialized)
+            {
+                Reload();
+                TakeAim();
+            }
         }
     }
 }

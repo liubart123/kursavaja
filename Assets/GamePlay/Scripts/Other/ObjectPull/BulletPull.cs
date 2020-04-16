@@ -19,6 +19,7 @@ namespace Assets.GamePlay.Scripts.Other.ObjectPull
 
         public void Initialize(GameObject objectOfPull, int size)
         {
+            ParentForPullObjects = GameObject.FindGameObjectWithTag("BulletPull");
             this.objectOfPull = objectOfPull;
             this.size = size;
             FillUpPool();

@@ -13,7 +13,13 @@ namespace Assets.GamePlay.Scripts.Enemies.Interfaces.DirectionCreator
     }
     public class DirectionCreatorParameters
     {
-        public Building.Building target;
+        public ICollection<Block> path;
+        public Vector2 enemyPos;
 
+        public DirectionCreatorParameters(ICollection<Block> path, Vector2 enemyPos)
+        {
+            this.path = path;
+            this.enemyPos = enemyPos;
+        }
     }
 }
