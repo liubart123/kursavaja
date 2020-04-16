@@ -28,5 +28,10 @@ namespace Assets.GamePlay.Scripts.BulletEffects
         public override void RemoveEffect(Enemy enemy)
         {
         }
+
+        public override BulletEffect CloneEffectWithOtherIntensity(float Intensity)
+        {
+            return new BulletEffectPeriodicDamageRaw(Intensity, kindOfDamage);
+        }
     }
 }

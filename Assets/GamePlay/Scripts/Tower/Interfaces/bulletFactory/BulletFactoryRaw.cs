@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using UnityEngine;
 using Assets.GamePlay.Scripts.Other.ObjectPull;
 using Assets.GamePlay.Scripts.TowerClasses;
+using Assets.GamePlay.Scripts.BulletEffects;
 
 namespace Assets.GamePlay.Scripts.Tower.Interfaces.bulletFactory
 {
@@ -18,18 +19,10 @@ namespace Assets.GamePlay.Scripts.Tower.Interfaces.bulletFactory
         public void Start()
         {
         }
-        public override void Initialize(Bullet bullet, ICollection<TowerClass> towerClasses)
+        public override void Initialize(Bullet bullet, ICollection<BulletEffect> effects, Tower tower)
         {
-            base.Initialize(bullet, towerClasses);
-            bullet.ListOfEffects = new List<BulletEffects.BulletEffect>();
-
-            foreach (var cl in towerClasses)
-            {
-                foreach (var eff in cl.BulletEffects)
-                {
-                    bullet.ListOfEffects.Add(eff);
-                }
-            }
+            base.Initialize(bullet, effects, tower);
+            bullet.ListOfEffects = effects;
 
             pull = GetComponent<BulletPull>();
             pull.Initialize(bullet.gameObject, pullSize);

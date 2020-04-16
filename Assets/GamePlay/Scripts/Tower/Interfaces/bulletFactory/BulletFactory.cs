@@ -1,5 +1,6 @@
 ﻿using Assets.GamePlay.Scripts.Ammo;
 using Assets.GamePlay.Scripts.Bonuses;
+using Assets.GamePlay.Scripts.BulletEffects;
 using Assets.GamePlay.Scripts.TowerClasses;
 using System;
 using System.Collections.Generic;
@@ -12,18 +13,21 @@ namespace Assets.GamePlay.Scripts.Tower.Interfaces
 {
     public abstract class BulletFactory : MonoBehaviour
     {
+        Tower tower;
+
         public abstract Bullet CreateBullet(BulletFactoryParameters args);
 
         protected Bullet bullet;    //type of bullet, that will be created
-        public virtual void Initialize(Bullet bullet, ICollection<TowerClass> towerClasses)
+        public virtual void Initialize(Bullet bullet, ICollection<BulletEffect> effects, Tower tower )
         {
             this.bullet = bullet;
-            this.towerClasses = towerClasses;
+            this.effects = effects;
+            this.tower = tower;
         }
 
 
         //TOWER_CLASSES
-        protected ICollection<TowerClass> towerClasses;    //classes that are got from other towers
+        protected ICollection<BulletEffect> effects;    //classes that are got from other towers
     }
     public class BulletFactoryParameters
     {

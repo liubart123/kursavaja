@@ -13,7 +13,7 @@ namespace Assets.GamePlay.Scripts.Ammo
 {
     public abstract class Bullet : MonoBehaviour, IDeletable, IMyCloneable<Bullet>
     {
-        public List<BulletEffect> ListOfEffects { get; set; }
+        public ICollection<BulletEffect> ListOfEffects { get; set; }
 
         public Vector2 directionOfMoving;
 
@@ -34,14 +34,6 @@ namespace Assets.GamePlay.Scripts.Ammo
         public virtual void OnFly(Vector2 positionOfFlying, Quaternion rotation)
         {
         }
-        public virtual void OnCollision(Enemy target)
-        {
-            ListOfEffects.ForEach(el => el.AffectOnce(target));
-        }
-        public virtual void OnCollisionEve(Enemy target, Vector2 positionOfFlying)
-        {
-
-        }
 
 
         public virtual void Delete()
@@ -54,7 +46,11 @@ namespace Assets.GamePlay.Scripts.Ammo
             Enemy enemy = collision.gameObject.GetComponent<Enemy>();
             if (enemy != null)
             {
-                ListOfEffects.ForEach(el => enemy.RecieveEffect(el));
+                foreach(var ef in ListOfEffects)
+                {
+                    enemy.RecieveEffect(ef);
+                }
+                //ListOfEffects.ForEach(el => enemy.RecieveEffect(el));
             }
         }
 

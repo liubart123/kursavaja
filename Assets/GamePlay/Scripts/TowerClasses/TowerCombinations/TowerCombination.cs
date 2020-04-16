@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Assets.GamePlay.Scripts.TowerClasses.TowerCombinations
 {
-    public abstract class TowerCombination : TowerClass
+    public class TowerCombination : TowerClass
     {
         //collection of classes that must be gathered to creaete combination
         public ICollection<TowerClass> towerClasses;    

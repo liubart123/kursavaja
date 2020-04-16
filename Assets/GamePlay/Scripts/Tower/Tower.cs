@@ -9,14 +9,19 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using UnityEngine;
-
+using Assets.GamePlay.Scripts.Player;
+using Assets.GamePlay.Scripts.Tower.Interfaces.ClassesCollection;
+using Assets.GamePlay.Scripts.BulletEffects;
 
 namespace Assets.GamePlay.Scripts.Tower
 {
     public abstract class Tower : Building.Building
     {
+        public Player.Player owner;
+
         [SerializeField]
         protected Bullet bullet;   //type of bullet, that is used by this tower
+        public float Effectivity { get; protected set; }    //effectivity of effects
 
         //AIMING
         public Enemy CurrentTarget { get; protected set; }
@@ -74,26 +79,12 @@ namespace Assets.GamePlay.Scripts.Tower
         public BulletFactory BulletFactory { get; protected set; }
         protected virtual void InitializeBulletFactory()
         {
-            List<TowerClass> towerClasses = new List<TowerClass>(otherTowerClasses);
-            towerClasses.Add(defaultTowerClass);
-            if (ownTowerClass != null) towerClasses.Add(ownTowerClass);
-            foreach (var comb in towerCombinations)
-            {
-                foreach (var cl in comb.towerClasses)
-                {
-                    towerClasses.Add(cl);
-                }
-            }
-            BulletFactory.Initialize(bullet, towerClasses);
+            ICollection<BulletEffect> effects = classCollection.GetAllEffects();
+            BulletFactory.Initialize(bullet, effects, this);
         }
 
         //TOWER_CLASSES
-        [SerializeField]
-        protected int influenceRange;
-        protected TowerClass defaultTowerClass; //special class for every kind of tower
-        protected TowerClass ownTowerClass;     //class that is got from bonuses
-        protected ICollection<TowerClass> otherTowerClasses;    //classes that are got from other towers
-        protected ICollection<TowerCombination> towerCombinations;    //generated combinations
+        public ClassCollection classCollection;
 
 
         public void FixedUpdate()

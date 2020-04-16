@@ -18,6 +18,11 @@ namespace Assets.GamePlay.Scripts.BulletEffects
             enemy.speed /= Intensity;
         }
 
+        public override BulletEffect CloneEffectWithOtherIntensity(float Intensity)
+        {
+            return new BulletEffectSlowingRaw(Intensity);
+        }
+
         public override void RemoveEffect(Enemy enemy)
         {
             enemy.speed *= Intensity;

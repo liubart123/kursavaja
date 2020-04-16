@@ -25,7 +25,10 @@ namespace Assets.GamePlay.Scripts.BulletEffects
         //effect, that appears at the beginning
         public abstract void AffectOnce(Enemy enemy);
 
+
         //removing effect from the enemy
         public abstract void RemoveEffect(Enemy enemy);
+
+        public abstract BulletEffect CloneEffectWithOtherIntensity(float Intensity);
     }
 }

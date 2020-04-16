@@ -15,6 +15,7 @@ using System.Threading.Tasks;
 using UnityEngine;
 using Assets.GamePlay.Scripts.TowerClasses;
 using Assets.GamePlay.Scripts.TowerClasses.TowerCombinations;
+using Assets.GamePlay.Scripts.Tower.Interfaces.ClassesCollection;
 
 namespace Assets.GamePlay.Scripts.Tower
 {
@@ -28,27 +29,22 @@ namespace Assets.GamePlay.Scripts.Tower
         public void Start()
         {
             //tower's interfaces
+            owner = FindObjectOfType<Player.Player>();
             TargetChooser = GetComponent<TargetChooser>();
             AimTaker = GetComponent<AimTaker>();
             TowerRotater = GetComponent<TowerRotater>();
             Shooter = GetComponent<Shooter>();
             Reloader = GetComponent<Reloader>();
             BulletFactory = GetComponent<BulletFactory>();
+            classCollection = GetComponent<ClassCollection>();
 
-            InitializeClassesAndCombinations();
+            //effectivity
+            Effectivity = 1;
+
+            classCollection.Initialize();
             InitializeBulletFactory();
 
-            //classes
-            defaultTowerClass = new TowerClassRaw1();
-            defaultTowerClass = new TowerClassRaw2();
-        }
 
-        protected void InitializeClassesAndCombinations()
-        {
-            defaultTowerClass = new TowerClassRaw1();
-            ownTowerClass = new TowerClassRaw2();
-            otherTowerClasses = new List<TowerClass>();
-            towerCombinations = new List<TowerCombination>();
         }
 
         public override void Shoot()
