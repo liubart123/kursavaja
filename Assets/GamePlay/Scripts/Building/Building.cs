@@ -7,6 +7,7 @@ namespace Assets.GamePlay.Scripts.Building {
     public abstract class Building : MonoBehaviour
     {
         public Player.Player owner;
+        public Builder.EBuilding typeOfBuilding;
         // Start is called before the first frame update
         void Start()
         {
@@ -18,7 +19,10 @@ namespace Assets.GamePlay.Scripts.Building {
         {
 
         }
-        public abstract void Initialize();
+        public virtual void Initialize()
+        {
+            GetBlock().passability = 1;
+        }
         public Block GetBlock()
         {
             return transform.parent.gameObject.GetComponent<Block>();

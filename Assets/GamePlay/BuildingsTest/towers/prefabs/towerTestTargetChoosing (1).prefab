@@ -4966,6 +4966,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   owner: {fileID: 0}
+  typeOfBuilding: 1
   bullet: {fileID: 1979143113634726425}
   isLoaded: 0
   classCollection: {fileID: 0}

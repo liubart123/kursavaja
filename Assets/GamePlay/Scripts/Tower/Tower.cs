@@ -91,6 +91,7 @@ namespace Assets.GamePlay.Scripts.Tower
         public override void Initialize()
         {
             initialized = true;
+            base.Initialize();
         }
         public void FixedUpdate()
         {

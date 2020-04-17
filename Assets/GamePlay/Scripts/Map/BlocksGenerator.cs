@@ -65,4 +65,5 @@ public class BlocksGenerator : MonoBehaviour
     {
         return GetGameObjectBlock(pos)?.GetComponent<Block>();
     }
+
 }

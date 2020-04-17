@@ -31,17 +31,24 @@ public class InputControl : MonoBehaviour
         EventSystem es = FindObjectOfType<EventSystem>();
         if (Input.GetMouseButtonDown(0))
         {
-            GameObject blockObj = BlocksGenerator.GetGameObjectBlock(camera.ScreenToWorldPoint(Input.mousePosition));
-            if (blockObj != null)
+            //was this click on ui or gane object
+            if (EventSystem.current.IsPointerOverGameObject())
             {
-                Block currentBlock = blockObj.GetComponent<Block>();
-                if (currentBlock != null)
-                {
-                    if (IsBuilding)
-                    {
-                        owner.builder.BuildTower(currentBlock);
-                    }
 
+            } else
+            {
+                GameObject blockObj = BlocksGenerator.GetGameObjectBlock(camera.ScreenToWorldPoint(Input.mousePosition));
+                if (blockObj != null)
+                {
+                    Block currentBlock = blockObj.GetComponent<Block>();
+                    if (currentBlock != null)
+                    {
+                        if (IsBuilding)
+                        {
+                            owner.builder.BuildBuildingOnBlock(currentBlock);
+                        }
+
+                    }
                 }
             }
         }
