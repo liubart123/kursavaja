@@ -49,7 +49,8 @@ public class Builder : MonoBehaviour
     public enum EBuilding
     {
         barrier,
-        rawTower
+        rawTower,
+        enemySpawner
     }
     public GameObject[] arrayOfBuildings;
 }

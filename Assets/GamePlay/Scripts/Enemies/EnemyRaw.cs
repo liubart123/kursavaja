@@ -23,12 +23,9 @@ namespace Assets.GamePlay.Scripts.Enemies
         }
         public override void Initialize()
         {
-            DirectionCreator = GetComponent<DirectionCreator>();
-            EnemyMovingTargetChooser = GetComponent<EnemyMovingTargetChooser>();
             rigidBody = GetComponent<Rigidbody2D>();
             base.Initialize();
 
-            ChooseTargetForMoving();
         }
     }
 }

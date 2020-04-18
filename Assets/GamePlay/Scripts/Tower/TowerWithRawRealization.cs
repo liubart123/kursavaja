@@ -45,20 +45,10 @@ namespace Assets.GamePlay.Scripts.Tower
         {
             base.Initialize();
             //tower's interfaces
-            owner = FindObjectOfType<Player.Player>();
-            TargetChooser = GetComponent<TargetChooser>();
-            AimTaker = GetComponent<AimTaker>();
-            TowerRotater = GetComponent<TowerRotater>();
-            Shooter = GetComponent<Shooter>();
-            Reloader = GetComponent<Reloader>();
-            BulletFactory = GetComponent<BulletFactory>();
-            classCollection = GetComponent<ClassCollection>();
 
             //effectivity
             Effectivity = 1;
 
-            classCollection.Initialize();
-            InitializeBulletFactory();
         }
     }
 }

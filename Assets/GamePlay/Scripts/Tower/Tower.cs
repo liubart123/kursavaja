@@ -12,6 +12,7 @@ using UnityEngine;
 using Assets.GamePlay.Scripts.Player;
 using Assets.GamePlay.Scripts.Tower.Interfaces.ClassesCollection;
 using Assets.GamePlay.Scripts.BulletEffects;
+using Assets.GamePlay.Scripts.Building.interfaces.HealthContorller;
 
 namespace Assets.GamePlay.Scripts.Tower
 {
@@ -28,8 +29,10 @@ namespace Assets.GamePlay.Scripts.Tower
         public TargetChooser TargetChooser{ get; protected set; }
         public virtual void ChooseTarget()
         {
-            //if (TargetChooser == null)
-            //    return;
+            if (CurrentTarget?.gameObject != null)
+            {
+                CurrentTarget.eventsWhenThisDie -= ChooseTargetAfterEnemyDeath;
+            }
             CurrentTarget = TargetChooser.ChooseTarget(
                 new TargetChooserParameters(
                     transform.eulerAngles.z,
@@ -37,9 +40,22 @@ namespace Assets.GamePlay.Scripts.Tower
             AimTaker.ResetAimTaker();
             if (CurrentTarget != null)
             {
-                CurrentTarget.eventsWhenThisDie += en => ChooseTarget();
+                CurrentTarget.eventsWhenThisDie += ChooseTargetAfterEnemyDeath;
             }
         }   //chose target among all possible enemies
+
+        private void ChooseTargetAfterEnemyDeath(Enemy en)
+        {
+            if (CurrentTarget == en)
+                ChooseTarget();
+        }
+        //пасля смерці тавэра цякучы таргет не будзе аднаўляць тагрет тафэру пасля смерці сябе)
+        private void MakeEnemyTakeNewTarget()
+        {
+            //Debug.Log(CurrentTarget.gameObject.name + " MakeEnemyTakeNewTarget");
+            if (CurrentTarget!=null)
+                CurrentTarget.eventsWhenThisDie -= ChooseTargetAfterEnemyDeath;
+        }
         public AimTaker AimTaker { get; protected set; }    //calculate direction for shooting
         public virtual void TakeAim()
         {
@@ -91,6 +107,24 @@ namespace Assets.GamePlay.Scripts.Tower
         public override void Initialize()
         {
             initialized = true;
+
+            healthController = GetComponent<HealthController>();
+            owner = FindObjectOfType<Player.Player>();
+            TargetChooser = GetComponent<TargetChooser>();
+            AimTaker = GetComponent<AimTaker>();
+            TowerRotater = GetComponent<TowerRotater>();
+            Shooter = GetComponent<Shooter>();
+            Reloader = GetComponent<Reloader>();
+            BulletFactory = GetComponent<BulletFactory>();
+            classCollection = GetComponent<ClassCollection>();
+
+
+            healthController.Initialize();
+            classCollection.Initialize();
+            InitializeBulletFactory();
+
+
+
             base.Initialize();
         }
         public void FixedUpdate()
@@ -100,6 +134,12 @@ namespace Assets.GamePlay.Scripts.Tower
                 Reload();
                 TakeAim();
             }
+        }
+
+        public override void Die()
+        {
+            base.Die();
+            MakeEnemyTakeNewTarget();
         }
     }
 }

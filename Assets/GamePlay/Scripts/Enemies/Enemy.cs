@@ -1,6 +1,7 @@
 ﻿using Assets.GamePlay.Scripts.BulletEffects;
 using Assets.GamePlay.Scripts.Damage;
 using Assets.GamePlay.Scripts.Enemies.Interfaces;
+using Assets.GamePlay.Scripts.Enemies.Interfaces.Damager;
 using Assets.GamePlay.Scripts.Enemies.Interfaces.DirectionCreator;
 using Assets.GamePlay.Scripts.Enemies.Interfaces.MovingTargetChooser;
 using Assets.GamePlay.Scripts.Enemies.Interfaces.PathFinder;
@@ -11,6 +12,7 @@ using System.Text;
 using System.Threading.Tasks;
 using UnityEngine;
 using static Assets.GamePlay.Scripts.Damage.DamageManager;
+using Assets.GamePlay.Scripts.Building;
 
 namespace Assets.GamePlay.Scripts.Enemies
 {
@@ -25,9 +27,29 @@ namespace Assets.GamePlay.Scripts.Enemies
         public EnemyMovingTargetChooser EnemyMovingTargetChooser { get; protected set; }
         public virtual void ChooseTargetForMoving()
         {
+            if (targetToMove != null)
+            {
+                //Debug.Log(this.gameObject.name + " removing event after death from " + targetToMove.gameObject.name);
+                targetToMove.OnDying -= ChooseTargetForMovingAfterTargetsDeath;
+            }
             targetToMove = EnemyMovingTargetChooser.ChooseTargetForMove(
                 new EnemyMovingTargetChooserParameters(GetPosition()));
             CreatePath();
+            if (targetToMove != null)
+            {
+                //Debug.Log(this.gameObject.name + " adding event after death from " + targetToMove.gameObject.name);
+                targetToMove.OnDying += ChooseTargetForMovingAfterTargetsDeath;
+            }
+        }
+        private void ChooseTargetForMovingAfterTargetsDeath(Building.Building b)
+        {
+            //Debug.Log("choosing new target for moving after target death");
+            if (targetToMove == b)
+            {
+                targetToMove.OnDying -= ChooseTargetForMovingAfterTargetsDeath;
+                targetToMove = null;
+                ChooseTargetForMoving();
+            }
         }
 
         //MOVING
@@ -50,6 +72,9 @@ namespace Assets.GamePlay.Scripts.Enemies
                 currentPath = pf.GetPath(
                     BlocksGenerator.GetBlock(GetPosition()),
                     targetToMove.GetBlock());
+            } else
+            {
+                currentPath = null;
             }
         }
         public virtual void Move()
@@ -156,15 +181,37 @@ namespace Assets.GamePlay.Scripts.Enemies
         {
         }
 
+
+        protected DamageMaker damageMaker;
+        //DOING DAMAGE
+        public void DoDamage(Building.Building building)
+        {
+            damageMaker.DoDamage(new DamageMakerPatameters(building));
+            Die();
+        }
+
         public virtual void Die()
         {
-            eventsWhenThisDie(this);
+            eventsWhenThisDie?.Invoke(this);
+            if (targetToMove != null && targetToMove.gameObject != null)
+            {
+                targetToMove.OnDying -= ChooseTargetForMovingAfterTargetsDeath;
+            }
             Destroy(gameObject);
         }
         public virtual void Initialize()
         {
+            //health
             SetChildsOfGameobjects();
             Health = maxHealth;
+
+            //interfaces
+            damageMaker = GetComponent<DamageMaker>();
+            DirectionCreator = GetComponent<DirectionCreator>();
+            EnemyMovingTargetChooser = GetComponent<EnemyMovingTargetChooser>();
+
+
+            ChooseTargetForMoving();
         }
     }
 }
