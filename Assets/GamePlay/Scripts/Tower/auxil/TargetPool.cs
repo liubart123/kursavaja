@@ -12,6 +12,7 @@ namespace Assets.GamePlay.Scripts.Tower.auxil
     {
         [SerializeField]
         protected Tower tower;
+        public float towerRange;
         public List<Enemy> TargetsInRange { get; protected set; }
         protected virtual void Start()
         {
@@ -34,6 +35,11 @@ namespace Assets.GamePlay.Scripts.Tower.auxil
                 TargetsInRange.Remove(enemy);
                 tower.ChooseTarget();
             }
+        }
+
+        public virtual void Initialize()
+        {
+            GetComponent<CircleCollider2D>().radius = towerRange;
         }
     }
 }

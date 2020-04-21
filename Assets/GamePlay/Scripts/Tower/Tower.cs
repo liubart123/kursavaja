@@ -13,6 +13,7 @@ using Assets.GamePlay.Scripts.Player;
 using Assets.GamePlay.Scripts.Tower.Interfaces.ClassesCollection;
 using Assets.GamePlay.Scripts.BulletEffects;
 using Assets.GamePlay.Scripts.Building.interfaces.HealthContorller;
+using Assets.GamePlay.Scripts.Tower.auxil;
 
 namespace Assets.GamePlay.Scripts.Tower
 {
@@ -25,12 +26,13 @@ namespace Assets.GamePlay.Scripts.Tower
         protected float effectivity;   //effectivity of effects
 
         //AIMING
+        public TargetPool targetPool;
         public Enemy CurrentTarget { get; protected set; }
         private Vector2 directionOfShooting;
         public TargetChooser TargetChooser{ get; protected set; }
         public virtual void ChooseTarget()
         {
-            if (CurrentTarget?.gameObject != null)
+            if (CurrentTarget != null && CurrentTarget?.gameObject != null)
             {
                 CurrentTarget.eventsWhenThisDie -= ChooseTargetAfterEnemyDeath;
             }
@@ -51,12 +53,6 @@ namespace Assets.GamePlay.Scripts.Tower
                 ChooseTarget();
         }
         //пасля смерці тавэра цякучы таргет не будзе аднаўляць тагрет тафэру пасля смерці сябе)
-        private void MakeEnemyTakeNewTarget()
-        {
-            //Debug.Log(CurrentTarget.gameObject.name + " MakeEnemyTakeNewTarget");
-            if (CurrentTarget!=null)
-                CurrentTarget.eventsWhenThisDie -= ChooseTargetAfterEnemyDeath;
-        }
         public AimTaker AimTaker { get; protected set; }    //calculate direction for shooting
         public virtual void TakeAim(bool getActualValue = false)
         {
@@ -119,6 +115,7 @@ namespace Assets.GamePlay.Scripts.Tower
         {
             initialized = true;
 
+            targetPool = transform.GetComponentInChildren<TargetPool>();
             healthController = GetComponent<HealthController>();
             owner = FindObjectOfType<Player.Player>();
             TargetChooser = GetComponent<TargetChooser>();
@@ -132,6 +129,8 @@ namespace Assets.GamePlay.Scripts.Tower
 
             healthController.Initialize();
             classCollection.Initialize();
+            targetPool.Initialize();
+            TargetChooser.Initialize();
             InitializeBulletFactory();
 
 
@@ -150,7 +149,6 @@ namespace Assets.GamePlay.Scripts.Tower
         public override void Die()
         {
             base.Die();
-            MakeEnemyTakeNewTarget();
             BulletFactory.Delete();
         }
     }

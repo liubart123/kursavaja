@@ -10,17 +10,7 @@ public class Builder : MonoBehaviour
     public Player owner;
     [SerializeField]
     protected EBuilding currentBuilding;
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
     public void SetBuilding(Building b)
     {
         currentBuilding = b.typeOfBuilding;

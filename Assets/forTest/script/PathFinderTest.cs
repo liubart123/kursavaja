@@ -48,22 +48,6 @@ namespace Assets.forTest.script
 
                 }
             }
-            if (Input.GetKey(KeyCode.Space))
-            {
-                //PathFinder pathFinder = new PathFinder();
-                //ClearPath();
-                //path = pathFinder.GetPath(start, finish);
-                //foreach(var bl in path)
-                //{
-                //    bl.transform.localScale = new Vector3(0.5f, 0.5f);
-                //}
-                //DrawBlocks();
-                var enemies = GameObject.FindObjectsOfType<Enemy>();
-                foreach (var en in enemies)
-                {
-                    en.ChooseTargetForMoving();
-                }
-            }
         }
         private void ClearPath()
         {

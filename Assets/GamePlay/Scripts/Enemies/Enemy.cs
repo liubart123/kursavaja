@@ -22,36 +22,6 @@ namespace Assets.GamePlay.Scripts.Enemies
 
         protected ICollection<Block> currentPath;
 
-        //CHOOSING TARGET
-        protected Building.Building targetToMove;   
-        public EnemyMovingTargetChooser EnemyMovingTargetChooser { get; protected set; }
-        public virtual void ChooseTargetForMoving()
-        {
-            if (targetToMove != null)
-            {
-                //Debug.Log(this.gameObject.name + " removing event after death from " + targetToMove.gameObject.name);
-                targetToMove.OnDying -= ChooseTargetForMovingAfterTargetsDeath;
-            }
-            targetToMove = EnemyMovingTargetChooser.ChooseTargetForMove(
-                new EnemyMovingTargetChooserParameters(GetPosition()));
-            CreatePath();
-            if (targetToMove != null)
-            {
-                //Debug.Log(this.gameObject.name + " adding event after death from " + targetToMove.gameObject.name);
-                targetToMove.OnDying += ChooseTargetForMovingAfterTargetsDeath;
-            }
-        }
-        private void ChooseTargetForMovingAfterTargetsDeath(Building.Building b)
-        {
-            //Debug.Log("choosing new target for moving after target death");
-            if (targetToMove == b)
-            {
-                targetToMove.OnDying -= ChooseTargetForMovingAfterTargetsDeath;
-                targetToMove = null;
-                ChooseTargetForMoving();
-            }
-        }
-
         //MOVING
         public float speed;
 
@@ -64,18 +34,11 @@ namespace Assets.GamePlay.Scripts.Enemies
                 new DirectionCreatorParameters(currentPath,
                 GetPosition()));
         }
+
+        public ICollection<Block> pathFromSpawner;
         protected virtual void CreatePath()
         {
-            if (targetToMove != null)
-            {
-                PathFinder pf = new PathFinder();
-                currentPath = pf.GetPath(
-                    BlocksGenerator.GetBlock(GetPosition()),
-                    targetToMove.GetBlock());
-            } else
-            {
-                currentPath = null;
-            }
+            currentPath = new List<Block>(pathFromSpawner);
         }
         public virtual void Move()
         {
@@ -193,11 +156,9 @@ namespace Assets.GamePlay.Scripts.Enemies
         public virtual void Die()
         {
             eventsWhenThisDie?.Invoke(this);
-            if (targetToMove != null && targetToMove.gameObject != null)
-            {
-                targetToMove.OnDying -= ChooseTargetForMovingAfterTargetsDeath;
-            }
-            Destroy(gameObject);
+            //Destroy(gameObject);
+            Destroy(this.gameObject, 1);
+            gameObject.SetActive(false);
         }
         public virtual void Initialize()
         {
@@ -208,10 +169,8 @@ namespace Assets.GamePlay.Scripts.Enemies
             //interfaces
             damageMaker = GetComponent<DamageMaker>();
             DirectionCreator = GetComponent<DirectionCreator>();
-            EnemyMovingTargetChooser = GetComponent<EnemyMovingTargetChooser>();
 
-
-            ChooseTargetForMoving();
+            CreatePath();
         }
     }
 }

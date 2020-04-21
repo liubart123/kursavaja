@@ -13,6 +13,7 @@ namespace Assets.GamePlay.Scripts.Tower.Interfaces.targetChooser
     {
         [SerializeField]
         TargetPool pool;
+        TowerRotater towerRotater;
 
         public override Enemy ChooseTarget(TargetChooserParameters args)
         {
@@ -24,15 +25,22 @@ namespace Assets.GamePlay.Scripts.Tower.Interfaces.targetChooser
                 Vector2 towerDirection = new Vector2(
                     Mathf.Cos(args.towerRotation),
                     Mathf.Sin(args.towerRotation));
-                float minAngle = Mathf.Infinity;
+                float minCost = Mathf.Infinity;
+                float currentCost;
                 Enemy res = null;
                 pool.TargetsInRange.ForEach(el =>
                 {
                     //Debug.Log("direction of shooting " + args.towerPosition + ". Current direction: " + towerDirection);
                     float tempAngle = Vector2.Angle(towerDirection, -args.towerPosition + (Vector2)el.GetPosition());
-                    if (tempAngle < minAngle)
+                    tempAngle /= Mathf.PI;
+
+                    float distance = Vector2.Distance(args.towerPosition, el.GetPosition());
+                    distance /= pool.towerRange;
+
+                    currentCost = tempAngle / towerRotater.rotatingSpeed + distance;
+                    if (currentCost < minCost)
                     {
-                        minAngle = tempAngle;
+                        minCost = currentCost;
                         res = el;
                     }
                 });
@@ -45,6 +53,12 @@ namespace Assets.GamePlay.Scripts.Tower.Interfaces.targetChooser
                 }
                 return res;
             }
+        }
+
+        public override void Initialize()
+        {
+            towerRotater = GetComponent<TowerRotater>();
+            base.Initialize();
         }
     }
 }
