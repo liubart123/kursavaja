@@ -15,17 +15,22 @@ namespace Assets.GamePlay.Scripts.TowerClasses
         {
             return towerClasess.First(el => t == el.GetType());
         }
+        public TowerClass GetTowerClass(int id)
+        {
+            return towerClasess.First(el => id == el.Id);
+        }
 
         private void Start()
         {
         }
+
         public void Initialize()
         {
             towerClasess = new List<TowerClass>();
-            towerClasess.Add(new TowerClassRaw1());
-            towerClasess.Add(new TowerClassRaw2());
-            towerClasess.Add(new TowerClassRaw3());
-            towerClasess.Add(new TowerClassRaw4());
+            towerClasess.Add(new TowerClassRaw1(1));
+            towerClasess.Add(new TowerClassRaw2(1));
+            towerClasess.Add(new TowerClassRaw3(1));
+            towerClasess.Add(new TowerClassRaw4(1));
         }
     }
 }

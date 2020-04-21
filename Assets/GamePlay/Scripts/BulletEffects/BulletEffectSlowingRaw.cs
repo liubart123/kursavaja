@@ -15,7 +15,7 @@ namespace Assets.GamePlay.Scripts.BulletEffects
 
         public override void AffectOnce(Enemy enemy)
         {
-            enemy.speed /= Intensity;
+            enemy.speed /= Effectivity;
         }
 
         public override BulletEffect CloneEffectWithOtherIntensity(float Intensity)
@@ -25,7 +25,8 @@ namespace Assets.GamePlay.Scripts.BulletEffects
 
         public override void RemoveEffect(Enemy enemy)
         {
-            enemy.speed *= Intensity;
+            enemy.speed *= Effectivity;
         }
+
     }
 }

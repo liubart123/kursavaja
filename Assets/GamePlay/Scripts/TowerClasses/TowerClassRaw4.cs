@@ -10,9 +10,9 @@ namespace Assets.GamePlay.Scripts.TowerClasses
 {
     public class TowerClassRaw4 : TowerClass
     {
-        public TowerClassRaw4()
+        public TowerClassRaw4(float effectivity) : base(effectivity)
         {
-            BulletEffects.Add(new BulletEffectPeriodicDamageRaw(2, EKindOfDamage.blue));
+            BulletEffects.Add(new BulletEffectPeriodicDamageRaw(2 * this.effectivity, EKindOfDamage.green));
             Id = 4;
         }
     }

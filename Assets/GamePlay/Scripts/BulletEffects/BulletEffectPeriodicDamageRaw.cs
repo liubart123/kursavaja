@@ -22,7 +22,7 @@ namespace Assets.GamePlay.Scripts.BulletEffects
         }
         public override void Affect(Enemy enemy)
         {
-            enemy.GetDamage(Intensity / 10, kindOfDamage);
+            enemy.GetDamage(Effectivity, kindOfDamage);
         }
 
         public override void RemoveEffect(Enemy enemy)
@@ -32,6 +32,13 @@ namespace Assets.GamePlay.Scripts.BulletEffects
         public override BulletEffect CloneEffectWithOtherIntensity(float Intensity)
         {
             return new BulletEffectPeriodicDamageRaw(Intensity, kindOfDamage);
+        }
+
+        public override bool Equals(object obj)
+        {
+            return obj is BulletEffectPeriodicDamageRaw raw &&
+                   base.Equals(obj) &&
+                   kindOfDamage == raw.kindOfDamage;
         }
     }
 }

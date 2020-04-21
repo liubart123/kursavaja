@@ -25,6 +25,7 @@ namespace Assets.GamePlay.Scripts.Tower.Interfaces
             this.tower = tower;
         }
 
+        public abstract void Delete();
 
         //TOWER_CLASSES
         protected ICollection<BulletEffect> effects;    //classes that are got from other towers

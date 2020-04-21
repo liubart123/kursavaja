@@ -8,7 +8,10 @@ namespace Assets.GamePlay.Scripts.Tower.Interfaces
     {
         //chose target for tower from enemies in range 
         public abstract Enemy ChooseTarget(TargetChooserParameters args);
-        
+        public virtual void Initialize()
+        {
+
+        }
     }
     public class TargetChooserParameters
     {
@@ -32,4 +35,5 @@ namespace Assets.GamePlay.Scripts.Tower.Interfaces
         //    this.towerRotation = towerRotation;
         //}
     }
+    
 }

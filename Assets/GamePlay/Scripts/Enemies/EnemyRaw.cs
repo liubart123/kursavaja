@@ -19,7 +19,7 @@ namespace Assets.GamePlay.Scripts.Enemies
         }
         protected override void Start()
         {
-            Initialize();
+            //Initialize();
         }
         public override void Initialize()
         {

@@ -47,7 +47,7 @@ namespace Assets.GamePlay.Scripts.Tower
             //tower's interfaces
 
             //effectivity
-            Effectivity = 1;
+            effectivity = 1;
 
         }
     }

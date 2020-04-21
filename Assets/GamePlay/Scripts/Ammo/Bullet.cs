@@ -25,7 +25,12 @@ namespace Assets.GamePlay.Scripts.Ammo
         {
             DoShot(target.transform.position - transform.position);
         }
-        public abstract void DoShot(Vector2 direction);
+        public virtual void DoShot(Vector2 direction)
+        {
+            directionOfMoving = direction;
+            directionOfMoving.Normalize();
+            Move();
+        }
         //move according to enemy position and speed
         public abstract void Move();
         public abstract void SetPosition(Vector2 pos);
@@ -38,9 +43,11 @@ namespace Assets.GamePlay.Scripts.Ammo
 
         public virtual void Delete()
         {
+            gameObject.SetActive(false);
             //Destroy(this.gameObject);
         }
 
+        public bool destroyOnCollision;
         private void OnTriggerEnter2D(Collider2D collision)
         {
             Enemy enemy = collision.gameObject.GetComponent<Enemy>();
@@ -51,6 +58,10 @@ namespace Assets.GamePlay.Scripts.Ammo
                     enemy.RecieveEffect(ef);
                 }
                 //ListOfEffects.ForEach(el => enemy.RecieveEffect(el));
+            }
+            if (destroyOnCollision)
+            {
+                Delete();
             }
         }
 

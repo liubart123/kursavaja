@@ -9,12 +9,12 @@ namespace Assets.GamePlay.Scripts.BulletEffects
 {
     public abstract class BulletEffect
     {
-        protected BulletEffect(float intensity)
+        protected BulletEffect(float effectivity)
         {
-            Intensity = intensity;
+            Effectivity = effectivity;
         }
 
-        public float Intensity { get; set; }
+        public float Effectivity { get; set; }
 
         //effect, that appears every fixedUpdate
         public virtual void Affect(Enemy enemy)
@@ -29,6 +29,11 @@ namespace Assets.GamePlay.Scripts.BulletEffects
         //removing effect from the enemy
         public abstract void RemoveEffect(Enemy enemy);
 
-        public abstract BulletEffect CloneEffectWithOtherIntensity(float Intensity);
+        public abstract BulletEffect CloneEffectWithOtherIntensity(float effectivity);
+
+        public override bool Equals(object obj)
+        {
+            return obj is BulletEffect;
+        }
     }
 }

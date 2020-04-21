@@ -90,11 +90,11 @@ namespace Assets.GamePlay.Scripts.Enemies
             BulletEffect sameEffect = listOfEffects.FirstOrDefault<BulletEffect>(
                 el =>
                 {
-                    return el.GetType() == effect.GetType();
+                    return el.Equals(effect);
                 });
             if (sameEffect != null)
             {
-                if (sameEffect.Intensity < effect.Intensity)
+                if (sameEffect.Effectivity < effect.Effectivity)
                 {
                     RemoveEffect(sameEffect);
                 } else

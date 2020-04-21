@@ -70,7 +70,7 @@ namespace Assets.GamePlay.Scripts.Other.ObjectPull
 
         public void ClearPool()
         {
-            //freeObjs.ForEach(el=>Des)
+            unFreeObjs.ForEach(el => el.Delete());
         }
     }
 }

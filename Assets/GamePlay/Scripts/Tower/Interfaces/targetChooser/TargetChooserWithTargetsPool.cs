@@ -28,7 +28,8 @@ namespace Assets.GamePlay.Scripts.Tower.Interfaces.targetChooser
                 Enemy res = null;
                 pool.TargetsInRange.ForEach(el =>
                 {
-                    float tempAngle = Vector2.Angle(towerDirection, args.towerPosition - (Vector2)el.GetPosition());
+                    //Debug.Log("direction of shooting " + args.towerPosition + ". Current direction: " + towerDirection);
+                    float tempAngle = Vector2.Angle(towerDirection, -args.towerPosition + (Vector2)el.GetPosition());
                     if (tempAngle < minAngle)
                     {
                         minAngle = tempAngle;

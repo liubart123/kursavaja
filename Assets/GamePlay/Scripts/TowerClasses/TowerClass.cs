@@ -12,9 +12,11 @@ namespace Assets.GamePlay.Scripts.TowerClasses
         public string Name { get; set; }
         public ICollection<BulletEffect> BulletEffects { get; protected set; } 
         public int Id { get; protected set; }
-        public TowerClass()
+        public float effectivity;
+        public TowerClass(float effectivity)
         {
             BulletEffects = new List<BulletEffect>();
+            this.effectivity = effectivity;
         }
     }
 }

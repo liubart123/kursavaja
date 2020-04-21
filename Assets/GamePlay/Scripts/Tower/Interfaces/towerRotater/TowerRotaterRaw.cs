@@ -9,8 +9,6 @@ namespace Assets.GamePlay.Scripts.Tower.Interfaces.towerRotater
 {
     class TowerRotaterRaw : TowerRotater
     {
-        public const int MINIMUM_DELTA_ANGLE = 2;
-        public float rotatingSpeed;
         public override bool RotateTower(TowerRotaterParameters args)
         {
             Vector2 target = args.direction;

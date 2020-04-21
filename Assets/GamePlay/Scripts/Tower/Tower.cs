@@ -21,7 +21,8 @@ namespace Assets.GamePlay.Scripts.Tower
 
         [SerializeField]
         protected Bullet bullet;   //type of bullet, that is used by this tower
-        public float Effectivity { get; protected set; }    //effectivity of effects
+        [SerializeField]
+        protected float effectivity;   //effectivity of effects
 
         //AIMING
         public Enemy CurrentTarget { get; protected set; }
@@ -35,7 +36,7 @@ namespace Assets.GamePlay.Scripts.Tower
             }
             CurrentTarget = TargetChooser.ChooseTarget(
                 new TargetChooserParameters(
-                    transform.eulerAngles.z,
+                    (transform.eulerAngles.z + 90)/180*Mathf.PI,
                     (Vector2)transform.position));
             AimTaker.ResetAimTaker();
             if (CurrentTarget != null)
@@ -57,13 +58,13 @@ namespace Assets.GamePlay.Scripts.Tower
                 CurrentTarget.eventsWhenThisDie -= ChooseTargetAfterEnemyDeath;
         }
         public AimTaker AimTaker { get; protected set; }    //calculate direction for shooting
-        public virtual void TakeAim()
+        public virtual void TakeAim(bool getActualValue = false)
         {
             if (CurrentTarget == null)
             {
                 return;
             }
-            directionOfShooting = AimTaker.TakeAim(new AimTakerParameters(CurrentTarget,transform.position, bullet.speedOfMoving));
+            directionOfShooting = AimTaker.TakeAim(new AimTakerParameters(CurrentTarget,transform.position, bullet.speedOfMoving, getActualValue));
             bool aimed = TowerRotater.RotateTower(new TowerRotaterParameters(directionOfShooting, transform));
             if (aimed && isLoaded)
             {
@@ -77,6 +78,7 @@ namespace Assets.GamePlay.Scripts.Tower
         public virtual void Shoot()
         {
             Bullet bullet = BulletFactory.CreateBullet(new BulletFactoryParameters(transform));
+            TakeAim(true);
             Shooter.Shoot(new ShooterParameters(CurrentTarget, bullet));
             ResetReloading();
         }
@@ -96,8 +98,17 @@ namespace Assets.GamePlay.Scripts.Tower
         public BulletFactory BulletFactory { get; protected set; }
         protected virtual void InitializeBulletFactory()
         {
+            InitializeBullet();
             ICollection<BulletEffect> effects = classCollection.GetAllEffects();
+            foreach(var ef in effects)
+            {
+                ef.Effectivity *= effectivity;
+            }
             BulletFactory.Initialize(bullet, effects, this);
+        }
+        protected virtual void InitializeBullet()
+        {
+            bullet = transform.GetComponentInChildren<Bullet>(true);
         }
 
         //TOWER_CLASSES
@@ -140,6 +151,7 @@ namespace Assets.GamePlay.Scripts.Tower
         {
             base.Die();
             MakeEnemyTakeNewTarget();
+            BulletFactory.Delete();
         }
     }
 }

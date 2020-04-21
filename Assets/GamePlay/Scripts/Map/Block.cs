@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using Assets.GamePlay.Scripts.Building;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -8,15 +9,6 @@ public class Block : MonoBehaviour
     public float passability;
     public Vector2Int indexes;
     // Start is called before the first frame update
-    void Start()
-    {
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-
-    }
     public bool HasBuilding()
     {
         if (transform.childCount == 0)
@@ -27,6 +19,10 @@ public class Block : MonoBehaviour
         {
             return true;
         }
+    }
+    public GameObject GetBuilding()
+    {
+        return transform.GetChild(0).gameObject;
     }
     public Vector2 GetPosition()
     {

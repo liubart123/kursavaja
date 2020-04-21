@@ -16,16 +16,15 @@ namespace Assets.GamePlay.Scripts.Ammo
         {
         }
         protected Enemy currentTarget;
-        public override void DoShot(Vector2 direction)
-        {
-            directionOfMoving = direction;
-            directionOfMoving.Normalize();
-            Move();
-        }
+        
         public override void Move ()
         {
             OnFly(transform.position, transform.rotation);
             GetComponent<Rigidbody2D>().velocity = (directionOfMoving * speedOfMoving);
+            float angleOfFlying = Mathf.Sign(Mathf.Asin(directionOfMoving.y)) * Mathf.Acos(directionOfMoving.x);
+            angleOfFlying *= 180 / Mathf.PI;
+            angleOfFlying -= 90;
+            transform.rotation = Quaternion.Euler(0, 0, angleOfFlying);
         }
         public override void SetPosition (Vector2 pos)
         {
@@ -43,13 +42,12 @@ namespace Assets.GamePlay.Scripts.Ammo
 
         public override void Delete()
         {
+            base.Delete();
             //GetComponent<BulletForPull>().ReturnToPull();
         }
         
 
 
-        [SerializeField]
-        private float intensity;
         //attaching to this bullet effects. For test
         private void CreateEffects()
         {

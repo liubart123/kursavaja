@@ -24,7 +24,7 @@ public class Builder : MonoBehaviour
     public void SetBuilding(Building b)
     {
         currentBuilding = b.typeOfBuilding;
-        owner.inputControl.IsBuilding = true;
+        owner.inputControl.typeOfAction = InputControl.ETypeOfInputAction.build;
     }
     public void BuildBuildingOnBlock(Block block)
     {
@@ -50,7 +50,9 @@ public class Builder : MonoBehaviour
     {
         barrier,
         rawTower,
-        enemySpawner
+        enemySpawner,
+        vintTower,
+        pushkaTower
     }
     public GameObject[] arrayOfBuildings;
 }

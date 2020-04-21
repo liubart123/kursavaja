@@ -20,12 +20,13 @@ namespace Assets.GamePlay.Scripts.Building {
         }
 
         //DYING
-        protected Action onDying;
         public event Action<Building> OnDying;
         public virtual void Die()
         {
+            GetBlock().passability = 1;
             Destroy(this.gameObject);
-            OnDying.Invoke(this);
+            
+            OnDying?.Invoke(this);
         }
         
 

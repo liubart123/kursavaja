@@ -24,27 +24,23 @@ namespace Assets.GamePlay.Scripts.TowerClasses.TowerCombinations
         protected void CreateStartCombinations()
         {
             Player.Player owner = GetComponent<Player.Player>();
-            TowerCombination tc = new TowerCombination
-            {
-                towerClasses = new List<TowerClass>
+            TowerCombination tc = new TowerCombination(1);
+            tc.towerClasses = new List<TowerClass>
                 {
                     owner.towerClassCollection.GetTowerClass(typeof(TowerClassRaw1)),
                     owner.towerClassCollection.GetTowerClass(typeof(TowerClassRaw3))
-                }
-            };
-            tc.BulletEffects.Add(new BulletEffectSlowingRaw(2));
+                };
+            tc.BulletEffects.Add(new BulletEffectImmidiateDamageRaw(1500,Damage.DamageManager.EKindOfDamage.red));
             possibleCombinations.Add(tc);
 
 
-            tc = new TowerCombination
-            {
-                towerClasses = new List<TowerClass>
+            tc = new TowerCombination(1);
+            tc.towerClasses = new List<TowerClass>
                 {
                     owner.towerClassCollection.GetTowerClass(typeof(TowerClassRaw1)),
                     owner.towerClassCollection.GetTowerClass(typeof(TowerClassRaw4))
-                }
-            };
-            tc.BulletEffects.Add(new BulletEffectSlowingRaw(2));
+                };
+            tc.BulletEffects.Add(new BulletEffectPeriodicDamageRaw(5,Damage.DamageManager.EKindOfDamage.red));
             possibleCombinations.Add(tc);
         }
         public void Initialize()

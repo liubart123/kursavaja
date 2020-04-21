@@ -39,6 +39,11 @@ namespace Assets.GamePlay.Scripts.Tower.Interfaces.bulletFactory
             return bul;
         }
 
+        public override void Delete()
+        {
+            pull.ClearPool();
+        }
+
         //private void Update()
         //{
         //    if (Input.GetKeyDown(KeyCode.Space))

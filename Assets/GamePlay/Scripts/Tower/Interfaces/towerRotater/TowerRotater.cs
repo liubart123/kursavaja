@@ -9,6 +9,8 @@ namespace Assets.GamePlay.Scripts.Tower.Interfaces
 {
     public abstract class TowerRotater : MonoBehaviour
     {
+        public int MINIMUM_DELTA_ANGLE = 2;
+        public float rotatingSpeed;
         public abstract bool RotateTower(TowerRotaterParameters args);
     }
     public class TowerRotaterParameters

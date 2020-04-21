@@ -11,6 +11,7 @@ namespace Assets.GamePlay.Scripts.Tower.Interfaces.ClassesCollection
 {
     public class ClassCollectionRaw : ClassCollection
     {
+        public int[] idOfTowerClasess;
         public override ICollection<TowerClass> GetAllClasses()
         {
             List<TowerClass> res = new List<TowerClass>();

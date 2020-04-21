@@ -1,4 +1,5 @@
-﻿using Assets.GamePlay.Scripts.Player;
+﻿using Assets.GamePlay.Scripts.Building;
+using Assets.GamePlay.Scripts.Player;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -9,7 +10,20 @@ public class InputControl : MonoBehaviour
     public Player owner;
     private CameraMove cameraMove;
     private Camera camera;
-    public bool IsBuilding { get; set; }
+    public ETypeOfInputAction typeOfAction;
+    public void SetTypeOfAction(string t)
+    {
+        if (t == ETypeOfInputAction.destroy.ToString())
+        {
+            typeOfAction = ETypeOfInputAction.destroy;
+        }
+    }
+    public enum ETypeOfInputAction
+    {
+        nothing,
+        build,
+        destroy
+    }
     // Start is called before the first frame update
     void Start()
     {
@@ -43,11 +57,12 @@ public class InputControl : MonoBehaviour
                     Block currentBlock = blockObj.GetComponent<Block>();
                     if (currentBlock != null)
                     {
-                        if (IsBuilding)
+                        if (typeOfAction == ETypeOfInputAction.build)
                         {
                             owner.builder.BuildBuildingOnBlock(currentBlock);
+                        } else if (typeOfAction == ETypeOfInputAction.destroy) {
+                            currentBlock.GetBuilding()?.GetComponent<Building>()?.Die();
                         }
-
                     }
                 }
             }

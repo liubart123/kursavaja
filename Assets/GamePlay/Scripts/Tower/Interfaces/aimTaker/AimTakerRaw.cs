@@ -51,7 +51,13 @@ namespace Assets.GamePlay.Scripts.Tower.Interfaces.aimRotater
 
             //target = tarPos;
 
+            float deffectAngle = UnityEngine.Random.Range(0, Mathf.PI * 2);
+            target.Normalize();
+            target += new Vector2(Mathf.Cos(deffectAngle), Mathf.Sin(deffectAngle)) * (1 - effectivity);
+
             lastTarget = target;
+
+
             return target;
         }
         public override void ResetAimTaker()
