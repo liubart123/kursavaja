@@ -32,32 +32,20 @@ namespace Assets.GamePlay.Scripts.Tower
         public TargetChooser TargetChooser{ get; protected set; }
         public virtual void ChooseTarget()
         {
-            if (CurrentTarget != null && CurrentTarget?.gameObject != null)
-            {
-                CurrentTarget.eventsWhenThisDie -= ChooseTargetAfterEnemyDeath;
-            }
             CurrentTarget = TargetChooser.ChooseTarget(
                 new TargetChooserParameters(
                     (transform.eulerAngles.z + 90)/180*Mathf.PI,
                     (Vector2)transform.position));
             AimTaker.ResetAimTaker();
-            if (CurrentTarget != null)
-            {
-                CurrentTarget.eventsWhenThisDie += ChooseTargetAfterEnemyDeath;
-            }
         }   //chose target among all possible enemies
 
-        private void ChooseTargetAfterEnemyDeath(Enemy en)
-        {
-            if (CurrentTarget == en)
-                ChooseTarget();
-        }
         //пасля смерці тавэра цякучы таргет не будзе аднаўляць тагрет тафэру пасля смерці сябе)
         public AimTaker AimTaker { get; protected set; }    //calculate direction for shooting
         public virtual void TakeAim(bool getActualValue = false)
         {
-            if (CurrentTarget == null)
+            if (CurrentTarget == null || CurrentTarget.gameObject.activeSelf == false)
             {
+                ChooseTarget();
                 return;
             }
             directionOfShooting = AimTaker.TakeAim(new AimTakerParameters(CurrentTarget,transform.position, bullet.speedOfMoving, getActualValue));
