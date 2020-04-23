@@ -40,5 +40,10 @@ namespace Assets.GamePlay.Scripts.BulletEffects
                    base.Equals(obj) &&
                    kindOfDamage == raw.kindOfDamage;
         }
+
+        public override BulletEffect Clone()
+        {
+            return new BulletEffectPeriodicDamageRaw(Effectivity, kindOfDamage);
+        }
     }
 }

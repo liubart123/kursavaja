@@ -39,10 +39,13 @@ public class Builder : MonoBehaviour
     public enum EBuilding
     {
         barrier,
-        rawTower,
         enemySpawner,
+        jungleTower,
         vintTower,
-        pushkaTower
+        oliveTower,
+        indigoTower,
+        mangoTower,
+        narcissTower
     }
     public GameObject[] arrayOfBuildings;
 }

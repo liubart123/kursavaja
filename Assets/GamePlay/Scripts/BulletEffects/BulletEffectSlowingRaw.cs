@@ -28,5 +28,9 @@ namespace Assets.GamePlay.Scripts.BulletEffects
             enemy.speed *= Effectivity;
         }
 
+        public override BulletEffect Clone()
+        {
+            return new BulletEffectSlowingRaw(Effectivity);
+        }
     }
 }

@@ -13,6 +13,7 @@ namespace Assets.GamePlay.Scripts.BulletEffects
         {
             Effectivity = effectivity;
         }
+        public abstract BulletEffect Clone();
 
         public float Effectivity { get; set; }
 

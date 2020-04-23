@@ -25,23 +25,23 @@ namespace Assets.GamePlay.Scripts.TowerClasses.TowerCombinations
         {
             Player.Player owner = GetComponent<Player.Player>();
             TowerCombination tc = new TowerCombination(1);
-            tc.towerClasses = new List<TowerClass>
-                {
-                    owner.towerClassCollection.GetTowerClass(typeof(TowerClassRaw1)),
-                    owner.towerClassCollection.GetTowerClass(typeof(TowerClassRaw3))
-                };
-            tc.BulletEffects.Add(new BulletEffectImmidiateDamageRaw(1500,Damage.DamageManager.EKindOfDamage.red));
-            possibleCombinations.Add(tc);
+            //tc.towerClasses = new List<TowerClass>
+            //    {
+            //        owner.towerClassCollection.GetTowerClass(typeof(DamageTowerClassBlue)),
+            //        owner.towerClassCollection.GetTowerClass(typeof(PeriodicTowerClassBlue))
+            //    };
+            //tc.BulletEffects.Add(new BulletEffectImmidiateDamageRaw(1500,Damage.DamageManager.EKindOfDamage.red));
+            //possibleCombinations.Add(tc);
 
 
-            tc = new TowerCombination(1);
-            tc.towerClasses = new List<TowerClass>
-                {
-                    owner.towerClassCollection.GetTowerClass(typeof(TowerClassRaw1)),
-                    owner.towerClassCollection.GetTowerClass(typeof(TowerClassRaw4))
-                };
-            tc.BulletEffects.Add(new BulletEffectPeriodicDamageRaw(5,Damage.DamageManager.EKindOfDamage.red));
-            possibleCombinations.Add(tc);
+            //tc = new TowerCombination(1);
+            //tc.towerClasses = new List<TowerClass>
+            //    {
+            //        owner.towerClassCollection.GetTowerClass(typeof(DamageTowerClassBlue)),
+            //        owner.towerClassCollection.GetTowerClass(typeof(TowerClassRaw4))
+            //    };
+            //tc.BulletEffects.Add(new BulletEffectPeriodicDamageRaw(5,Damage.DamageManager.EKindOfDamage.red));
+            //possibleCombinations.Add(tc);
         }
         public void Initialize()
         {

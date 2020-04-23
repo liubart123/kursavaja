@@ -56,10 +56,17 @@ namespace Assets.GamePlay.Scripts.Tower.Interfaces.ClassesCollection
         protected void SetClasses()
         {
             TowerClasseGenerator towerClassCollection = GetComponent<Tower>().owner.towerClassCollection;
-            defaultTowerClass = towerClassCollection.GetTowerClass(typeof(TowerClassRaw1));
-            ownTowerClass = towerClassCollection.GetTowerClass(typeof(TowerClassRaw3));
+            defaultTowerClass = towerClassCollection.GetTowerClass(idOfTowerClasess[0]);
+            //ownTowerClass = towerClassCollection.GetTowerClass(typeof(PeriodicTowerClassBlue));
             otherTowerClasses = new List<TowerClass>();
-            otherTowerClasses.Add(towerClassCollection.GetTowerClass(typeof(TowerClassRaw4)));
+
+            for (int i=1;i< idOfTowerClasess.Length; i++)
+            {
+                towerClassCollection.GetTowerClass(idOfTowerClasess[i]);
+
+            }
+
+            //otherTowerClasses.Add(towerClassCollection.GetTowerClass(typeof(TowerClassRaw4)));
             //otherTowerClasses.Add(towerClassCollection.GetTowerClass(typeof(TowerClassRaw2)));
             //otherTowerClasses.Add(towerClassCollection.GetTowerClass(typeof(TowerClassRaw3)));
             towerCombinations = new List<TowerCombination>();
@@ -79,14 +86,14 @@ namespace Assets.GamePlay.Scripts.Tower.Interfaces.ClassesCollection
             {
                 foreach (var eff in cl.BulletEffects)
                 {
-                    res.Add(eff);
+                    res.Add(eff.Clone());
                 }
             }
             foreach (var cl in towerCombinations)
             {
                 foreach (var eff in cl.BulletEffects)
                 {
-                    res.Add(eff);
+                    res.Add(eff.Clone());
                 }
             }
             return res;

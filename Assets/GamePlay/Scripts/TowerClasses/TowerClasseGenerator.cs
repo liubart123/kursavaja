@@ -27,10 +27,11 @@ namespace Assets.GamePlay.Scripts.TowerClasses
         public void Initialize()
         {
             towerClasess = new List<TowerClass>();
-            towerClasess.Add(new TowerClassRaw1(1));
-            towerClasess.Add(new TowerClassRaw2(1));
-            towerClasess.Add(new TowerClassRaw3(1));
-            towerClasess.Add(new TowerClassRaw4(1));
+            towerClasess.Add(new DamageTowerClassBlue(1));
+            towerClasess.Add(new DamageTowerClassRed(1));
+            towerClasess.Add(new DamageTowerClassGreen(1));
+            towerClasess.Add(new SlowingTowerClass(1));
+            towerClasess.Add(new PeriodicTowerClassBlue(1));
         }
     }
 }
