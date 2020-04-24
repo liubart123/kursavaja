@@ -6,12 +6,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using static Assets.GamePlay.Scripts.TowerClasses.TowerClasseGenerator;
 
 namespace Assets.GamePlay.Scripts.Tower.Interfaces.ClassesCollection
 {
     public class ClassCollectionRaw : ClassCollection
     {
-        public int[] idOfTowerClasess;
+        public ETowerClass[] idOfTowerClasess;
         public override ICollection<TowerClass> GetAllClasses()
         {
             List<TowerClass> res = new List<TowerClass>();

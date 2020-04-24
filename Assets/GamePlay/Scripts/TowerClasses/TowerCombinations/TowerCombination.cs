@@ -1,8 +1,10 @@
-﻿using System;
+﻿using Assets.GamePlay.Scripts.BulletEffects;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using static Assets.GamePlay.Scripts.TowerClasses.TowerClasseGenerator;
 
 namespace Assets.GamePlay.Scripts.TowerClasses.TowerCombinations
 {
@@ -11,7 +13,7 @@ namespace Assets.GamePlay.Scripts.TowerClasses.TowerCombinations
         //collection of classes that must be gathered to creaete combination
         public ICollection<TowerClass> towerClasses;
 
-        public TowerCombination(float effectivity) : base (effectivity)
+        public TowerCombination(params BulletEffect[] effects) : base (ETowerClass.combination,effects)
         {
         }
     }

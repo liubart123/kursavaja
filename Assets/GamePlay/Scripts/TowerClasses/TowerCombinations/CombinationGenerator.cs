@@ -24,7 +24,7 @@ namespace Assets.GamePlay.Scripts.TowerClasses.TowerCombinations
         protected void CreateStartCombinations()
         {
             Player.Player owner = GetComponent<Player.Player>();
-            TowerCombination tc = new TowerCombination(1);
+            //TowerCombination tc = new TowerCombination(1);
             //tc.towerClasses = new List<TowerClass>
             //    {
             //        owner.towerClassCollection.GetTowerClass(typeof(DamageTowerClassBlue)),
