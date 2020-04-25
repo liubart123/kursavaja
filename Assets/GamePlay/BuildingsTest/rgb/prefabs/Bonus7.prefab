@@ -9,8 +9,10 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5810983747398177072}
-  - component: {fileID: -1705637035524985559}
-  m_Layer: 0
+  - component: {fileID: 6062742115540418735}
+  - component: {fileID: 6925126091136998867}
+  - component: {fileID: -4308259870419192498}
+  m_Layer: 15
   m_Name: Bonus7
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -33,7 +35,7 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &-1705637035524985559
+--- !u!114 &6062742115540418735
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -42,9 +44,44 @@ MonoBehaviour:
   m_GameObject: {fileID: 1301228599647647078}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a4edafebad4e55044b2fd55d674ae1eb, type: 3}
+  m_Script: {fileID: 11500000, guid: 6c514f790075b4b408392080f5091829, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  owner: {fileID: 0}
+  typeOfBuilding: 10
+  bonusType: 1
+  healthController: {fileID: 0}
+--- !u!58 &6925126091136998867
+CircleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1301228599647647078}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  serializedVersion: 2
+  m_Radius: 0.5
+--- !u!114 &-4308259870419192498
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1301228599647647078}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9a444a080a063e64b88051f4684a776f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxHealth: 500000
+  health: 0
+  colorFOrFullHealth: {r: 0, g: 0, b: 0, a: 0}
 --- !u!1 &5652996199548177978
 GameObject:
   m_ObjectHideFlags: 0
@@ -56,7 +93,7 @@ GameObject:
   - component: {fileID: 4645139415869187487}
   - component: {fileID: 6519529646639334080}
   - component: {fileID: 314476250881168370}
-  m_Layer: 0
+  m_Layer: 15
   m_Name: building1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -151,7 +188,7 @@ GameObject:
   - component: {fileID: 8898415806054339737}
   - component: {fileID: 1836870348172243983}
   - component: {fileID: 7934155750699379224}
-  m_Layer: 0
+  m_Layer: 15
   m_Name: Point Light 2D
   m_TagString: Untagged
   m_Icon: {fileID: 0}

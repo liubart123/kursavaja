@@ -20,7 +20,7 @@ namespace Assets.GamePlay.Scripts.Enemies.Interfaces.MovingTargetChooser
 
             while (currentSearchingRange < deltaRange*100)
             {
-                int layerMask = 1 << 13;
+                int layerMask = 1 << 15;
                 //RaycastHit2D hit = Physics2D.CircleCast(arg.enemyPos, searchRange, 
                 //    new Vector2(Mathf.Cos(directionOfCircleCasting),
                 //                Mathf.Sin(directionOfCircleCasting))
@@ -29,7 +29,7 @@ namespace Assets.GamePlay.Scripts.Enemies.Interfaces.MovingTargetChooser
                 RaycastHit2D hit = Physics2D.CircleCast(arg.enemyPos, currentSearchingRange, Vector2.zero, Mathf.Infinity, layerMask);
                 if (hit.collider != null)
                 {
-                    result = hit.collider.GetComponent<Tower.Tower>();
+                    result = hit.collider.GetComponent<Building.Building>();
                     break;
                 }
                 currentSearchingRange += deltaRange;

@@ -8,8 +8,8 @@ using UnityEngine.EventSystems;
 public class InputControl : MonoBehaviour
 {
     public Player owner;
-    private CameraMove cameraMove;
-    private Camera camera;
+    protected CameraMove cameraMove;
+    protected new Camera camera;
     public ETypeOfInputAction typeOfAction;
     public void SetTypeOfAction(string t)
     {
@@ -25,14 +25,14 @@ public class InputControl : MonoBehaviour
         destroy
     }
     // Start is called before the first frame update
-    void Start()
+    public virtual void Start()
     {
         cameraMove = GetComponent<CameraMove>();
         camera = FindObjectOfType<Camera>();
     }
 
     // Update is called once per frame
-    void Update()
+    public virtual void Update()
     {
         //wasd
         if (Input.GetAxis("Horizontal")!=0 || Input.GetAxis("Vertical")!=0){

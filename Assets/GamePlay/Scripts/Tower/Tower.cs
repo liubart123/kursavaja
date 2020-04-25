@@ -104,7 +104,6 @@ namespace Assets.GamePlay.Scripts.Tower
             initialized = true;
 
             targetPool = transform.GetComponentInChildren<TargetPool>();
-            healthController = GetComponent<HealthController>();
             owner = FindObjectOfType<Player.Player>();
             TargetChooser = GetComponent<TargetChooser>();
             AimTaker = GetComponent<AimTaker>();
@@ -115,7 +114,6 @@ namespace Assets.GamePlay.Scripts.Tower
             classCollection = GetComponent<ClassCollection>();
 
 
-            healthController.Initialize();
             classCollection.Initialize();
             targetPool.Initialize();
             TargetChooser.Initialize();

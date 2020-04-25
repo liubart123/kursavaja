@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 720430980537786484}
   - component: {fileID: 2646301210883418153}
   - component: {fileID: 5298569971895825300}
-  m_Layer: 0
+  m_Layer: 15
   m_Name: building1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -104,8 +104,10 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5348624864863471364}
-  - component: {fileID: 7500239366780694499}
-  m_Layer: 0
+  - component: {fileID: 2710128374365217174}
+  - component: {fileID: -68397284257316877}
+  - component: {fileID: -2713464822369677895}
+  m_Layer: 15
   m_Name: building3(Clone)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -128,7 +130,7 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &7500239366780694499
+--- !u!114 &2710128374365217174
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -137,9 +139,44 @@ MonoBehaviour:
   m_GameObject: {fileID: 6759434840894764146}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2f27f3787dd3daa4fabf153c75d1db73, type: 3}
+  m_Script: {fileID: 11500000, guid: 6c514f790075b4b408392080f5091829, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  owner: {fileID: 0}
+  typeOfBuilding: 10
+  bonusType: 2
+  healthController: {fileID: 0}
+--- !u!58 &-68397284257316877
+CircleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6759434840894764146}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  serializedVersion: 2
+  m_Radius: 0.5
+--- !u!114 &-2713464822369677895
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6759434840894764146}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9a444a080a063e64b88051f4684a776f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxHealth: 500000
+  health: 0
+  colorFOrFullHealth: {r: 0, g: 0, b: 0, a: 0}
 --- !u!1 &7516738172750776713
 GameObject:
   m_ObjectHideFlags: 0
@@ -151,7 +188,7 @@ GameObject:
   - component: {fileID: 8864473919370385079}
   - component: {fileID: 2484581980529010274}
   - component: {fileID: 6925486858581756864}
-  m_Layer: 0
+  m_Layer: 15
   m_Name: Point Light 2D
   m_TagString: Untagged
   m_Icon: {fileID: 0}

@@ -13,6 +13,7 @@ using System.Threading.Tasks;
 using UnityEngine;
 using static Assets.GamePlay.Scripts.Damage.DamageManager;
 using Assets.GamePlay.Scripts.Building;
+using Assets.GamePlay.Scripts.Bonuses;
 
 namespace Assets.GamePlay.Scripts.Enemies
 {
@@ -147,7 +148,7 @@ namespace Assets.GamePlay.Scripts.Enemies
 
         protected DamageMaker damageMaker;
         //DOING DAMAGE
-        public void DoDamage(Building.Building building)
+        public void DoDamage(Bonus building)
         {
             damageMaker.DoDamage(new DamageMakerPatameters(building));
             Die();

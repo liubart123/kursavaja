@@ -12,24 +12,6 @@ namespace Assets.GamePlay.Scripts.Building {
         public Player.Player owner;
         public Builder.EBuilding typeOfBuilding;
 
-        //HEALTH
-        public HealthController healthController;
-        public void TakeDamage(float damage)
-        {
-            healthController.Health -= damage;
-        }
-
-        //DYING
-        public event Action<Building> OnDying;
-        public virtual void Die()
-        {
-            GetBlock().passability = 1;
-            Destroy(this.gameObject);
-            
-            OnDying?.Invoke(this);
-        }
-        
-
 
         // Start is called before the first frame update
         void Start()
@@ -53,9 +35,10 @@ namespace Assets.GamePlay.Scripts.Building {
             return transform.parent.gameObject.GetComponent<Block>();
         }
 
-        protected virtual void OnTriggerEnter2D(Collider2D collision)
+        public virtual void Die()
         {
-            collision.gameObject?.GetComponent<Enemy>()?.DoDamage(this);
+            GetBlock().passability = 1;
+            Destroy(this.gameObject);
         }
     }
 }

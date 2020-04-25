@@ -47,7 +47,8 @@ public class Builder : MonoBehaviour
         mangoTower,
         narcissTower,
         enemySpawnerPersian,
-        enemySpawnerCherry
+        enemySpawnerCherry,
+        bonus
     }
     public GameObject[] arrayOfBuildings;
 }
