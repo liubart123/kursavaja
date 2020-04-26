@@ -19,6 +19,10 @@ namespace Assets.GamePlay.Scripts.Other.ObjectPull
 
         public void Initialize(GameObject objectOfPull, int size)
         {
+            if (freeObjs.Count!=0 && unFreeObjs.Count != 0)
+            {
+                ClearPool();
+            }
             ParentForPullObjects = GameObject.FindGameObjectWithTag("BulletPull");
             this.objectOfPull = objectOfPull;
             this.size = size;

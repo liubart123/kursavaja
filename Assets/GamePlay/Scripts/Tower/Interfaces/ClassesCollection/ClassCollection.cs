@@ -16,13 +16,13 @@ namespace Assets.GamePlay.Scripts.Tower.Interfaces.ClassesCollection
         [SerializeField]
         protected int influenceRange;
         protected TowerClass defaultTowerClass; //special class for every kind of tower
-        protected TowerClass ownTowerClass;     //class that is got from bonuses
+        protected TowerClass bonusTowerClass;     //class that is got from bonuses
         protected ICollection<TowerClass> otherTowerClasses;    //classes that are got from other towers
         protected ICollection<TowerCombination> towerCombinations;    //generated combinations
 
         public abstract ICollection<TowerClass> GetAllClasses();
         public abstract ICollection<BulletEffect> GetAllEffects();
-        public abstract void OnOwnTowerClassChange();
+        public abstract void OnBonusTowerClassChange();
         public abstract void OnOtherTowersChange();
 
         public abstract void Initialize();

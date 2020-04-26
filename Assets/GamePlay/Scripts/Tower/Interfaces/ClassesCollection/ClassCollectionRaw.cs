@@ -12,14 +12,16 @@ namespace Assets.GamePlay.Scripts.Tower.Interfaces.ClassesCollection
 {
     public class ClassCollectionRaw : ClassCollection
     {
+        protected TowerClasseGenerator classGenerator;
         public ETowerClass[] idOfTowerClasess;
+        protected Tower tower;
         public override ICollection<TowerClass> GetAllClasses()
         {
             List<TowerClass> res = new List<TowerClass>();
             res.Add(defaultTowerClass);
-            if (ownTowerClass != null)
+            if (bonusTowerClass != null)
             {
-                res.Add(ownTowerClass);
+                res.Add(bonusTowerClass);
             }
             foreach(var cl in otherTowerClasses)
             {
@@ -40,9 +42,9 @@ namespace Assets.GamePlay.Scripts.Tower.Interfaces.ClassesCollection
         {
             throw new NotImplementedException();
         }
-        public override void OnOwnTowerClassChange()
+        public override void OnBonusTowerClassChange()
         {
-            throw new NotImplementedException();
+            bonusTowerClass = classGenerator.GetClassFromBonuses(tower.bonusConveyor);
         }
         //змяніць камбінацыі тавэра
         protected void ChangeCombinations()
@@ -77,6 +79,8 @@ namespace Assets.GamePlay.Scripts.Tower.Interfaces.ClassesCollection
         {
             SetClasses();
             ChangeCombinations();
+            classGenerator = FindObjectOfType<TowerClasseGenerator>();
+            tower = GetComponent<Tower>();
         }
 
         public override ICollection<BulletEffect> GetAllEffects()

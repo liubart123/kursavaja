@@ -33,4 +33,14 @@ public class Block : MonoBehaviour
         return transform.position;
     }
 
+    public Color defaultColor, lightedColor;
+    public void LightBlockUp()
+    {
+        GetComponent<SpriteRenderer>().color = lightedColor;
+    }
+    public void UnLightBlock()
+    {
+        GetComponent<SpriteRenderer>().color = defaultColor;
+    }
+
 }

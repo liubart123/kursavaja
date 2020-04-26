@@ -41,7 +41,7 @@ namespace Assets.GamePlay.Scripts.Tower.Interfaces.bulletFactory
 
         public override void Delete()
         {
-            pull.ClearPool();
+            pull?.ClearPool();
         }
 
         //private void Update()

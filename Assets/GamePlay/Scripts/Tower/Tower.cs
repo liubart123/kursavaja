@@ -83,7 +83,7 @@ namespace Assets.GamePlay.Scripts.Tower
             isLoaded = false;
         }
         public BulletFactory BulletFactory { get; protected set; }
-        protected virtual void InitializeBulletFactory()
+        public virtual void InitializeBulletFactory()
         {
             InitializeBullet();
             ICollection<BulletEffect> effects = classCollection.GetAllEffects();
@@ -103,6 +103,7 @@ namespace Assets.GamePlay.Scripts.Tower
         public BonusConveyor bonusConveyor;
 
         private bool initialized = false;
+
         public override void Initialize()
         {
             initialized = true;
@@ -122,12 +123,13 @@ namespace Assets.GamePlay.Scripts.Tower
             classCollection.Initialize();
             targetPool.Initialize();
             TargetChooser.Initialize();
-            InitializeBulletFactory();
+            //InitializeBulletFactory();
             bonusConveyor.Initialize();
 
 
 
             base.Initialize();
+            GetBlock().passability = Mathf.Infinity;
         }
         public void FixedUpdate()
         {
