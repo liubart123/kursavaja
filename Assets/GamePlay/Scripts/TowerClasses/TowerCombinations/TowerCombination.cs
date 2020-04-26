@@ -13,7 +13,7 @@ namespace Assets.GamePlay.Scripts.TowerClasses.TowerCombinations
         //collection of classes that must be gathered to creaete combination
         public ICollection<TowerClass> towerClasses;
 
-        public TowerCombination(params BulletEffect[] effects) : base (ETowerClass.combination,effects)
+        public TowerCombination(string name, params BulletEffect[] effects) : base (ETowerClass.combination, name, effects)
         {
         }
     }

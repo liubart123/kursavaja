@@ -30,13 +30,13 @@ namespace Assets.GamePlay.Scripts.TowerClasses
         {
             towerClasess = new List<TowerClass>();
             //default classes
-            towerClasess.Add(new TowerClass(ETowerClass.damageBlue,
+            towerClasess.Add(new TowerClass(ETowerClass.damageBlue, "α",
                 new BulletEffectImmidiateDamageRaw(damage, EKindOfDamage.blue)
                 ));
-            towerClasess.Add(new TowerClass(ETowerClass.damageGreen,
+            towerClasess.Add(new TowerClass(ETowerClass.damageGreen, "β",
                 new BulletEffectImmidiateDamageRaw(damage, EKindOfDamage.green)
                 ));
-            towerClasess.Add(new TowerClass(ETowerClass.damageRed,
+            towerClasess.Add(new TowerClass(ETowerClass.damageRed, "γ",
                 new BulletEffectImmidiateDamageRaw(damage, EKindOfDamage.red)
                 ));
         }

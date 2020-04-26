@@ -22,6 +22,10 @@ public class Block : MonoBehaviour
     }
     public GameObject GetBuilding()
     {
+        if (transform.childCount == 0)
+        {
+            return null;
+        }
         return transform.GetChild(0).gameObject;
     }
     public Vector2 GetPosition()

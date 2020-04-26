@@ -158,8 +158,8 @@ namespace Assets.GamePlay.Scripts.Enemies
         {
             eventsWhenThisDie?.Invoke(this);
             //Destroy(gameObject);
-            Destroy(this.gameObject, 3);
-            gameObject.SetActive(false);
+            Destroy(this.gameObject);
+            //gameObject.SetActive(false);
         }
         public virtual void Initialize()
         {

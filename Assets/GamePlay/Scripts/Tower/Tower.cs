@@ -14,6 +14,7 @@ using Assets.GamePlay.Scripts.Tower.Interfaces.ClassesCollection;
 using Assets.GamePlay.Scripts.BulletEffects;
 using Assets.GamePlay.Scripts.Building.interfaces.HealthContorller;
 using Assets.GamePlay.Scripts.Tower.auxil;
+using Assets.GamePlay.Scripts.Tower.Interfaces.BonusConveyor;
 
 namespace Assets.GamePlay.Scripts.Tower
 {
@@ -24,6 +25,8 @@ namespace Assets.GamePlay.Scripts.Tower
         protected Bullet bullet;   //type of bullet, that is used by this tower
         [SerializeField]
         protected float effectivity;   //effectivity of effects
+
+        public string towerName;
 
         //AIMING
         public TargetPool targetPool;
@@ -97,6 +100,7 @@ namespace Assets.GamePlay.Scripts.Tower
 
         //TOWER_CLASSES
         public ClassCollection classCollection;
+        public BonusConveyor bonusConveyor;
 
         private bool initialized = false;
         public override void Initialize()
@@ -112,12 +116,14 @@ namespace Assets.GamePlay.Scripts.Tower
             Reloader = GetComponent<Reloader>();
             BulletFactory = GetComponent<BulletFactory>();
             classCollection = GetComponent<ClassCollection>();
+            bonusConveyor = GetComponent<BonusConveyor>();
 
 
             classCollection.Initialize();
             targetPool.Initialize();
             TargetChooser.Initialize();
             InitializeBulletFactory();
+            bonusConveyor.Initialize();
 
 
 
@@ -134,8 +140,18 @@ namespace Assets.GamePlay.Scripts.Tower
 
         public override void Die()
         {
-            base.Die();
             BulletFactory.Delete();
+            base.Die();
+        }
+
+        //SHOWING TOWER INFORMATION ON MAP
+        public void ShowTowerInfo()
+        {
+            bonusConveyor.ShowConveyor();
+        }
+        public void HideTowerInfo()
+        {
+            bonusConveyor.HideConveyor();
         }
     }
 }

@@ -10,14 +10,15 @@ namespace Assets.GamePlay.Scripts.TowerClasses
 {
     public class TowerClass
     {
-        public string Name { get; set; }
+        public string TowerClassName { get; set; }
         public ETowerClass typeOfTower;
         public ICollection<BulletEffect> BulletEffects { get; protected set; } 
         public float effectivity = 1;
-        public TowerClass(ETowerClass t, params BulletEffect[] effects)
+        public TowerClass(ETowerClass t, string className, params BulletEffect[] effects)
         {
             BulletEffects = new List<BulletEffect>(effects);
             typeOfTower = t;
+            TowerClassName = className;
         }
     }
 }

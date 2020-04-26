@@ -35,6 +35,15 @@ public class Builder : MonoBehaviour
             res.GetComponent<Building>().Initialize();
         }
     }
+    public void ReBuildBuildingOnBlock(Block block, EBuilding typeOfBuilding)
+    {
+        for (int i = block.transform.childCount - 1; i >= 0; i--)
+        {
+            block.transform.GetChild(i).gameObject.GetComponent<Building>()?.Die();
+        }
+        block.transform.DetachChildren();
+        BuildBuildingOnBlock(block, arrayOfBuildings[(int)typeOfBuilding].GetComponent<Building>());
+    }
 
     public enum EBuilding
     {
