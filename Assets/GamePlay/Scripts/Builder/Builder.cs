@@ -14,7 +14,7 @@ public class Builder : MonoBehaviour
     public void SetBuilding(Building b)
     {
         currentBuilding = b.typeOfBuilding;
-        owner.inputControl.typeOfAction = InputControl.ETypeOfInputAction.build;
+        owner.inputControl.TypeOfAction = InputControl.ETypeOfInputAction.build;
     }
     public void BuildBuildingOnBlock(Block block)
     {

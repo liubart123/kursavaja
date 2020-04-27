@@ -24,7 +24,38 @@ namespace Assets.GamePlay.Scripts.Tower.Interfaces.ClassesCollection
         public abstract ICollection<BulletEffect> GetAllEffects();
         public abstract void OnBonusTowerClassChange();
         public abstract void OnOtherTowersChange();
+        public virtual void MakeInfluenceOnOtherTowers()
+        {
+            foreach(var t in GetTowersInRange())
+            {
+                t.GetComponent<Tower>().classCollection.OnOtherTowersChange();
+            }
+        }
 
         public abstract void Initialize();
+        public virtual ICollection<Block> GetBlocksInRange()
+        {
+            int layerMask = 1 << 10;
+            var hits = Physics2D.CircleCastAll(transform.position, influenceRange, Vector2.zero, 1, layerMask);
+            Block[] res = new Block[hits.Length];
+            for (int i = 0; i < hits.Length; i++)
+            {
+                res[i] = hits[i].collider.gameObject.GetComponent<Block>();
+            }
+            return res;
+        }
+        public virtual ICollection<Tower> GetTowersInRange()
+        {
+
+            int layerMask = 1 << 13;
+            var hits = Physics2D.CircleCastAll(transform.position, influenceRange, Vector2.zero, 1, layerMask);
+            Tower[] res = new Tower[hits.Length];
+            for (int i = 0; i < hits.Length; i++)
+            {
+                res[i] = hits[i].collider.gameObject.GetComponent<Tower>();
+            }
+            return res;
+        }
+        public virtual void Die() { MakeInfluenceOnOtherTowers(); }
     }
 }

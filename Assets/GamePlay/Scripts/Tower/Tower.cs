@@ -143,6 +143,7 @@ namespace Assets.GamePlay.Scripts.Tower
         public override void Die()
         {
             BulletFactory.Delete();
+            classCollection.Die();
             base.Die();
         }
 
@@ -150,10 +151,21 @@ namespace Assets.GamePlay.Scripts.Tower
         public void ShowTowerInfo()
         {
             bonusConveyor.ShowConveyor();
+
+            var blocks = classCollection.GetBlocksInRange();
+            foreach(var b in blocks)
+            {
+                b.LightBlockUp();
+            }
         }
         public void HideTowerInfo()
         {
             bonusConveyor.HideConveyor();
+            var blocks = classCollection.GetBlocksInRange();
+            foreach (var b in blocks)
+            {
+                b.UnLightBlock();
+            }
         }
     }
 }

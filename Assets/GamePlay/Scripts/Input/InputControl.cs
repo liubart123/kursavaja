@@ -5,25 +5,39 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.UI;
 
 public class InputControl : MonoBehaviour
 {
     public Player owner;
     protected CameraMove cameraMove;
     protected new Camera camera;
-    public ETypeOfInputAction typeOfAction;
+    protected ETypeOfInputAction typeOfAction;
+    public ETypeOfInputAction TypeOfAction
+    {
+        get
+        {
+            return typeOfAction;
+        }
+        set
+        {
+            typeOfAction = value;
+            textFieldForCurrentOperation.GetComponent<Text>().text = value.ToString();
+        }
+    }
     protected GuiControl guiControl;
+    public GameObject textFieldForCurrentOperation;
 
     protected Action revertState;
     public void SetTypeOfAction(string t)
     {
         if (t == ETypeOfInputAction.destroy.ToString())
         {
-            typeOfAction = ETypeOfInputAction.destroy;
+            TypeOfAction = ETypeOfInputAction.destroy;
         }
         else if (t == ETypeOfInputAction.creatingBonusConveyor.ToString())
         {
-            typeOfAction = ETypeOfInputAction.creatingBonusConveyor;
+            TypeOfAction = ETypeOfInputAction.creatingBonusConveyor;
         }
     }
     public enum ETypeOfInputAction
@@ -80,12 +94,12 @@ public class InputControl : MonoBehaviour
         //}
         if (Input.GetKeyDown(KeyCode.Escape))
         {
-            if (typeOfAction == ETypeOfInputAction.nothing)
+            if (TypeOfAction == ETypeOfInputAction.nothing)
             {
                 guiControl.OpenMenuPanel();
             } else
             {
-                typeOfAction = ETypeOfInputAction.nothing;
+                TypeOfAction = ETypeOfInputAction.nothing;
             }
         }
     }

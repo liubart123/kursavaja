@@ -40,11 +40,37 @@ namespace Assets.GamePlay.Scripts.Tower.Interfaces.ClassesCollection
         //
         public override void OnOtherTowersChange()
         {
-            throw new NotImplementedException();
+            var towers = GetTowersInRange();
+            otherTowerClasses.Clear();
+            foreach (var t in towers)
+            {
+                var classes = t.classCollection.GetAllClasses();
+                foreach (var cl in classes)
+                {
+                    if (!otherTowerClasses.Contains(cl))
+                    {
+                        otherTowerClasses.Add(cl);
+                    }
+                }
+            }
+            //if (otherTowerClasses == null)
+            //{
+            //    return;
+            //}
+
+            if (otherTowerClasses.Contains(defaultTowerClass))
+            {
+                otherTowerClasses.Remove(defaultTowerClass);
+            }
+            if (otherTowerClasses.Contains(bonusTowerClass))
+            {
+                otherTowerClasses.Remove(bonusTowerClass);
+            }
         }
         public override void OnBonusTowerClassChange()
         {
             bonusTowerClass = classGenerator.GetClassFromBonuses(tower.bonusConveyor);
+            MakeInfluenceOnOtherTowers();
         }
         //змяніць камбінацыі тавэра
         protected void ChangeCombinations()
@@ -78,6 +104,8 @@ namespace Assets.GamePlay.Scripts.Tower.Interfaces.ClassesCollection
         public override void Initialize()
         {
             SetClasses();
+            OnOtherTowersChange();
+            MakeInfluenceOnOtherTowers();
             ChangeCombinations();
             classGenerator = FindObjectOfType<TowerClasseGenerator>();
             tower = GetComponent<Tower>();
