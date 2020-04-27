@@ -15,8 +15,8 @@ namespace Assets.GamePlay.Scripts.Tower.Interfaces.ClassesCollection
         //TOWER_CLASSES
         [SerializeField]
         protected int influenceRange;
-        protected TowerClass defaultTowerClass; //special class for every kind of tower
-        protected TowerClass bonusTowerClass;     //class that is got from bonuses
+        public TowerClass defaultTowerClass; //special class for every kind of tower
+        public TowerClass bonusTowerClass;     //class that is got from bonuses
         protected ICollection<TowerClass> otherTowerClasses;    //classes that are got from other towers
         protected ICollection<TowerCombination> towerCombinations;    //generated combinations
 
@@ -24,9 +24,12 @@ namespace Assets.GamePlay.Scripts.Tower.Interfaces.ClassesCollection
         public abstract ICollection<BulletEffect> GetAllEffects();
         public abstract void OnBonusTowerClassChange();
         public abstract void OnOtherTowersChange();
-        public virtual void MakeInfluenceOnOtherTowers()
+        public virtual void MakeInfluenceOnOtherTowers(bool isThisTowerDead = false)
         {
-            foreach(var t in GetTowersInRange())
+            var towers = GetTowersInRange(isThisTowerDead);
+            if (towers == null)
+                return;
+            foreach (var t in towers)
             {
                 t.GetComponent<Tower>().classCollection.OnOtherTowersChange();
             }
@@ -44,18 +47,36 @@ namespace Assets.GamePlay.Scripts.Tower.Interfaces.ClassesCollection
             }
             return res;
         }
-        public virtual ICollection<Tower> GetTowersInRange()
+        public virtual ICollection<Tower> GetTowersInRange(bool isThisTowerDead = false)
         {
 
             int layerMask = 1 << 13;
             var hits = Physics2D.CircleCastAll(transform.position, influenceRange, Vector2.zero, 1, layerMask);
-            Tower[] res = new Tower[hits.Length];
-            for (int i = 0; i < hits.Length; i++)
+
+            Tower[] res;
+            if (isThisTowerDead)
             {
-                res[i] = hits[i].collider.gameObject.GetComponent<Tower>();
+                res = new Tower[hits.Length];
+                for (int i = 0; i < hits.Length; i++)
+                {
+                    res[i] = hits[i].collider.gameObject.GetComponent<Tower>();
+                }
+            }else
+            {
+                res = new Tower[hits.Length - 1];
+                bool wasThisTower = false;
+                for (int i = 0; i < hits.Length; i++)
+                {
+                    if (hits[i].collider.gameObject.GetComponent<Tower>().classCollection == this)
+                    {
+                        wasThisTower = true;
+                        continue;
+                    }
+                    res[i - (wasThisTower ? 1 : 0)] = hits[i].collider.gameObject.GetComponent<Tower>();
+                }
             }
             return res;
         }
-        public virtual void Die() { MakeInfluenceOnOtherTowers(); }
+        public virtual void Die() { MakeInfluenceOnOtherTowers(true); }
     }
 }

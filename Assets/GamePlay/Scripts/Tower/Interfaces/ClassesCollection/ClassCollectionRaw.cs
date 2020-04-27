@@ -42,9 +42,18 @@ namespace Assets.GamePlay.Scripts.Tower.Interfaces.ClassesCollection
         {
             var towers = GetTowersInRange();
             otherTowerClasses.Clear();
+            if (towers == null)
+                return;
             foreach (var t in towers)
             {
-                var classes = t.classCollection.GetAllClasses();
+                //if (t == this)
+                //    continue;
+                var classes = new List<TowerClass>();
+                classes.Add(t.classCollection.defaultTowerClass);
+                if (t.classCollection.bonusTowerClass != null)
+                {
+                    classes.Add(t.classCollection.bonusTowerClass);
+                }
                 foreach (var cl in classes)
                 {
                     if (!otherTowerClasses.Contains(cl))
@@ -53,10 +62,6 @@ namespace Assets.GamePlay.Scripts.Tower.Interfaces.ClassesCollection
                     }
                 }
             }
-            //if (otherTowerClasses == null)
-            //{
-            //    return;
-            //}
 
             if (otherTowerClasses.Contains(defaultTowerClass))
             {
@@ -82,6 +87,7 @@ namespace Assets.GamePlay.Scripts.Tower.Interfaces.ClassesCollection
         private void Start()
         {
         }
+        //set default tower class
         protected void SetClasses()
         {
             TowerClasseGenerator towerClassCollection = GetComponent<Tower>().owner.towerClassCollection;

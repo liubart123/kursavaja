@@ -143,8 +143,8 @@ namespace Assets.GamePlay.Scripts.Tower
         public override void Die()
         {
             BulletFactory.Delete();
-            classCollection.Die();
             base.Die();
+            classCollection.Die();
         }
 
         //SHOWING TOWER INFORMATION ON MAP
