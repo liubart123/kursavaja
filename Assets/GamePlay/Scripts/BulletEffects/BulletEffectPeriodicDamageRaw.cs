@@ -8,13 +8,16 @@ using static Assets.GamePlay.Scripts.Damage.DamageManager;
 
 namespace Assets.GamePlay.Scripts.BulletEffects
 {
+    [Serializable]
     public class BulletEffectPeriodicDamageRaw : BulletEffect
     {
 
-        EKindOfDamage kindOfDamage;
+        public EKindOfDamage kindOfDamage;
         public BulletEffectPeriodicDamageRaw(float intensity, EKindOfDamage kindOfDamage) : base(intensity)
         {
             this.kindOfDamage = kindOfDamage;
+            typeOfEffect = ETypeOfBulletEffect.periodicDamage;
+            effectName = "periodicDamage";
         }
 
         public override void AffectOnce(Enemy enemy)
@@ -22,7 +25,7 @@ namespace Assets.GamePlay.Scripts.BulletEffects
         }
         public override void Affect(Enemy enemy)
         {
-            enemy.GetDamage(Effectivity, kindOfDamage);
+            enemy.GetDamage(effectivity, kindOfDamage);
         }
 
         public override void RemoveEffect(Enemy enemy)
@@ -43,7 +46,7 @@ namespace Assets.GamePlay.Scripts.BulletEffects
 
         public override BulletEffect Clone()
         {
-            return new BulletEffectPeriodicDamageRaw(Effectivity, kindOfDamage);
+            return new BulletEffectPeriodicDamageRaw(effectivity, kindOfDamage);
         }
     }
 }

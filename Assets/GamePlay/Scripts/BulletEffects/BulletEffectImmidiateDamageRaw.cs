@@ -8,17 +8,20 @@ using static Assets.GamePlay.Scripts.Damage.DamageManager;
 
 namespace Assets.GamePlay.Scripts.BulletEffects
 {
+    [Serializable]
     class BulletEffectImmidiateDamageRaw : BulletEffect
     {
-        EKindOfDamage kindOfDamage;
+        public EKindOfDamage kindOfDamage;
         public BulletEffectImmidiateDamageRaw(float intensity, EKindOfDamage kindOfDamage) : base(intensity)
         {
             this.kindOfDamage = kindOfDamage;
+            typeOfEffect = ETypeOfBulletEffect.immidiateDamage;
+            effectName = "immidiateDamage";
         }
 
         public override void AffectOnce(Enemy enemy)
         {
-            enemy.GetDamage(Effectivity, kindOfDamage);
+            enemy.GetDamage(effectivity, kindOfDamage);
             enemy.RemoveEffect(this);
         }
 
@@ -38,7 +41,7 @@ namespace Assets.GamePlay.Scripts.BulletEffects
         }
         public override BulletEffect Clone()
         {
-            return new BulletEffectImmidiateDamageRaw(Effectivity, kindOfDamage);
+            return new BulletEffectImmidiateDamageRaw(effectivity, kindOfDamage);
         }
     }
 }

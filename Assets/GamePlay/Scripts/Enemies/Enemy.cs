@@ -58,7 +58,7 @@ namespace Assets.GamePlay.Scripts.Enemies
                 });
             if (sameEffect != null)
             {
-                if (sameEffect.Effectivity < effect.Effectivity)
+                if (sameEffect.effectivity < effect.effectivity)
                 {
                     RemoveEffect(sameEffect);
                 } else

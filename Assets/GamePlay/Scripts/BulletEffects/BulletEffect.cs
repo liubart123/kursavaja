@@ -7,15 +7,17 @@ using System.Threading.Tasks;
 
 namespace Assets.GamePlay.Scripts.BulletEffects
 {
+    [Serializable]
     public abstract class BulletEffect
     {
+        public string effectName;
         protected BulletEffect(float effectivity)
         {
-            Effectivity = effectivity;
+            this.effectivity = effectivity;
         }
         public abstract BulletEffect Clone();
 
-        public float Effectivity { get; set; }
+        public float effectivity;
 
         //effect, that appears every fixedUpdate
         public virtual void Affect(Enemy enemy)
@@ -35,6 +37,14 @@ namespace Assets.GamePlay.Scripts.BulletEffects
         public override bool Equals(object obj)
         {
             return obj is BulletEffect;
+        }
+
+        public ETypeOfBulletEffect typeOfEffect;
+        public enum ETypeOfBulletEffect
+        {
+            immidiateDamage,
+            periodicDamage,
+            slowing
         }
     }
 }

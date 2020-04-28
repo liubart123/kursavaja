@@ -1,4 +1,5 @@
-﻿using Assets.GamePlay.Scripts.TowerClasses;
+﻿using Assets.GamePlay.Scripts.GUI;
+using Assets.GamePlay.Scripts.TowerClasses;
 using Assets.GamePlay.Scripts.TowerClasses.TowerCombinations;
 using System;
 using System.Collections.Generic;
@@ -27,7 +28,7 @@ namespace Assets.GamePlay.Scripts.Player
             towerClassCollection.Initialize();
             possibleCombinations.Initialize();
             InitializeTowers();
-
+            FindObjectOfType<TowerCombinationPanel>().Initialize();
         }
         private void InitializeTowers()
         {

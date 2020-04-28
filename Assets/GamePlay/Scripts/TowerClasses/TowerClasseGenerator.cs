@@ -20,6 +20,10 @@ namespace Assets.GamePlay.Scripts.TowerClasses
         {
             return towerClasess.FirstOrDefault(el => towerClasse == el.typeOfTower);
         }
+        public TowerClass GetTowerClass(string towerClassName)
+        {
+            return towerClasess.FirstOrDefault(el => towerClassName == el.TowerClassName);
+        }
 
         private void Start()
         {
@@ -33,11 +37,11 @@ namespace Assets.GamePlay.Scripts.TowerClasses
         {
             towerClasess = new List<TowerClass>();
             //default classes
-            towerClasess.Add(new TowerClass(ETowerClass.damageBlue, "α",
-                new Color(0.4f, 0.4f, 0.8f),
-                new EBonusType[] { 
-                    EBonusType.blue,EBonusType.blue,EBonusType.blue },
-                new BulletEffectImmidiateDamageRaw(damage, EKindOfDamage.blue)
+            towerClasess.Add(new TowerClass(ETowerClass.damageRed, "α", 
+                new Color(0.8f, 0.4f, 0.4f),
+                new EBonusType[] {
+                    EBonusType.red,EBonusType.red,EBonusType.red },
+                new BulletEffectImmidiateDamageRaw(damage, EKindOfDamage.red)
                 ));
             towerClasess.Add(new TowerClass(ETowerClass.damageGreen, "β", 
                 new Color(0.4f,0.8f,0.4f),
@@ -45,17 +49,11 @@ namespace Assets.GamePlay.Scripts.TowerClasses
                     EBonusType.green,EBonusType.green,EBonusType.green },
                 new BulletEffectImmidiateDamageRaw(damage, EKindOfDamage.green)
                 ));
-            towerClasess.Add(new TowerClass(ETowerClass.damageRed, "γ",
-                new Color(0.8f, 0.4f, 0.4f),
+            towerClasess.Add(new TowerClass(ETowerClass.damageBlue, "γ",
+                new Color(0.4f, 0.4f, 0.8f),
                 new EBonusType[] {
-                    EBonusType.red,EBonusType.red,EBonusType.red },
-                new BulletEffectImmidiateDamageRaw(damage, EKindOfDamage.red)
-                ));
-            towerClasess.Add(new TowerClass(ETowerClass.slowerClass, "δ",
-                new Color(0.8f, 0.8f, 0.8f),
-                new EBonusType[] {
-                    EBonusType.red,EBonusType.green,EBonusType.blue },
-                new BulletEffectSlowingRaw(startSlow)
+                    EBonusType.blue,EBonusType.blue,EBonusType.blue },
+                new BulletEffectImmidiateDamageRaw(damage, EKindOfDamage.blue)
                 ));
 
             towerClasess.Add(new TowerClass(ETowerClass.damageRedGreen, "ε",
@@ -101,6 +99,12 @@ namespace Assets.GamePlay.Scripts.TowerClasses
                     EBonusType.blue,EBonusType.blue,EBonusType.green },
                 new BulletEffectImmidiateDamageRaw(damage, EKindOfDamage.blue),
                 new BulletEffectImmidiateDamageRaw(damage / 2, EKindOfDamage.green)
+                ));
+            towerClasess.Add(new TowerClass(ETowerClass.slowerClass, "δ",
+                new Color(0.8f, 0.8f, 0.8f),
+                new EBonusType[] {
+                    EBonusType.red,EBonusType.green,EBonusType.blue },
+                new BulletEffectSlowingRaw(startSlow)
                 ));
         }
 

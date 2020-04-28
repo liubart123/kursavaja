@@ -89,7 +89,7 @@ namespace Assets.GamePlay.Scripts.Tower
             ICollection<BulletEffect> effects = classCollection.GetAllEffects();
             foreach(var ef in effects)
             {
-                ef.Effectivity *= effectivity;
+                ef.effectivity *= effectivity;
             }
             BulletFactory.Initialize(bullet, effects, this);
         }
