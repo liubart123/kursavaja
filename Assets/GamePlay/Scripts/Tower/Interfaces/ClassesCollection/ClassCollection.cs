@@ -22,8 +22,14 @@ namespace Assets.GamePlay.Scripts.Tower.Interfaces.ClassesCollection
 
         public abstract ICollection<TowerClass> GetAllClasses();
         public abstract ICollection<BulletEffect> GetAllEffects();
-        public abstract void OnBonusTowerClassChange();
-        public abstract void OnOtherTowersChange();
+        public virtual ICollection<TowerCombination> GetAllCombinations()
+        {
+            return towerCombinations;
+        }
+        
+        public abstract void OnBonusTowerClassChange();//змяненне канвеера бонусаў
+        
+        public abstract void OnOtherTowersChange();//змяненне бліжайшых тавэроў
         public virtual void MakeInfluenceOnOtherTowers(bool isThisTowerDead = false)
         {
             var towers = GetTowersInRange(isThisTowerDead);

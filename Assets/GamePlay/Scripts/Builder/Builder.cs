@@ -1,5 +1,6 @@
 ﻿using Assets.GamePlay.Scripts.Building;
 using Assets.GamePlay.Scripts.Player;
+using Assets.GamePlay.Scripts.storageTower;
 using Assets.GamePlay.Scripts.Tower;
 using System.Collections;
 using System.Collections.Generic;
@@ -10,6 +11,7 @@ public class Builder : MonoBehaviour
     public Player owner;
     [SerializeField]
     protected EBuilding currentBuilding;
+    protected BuildingsStorage towerStorage;
 
     public void SetBuilding(Building b)
     {
@@ -33,6 +35,10 @@ public class Builder : MonoBehaviour
             res.transform.parent = block.transform;
             res.GetComponent<Building>().owner = owner;
             res.GetComponent<Building>().Initialize();
+            if (towerStorage != null)
+            {
+                towerStorage.WasteMoney(res.GetComponent<Building>().typeOfBuilding);
+            }
         }
     }
     public void ReBuildBuildingOnBlock(Block block, EBuilding typeOfBuilding)
@@ -45,6 +51,10 @@ public class Builder : MonoBehaviour
         BuildBuildingOnBlock(block, arrayOfBuildings[(int)typeOfBuilding].GetComponent<Building>());
     }
 
+    public void Initialize()
+    {
+        towerStorage = FindObjectOfType<BuildingsStorage>();
+    }
     public enum EBuilding
     {
         barrier,

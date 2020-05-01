@@ -13,9 +13,12 @@ public class BlocksGenerator : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        //GenerateBlocks();
+    }
+    public void Initialize()
+    {
         GenerateBlocks();
     }
-
     // Update is called once per frame
     void Update()
     {

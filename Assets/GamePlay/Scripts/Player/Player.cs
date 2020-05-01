@@ -1,6 +1,9 @@
 ﻿using Assets.GamePlay.Scripts.GUI;
+using Assets.GamePlay.Scripts.GUI.TowerCombinationPanel;
+using Assets.GamePlay.Scripts.storageTower;
 using Assets.GamePlay.Scripts.TowerClasses;
 using Assets.GamePlay.Scripts.TowerClasses.TowerCombinations;
+using Assets.scripts.serialization;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,19 +19,35 @@ namespace Assets.GamePlay.Scripts.Player
         public TowerClasseGenerator towerClassCollection;
         public InputControl inputControl;
         public Builder builder;
+        public BuildingsStorage towerStorage;
 
         public void Start()
         {
             possibleCombinations = FindObjectOfType<CombinationGenerator>();
             towerClassCollection = FindObjectOfType<TowerClasseGenerator>();
+
+            towerStorage = FindObjectOfType<BuildingsStorage>();
+            if (towerStorage != null)
+            {
+                towerStorage.Initialize();
+                towerStorage.owner = this;
+            }
+
             inputControl = FindObjectOfType<InputControl>();
             inputControl.owner = this;
+
+            FindObjectOfType<BlocksGenerator>()?.Initialize();
+
             builder = FindObjectOfType<Builder>();
             builder.owner = this;
+            builder.Initialize();
+
             towerClassCollection.Initialize();
             possibleCombinations.Initialize();
-            InitializeTowers();
+
             FindObjectOfType<TowerCombinationPanel>().Initialize();
+            FindObjectOfType<MapSerDeser>().LoadMapLevel();
+
         }
         private void InitializeTowers()
         {

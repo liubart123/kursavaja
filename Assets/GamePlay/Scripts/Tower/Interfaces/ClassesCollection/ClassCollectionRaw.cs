@@ -46,14 +46,14 @@ namespace Assets.GamePlay.Scripts.Tower.Interfaces.ClassesCollection
                 return;
             foreach (var t in towers)
             {
-                //if (t == this)
-                //    continue;
+                //клясы суседняга тавэра заносяцца сюды
                 var classes = new List<TowerClass>();
                 classes.Add(t.classCollection.defaultTowerClass);
                 if (t.classCollection.bonusTowerClass != null)
                 {
                     classes.Add(t.classCollection.bonusTowerClass);
                 }
+                //і надаюцца гэтаму тавэру, улічваючы паўторы
                 foreach (var cl in classes)
                 {
                     if (!otherTowerClasses.Contains(cl))
@@ -63,6 +63,8 @@ namespace Assets.GamePlay.Scripts.Tower.Interfaces.ClassesCollection
                 }
             }
 
+            //у клясах, атрыманых з суседніх тавэроў не можа быць
+            //дэфолтнага кляса гэтага тавэра, альбо кляса, атрыманага з канвеера
             if (otherTowerClasses.Contains(defaultTowerClass))
             {
                 otherTowerClasses.Remove(defaultTowerClass);
@@ -71,17 +73,20 @@ namespace Assets.GamePlay.Scripts.Tower.Interfaces.ClassesCollection
             {
                 otherTowerClasses.Remove(bonusTowerClass);
             }
+            ChangeCombinations();
         }
         public override void OnBonusTowerClassChange()
         {
             bonusTowerClass = classGenerator.GetClassFromBonuses(tower.bonusConveyor);
             MakeInfluenceOnOtherTowers();
+            ChangeCombinations();
         }
+
+        protected CombinationGenerator combinationGenerator;
         //змяніць камбінацыі тавэра
         protected void ChangeCombinations()
         {
-
-            CombinationGenerator combinationGenerator = GetComponent<Tower>().owner.possibleCombinations;
+            combinationGenerator = GetComponent<Tower>().owner.possibleCombinations;
             towerCombinations = combinationGenerator.ConvertClassesToCombination(GetAllClasses());
         }
         private void Start()
