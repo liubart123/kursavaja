@@ -2,6 +2,7 @@
 using Assets.GamePlay.Scripts.Player;
 using Assets.GamePlay.Scripts.storageTower;
 using Assets.GamePlay.Scripts.Tower;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -11,7 +12,6 @@ public class Builder : MonoBehaviour
     public Player owner;
     [SerializeField]
     protected EBuilding currentBuilding;
-    protected BuildingsStorage towerStorage;
 
     public void SetBuilding(Building b)
     {
@@ -26,7 +26,7 @@ public class Builder : MonoBehaviour
     {
         BuildBuildingOnBlock(block, arrayOfBuildings[(int)typeOfBuilding].GetComponent<Building>());
     }
-
+    public Action<Building> OnBuilding;
     public void BuildBuildingOnBlock(Block block, Building b)
     {
         if (!block.HasBuilding())
@@ -35,10 +35,11 @@ public class Builder : MonoBehaviour
             res.transform.parent = block.transform;
             res.GetComponent<Building>().owner = owner;
             res.GetComponent<Building>().Initialize();
-            if (towerStorage != null)
-            {
-                towerStorage.WasteMoney(res.GetComponent<Building>().typeOfBuilding);
-            }
+            OnBuilding?.Invoke(res.GetComponent<Building>());
+            //if (towerStorage != null)
+            //{
+            //    towerStorage.RemoveBuilding(res.GetComponent<Building>().typeOfBuilding);
+            //}
         }
     }
     public void ReBuildBuildingOnBlock(Block block, EBuilding typeOfBuilding)
@@ -53,7 +54,12 @@ public class Builder : MonoBehaviour
 
     public void Initialize()
     {
-        towerStorage = FindObjectOfType<BuildingsStorage>();
+        //towerStorage = FindObjectOfType<BuildingsStorage>();
+    }
+    public void Initialize(Player pl)
+    {
+        owner = pl;
+        Initialize();
     }
     public enum EBuilding
     {

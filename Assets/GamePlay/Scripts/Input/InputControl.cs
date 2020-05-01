@@ -53,9 +53,13 @@ public class InputControl : MonoBehaviour
     {
         cameraMove = GetComponent<CameraMove>();
         camera = FindObjectOfType<Camera>();
-        guiControl = FindObjectOfType<GuiControl>();
+        //guiControl = FindObjectOfType<GuiControl>();
     }
-
+    public virtual void Initialize(Player pl)
+    {
+        owner = pl;
+        guiControl = pl.guiControl;
+    }
     // Update is called once per frame
     public virtual void Update()
     {
@@ -96,7 +100,10 @@ public class InputControl : MonoBehaviour
         {
             if (TypeOfAction == ETypeOfInputAction.nothing)
             {
-                guiControl.OpenMenuPanel();
+                if (!guiControl.menuPanel.activeSelf)
+                    guiControl.OpenMenuPanel();
+                else
+                    guiControl.CloseAllPanels();
             } else
             {
                 TypeOfAction = ETypeOfInputAction.nothing;

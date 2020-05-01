@@ -17,17 +17,12 @@ namespace Assets.GamePlay.Scripts.Map
                 t.classCollection.OnBonusTowerClassChange();
             }
         }
-
-        public static Block GetNeighbourBLock(Block block)
+        Player.Player owner;
+        public void Initialize(Player.Player pl)
         {
-            return null;
-        }
-        public enum EDirection
-        {
-            left,
-            right,
-            up,
-            down
+            owner = pl;
+            if (pl.bonusesBuilder!=null)
+                pl.bonusesBuilder.OnBonusChanging += CalculateTowerClassesForAll;
         }
     }
 }

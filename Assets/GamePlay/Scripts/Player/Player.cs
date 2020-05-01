@@ -1,5 +1,8 @@
-﻿using Assets.GamePlay.Scripts.GUI;
+﻿using Assets.GamePlay.Scripts.Bonuses;
+using Assets.GamePlay.Scripts.GUI;
 using Assets.GamePlay.Scripts.GUI.TowerCombinationPanel;
+using Assets.GamePlay.Scripts.Map;
+using Assets.GamePlay.Scripts.Mechanic;
 using Assets.GamePlay.Scripts.storageTower;
 using Assets.GamePlay.Scripts.TowerClasses;
 using Assets.GamePlay.Scripts.TowerClasses.TowerCombinations;
@@ -19,35 +22,32 @@ namespace Assets.GamePlay.Scripts.Player
         public TowerClasseGenerator towerClassCollection;
         public InputControl inputControl;
         public Builder builder;
-        public BuildingsStorage towerStorage;
+        public BonusesBuilder bonusesBuilder;
+        public GuiControl guiControl;
+        public TowerCombinationPanel combinationPanel;
+        public TimeController timeController;
+        public BuildingsStorage buildingsStorage;
+        public MapSerDeser mapSerDeser;
+        public MapController mapController;
 
         public void Start()
         {
-            possibleCombinations = FindObjectOfType<CombinationGenerator>();
-            towerClassCollection = FindObjectOfType<TowerClasseGenerator>();
-
-            towerStorage = FindObjectOfType<BuildingsStorage>();
-            if (towerStorage != null)
-            {
-                towerStorage.Initialize();
-                towerStorage.owner = this;
-            }
-
-            inputControl = FindObjectOfType<InputControl>();
-            inputControl.owner = this;
+            towerClassCollection.Initialize(this);
+            possibleCombinations.Initialize(this);
+            inputControl.Initialize(this);
+            builder.Initialize(this);
+            bonusesBuilder?.Initialize(this);
+            guiControl.Initialize(this);
+            combinationPanel.Initialize(this);
+            //timeController.Initialize();
+            buildingsStorage?.Initialize(this);
+            mapSerDeser.Initialize(this);
+            mapController?.Initialize(this);
 
             FindObjectOfType<BlocksGenerator>()?.Initialize();
 
-            builder = FindObjectOfType<Builder>();
-            builder.owner = this;
-            builder.Initialize();
 
-            towerClassCollection.Initialize();
-            possibleCombinations.Initialize();
-
-            FindObjectOfType<TowerCombinationPanel>().Initialize();
-            FindObjectOfType<MapSerDeser>().LoadMapLevel();
-
+            mapSerDeser.LoadMapLevel();
         }
         private void InitializeTowers()
         {

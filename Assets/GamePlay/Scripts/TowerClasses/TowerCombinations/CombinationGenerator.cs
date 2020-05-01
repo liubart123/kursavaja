@@ -44,6 +44,11 @@ namespace Assets.GamePlay.Scripts.TowerClasses.TowerCombinations
         {
             CreateStartCombinations();
         }
+        public void Initialize(Player.Player pl)
+        {
+            owner = pl;
+            Initialize();
+        }
         public TowerCombination GetTowerCombination(ETypeOfCombination t)
         {
             return possibleCombinations.FirstOrDefault((el) => t == el.typeOfCombination);

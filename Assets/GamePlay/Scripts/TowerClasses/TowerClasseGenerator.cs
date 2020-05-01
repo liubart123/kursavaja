@@ -15,6 +15,7 @@ namespace Assets.GamePlay.Scripts.TowerClasses
     //кляс, для генерацыі клясаў веж адпаведна параметрам. У кожнага гульца свой экзэмлпяр
     public class TowerClasseGenerator : MonoBehaviour
     {
+        public Player.Player owner;
         public ICollection<TowerClass> towerClasess;
         public TowerClass GetTowerClass(ETowerClass towerClasse)
         {
@@ -106,6 +107,12 @@ namespace Assets.GamePlay.Scripts.TowerClasses
                     EBonusType.red,EBonusType.green,EBonusType.blue },
                 new BulletEffectSlowingRaw(startSlow)
                 ));
+        }
+
+        public void Initialize(Player.Player pl)
+        {
+            owner = pl;
+            Initialize();
         }
 
         public TowerClass GetClassFromBonuses(BonusConveyor bonusConveyor)
