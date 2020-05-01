@@ -57,11 +57,11 @@ namespace Assets.GamePlay.Scripts.Ammo
                 {
                     enemy.RecieveEffect(ef);
                 }
+                if (destroyOnCollision)
+                {
+                    Delete();
+                }
                 //ListOfEffects.ForEach(el => enemy.RecieveEffect(el));
-            }
-            if (destroyOnCollision)
-            {
-                Delete();
             }
         }
 

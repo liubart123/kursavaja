@@ -1,4 +1,5 @@
 ﻿using Assets.GamePlay.Scripts.Bonuses;
+using Assets.GamePlay.Scripts.Enemies;
 using Assets.GamePlay.Scripts.GUI;
 using Assets.GamePlay.Scripts.GUI.TowerCombinationPanel;
 using Assets.GamePlay.Scripts.Map;
@@ -46,6 +47,7 @@ namespace Assets.GamePlay.Scripts.Player
 
             FindObjectOfType<BlocksGenerator>()?.Initialize();
 
+            EnemiesPull.Initialize();
 
             mapSerDeser.LoadMapLevel();
         }

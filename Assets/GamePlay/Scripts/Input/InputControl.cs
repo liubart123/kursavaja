@@ -1,5 +1,6 @@
 ﻿using Assets.GamePlay.Scripts.Building;
 using Assets.GamePlay.Scripts.Player;
+using Assets.GamePlay.Scripts.Waves;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -59,6 +60,7 @@ public class InputControl : MonoBehaviour
     {
         owner = pl;
         guiControl = pl.guiControl;
+        WaveManager.OnWaveStart += OperationsCancelation;
     }
     // Update is called once per frame
     public virtual void Update()
@@ -98,16 +100,21 @@ public class InputControl : MonoBehaviour
         //}
         if (Input.GetKeyDown(KeyCode.Escape))
         {
-            if (TypeOfAction == ETypeOfInputAction.nothing)
-            {
-                if (!guiControl.menuPanel.activeSelf)
-                    guiControl.OpenMenuPanel();
-                else
-                    guiControl.CloseAllPanels();
-            } else
-            {
-                TypeOfAction = ETypeOfInputAction.nothing;
-            }
+            OperationsCancelation();
+        }
+    }
+    public void OperationsCancelation()
+    {
+        if (TypeOfAction == ETypeOfInputAction.nothing)
+        {
+            if (!guiControl.menuPanel.activeSelf)
+                guiControl.OpenMenuPanel();
+            else
+                guiControl.CloseAllPanels();
+        }
+        else
+        {
+            TypeOfAction = ETypeOfInputAction.nothing;
         }
     }
 }
