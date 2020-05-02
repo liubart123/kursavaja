@@ -18,7 +18,7 @@ public class BlocksGenerator : MonoBehaviour
     }
     public void Initialize()
     {
-        if (PhotonNetwork.IsConnected && !PhotonNetwork.IsMasterClient)
+        if (OnlineManager.CreateNetworkObjects)
             return;
         GenerateBlocks();
     }

@@ -49,7 +49,7 @@ namespace Assets.GamePlay.Scripts.Player
 
             EnemiesPull.Initialize();
 
-            //mapSerDeser.LoadMapLevel();
+            mapSerDeser.LoadMapLevel();
         }
         private void InitializeTowers()
         {
