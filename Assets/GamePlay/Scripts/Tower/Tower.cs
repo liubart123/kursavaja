@@ -103,7 +103,12 @@ namespace Assets.GamePlay.Scripts.Tower
         public BonusConveyor bonusConveyor;
 
         private bool initialized = false;
-
+        public virtual void ResetState()
+        {
+            InitializeBulletFactory();
+            AimTaker.ResetAimTaker();
+            transform.rotation = Quaternion.Euler(0, 0, 0);
+        }
         public override void Initialize()
         {
             initialized = true;

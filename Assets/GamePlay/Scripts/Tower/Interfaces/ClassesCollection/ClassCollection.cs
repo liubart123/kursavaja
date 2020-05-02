@@ -59,6 +59,16 @@ namespace Assets.GamePlay.Scripts.Tower.Interfaces.ClassesCollection
             int layerMask = 1 << 13;
             var hits = Physics2D.CircleCastAll(transform.position, influenceRange, Vector2.zero, 1, layerMask);
 
+            ICollection<Tower> res2 = new List<Tower>();
+            foreach (var hit in hits)
+            {
+                if (hit.collider != gameObject)
+                {
+                    res2.Add(hit.collider.GetComponent<Tower>());
+                }
+            }
+            return res2;
+
             Tower[] res;
             if (isThisTowerDead)
             {
@@ -67,7 +77,8 @@ namespace Assets.GamePlay.Scripts.Tower.Interfaces.ClassesCollection
                 {
                     res[i] = hits[i].collider.gameObject.GetComponent<Tower>();
                 }
-            }else
+            }
+            else
             {
                 res = new Tower[hits.Length - 1];
                 bool wasThisTower = false;

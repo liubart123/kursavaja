@@ -13,6 +13,10 @@ namespace Assets.GamePlay.Scripts.Enemies.Interfaces.MovingTargetChooser
         {
             return null;
         }
+        public virtual void Reset()
+        {
+
+        }
 
     }
     public class EnemyMovingTargetChooserParameters

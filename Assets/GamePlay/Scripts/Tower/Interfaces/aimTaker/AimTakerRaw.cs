@@ -53,8 +53,9 @@ namespace Assets.GamePlay.Scripts.Tower.Interfaces.aimRotater
 
             float deffectAngle = UnityEngine.Random.Range(0, Mathf.PI * 2);
             target.Normalize();
-            target += new Vector2(Mathf.Cos(deffectAngle), Mathf.Sin(deffectAngle)) * (1 - effectivity);
+            //target += new Vector2(Mathf.Cos(deffectAngle), Mathf.Sin(deffectAngle)) * (1 - effectivity);
 
+            target.Normalize();
             lastTarget = target;
 
 

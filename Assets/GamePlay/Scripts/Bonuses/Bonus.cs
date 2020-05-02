@@ -24,11 +24,14 @@ namespace Assets.GamePlay.Scripts.Bonuses
         public HealthController healthController;
         public void TakeDamage(float damage)
         {
-            healthController.Health -= damage;
+            healthController.Damage += damage;
         }
 
-        //DYING
-        public event Action<Building.Building> OnDying;
+        private void OnTriggerEnter(Collider other)
+        {
+            other.GetComponent<Enemy>().DoDamage(this);
+        }
+
 
         protected virtual void OnTriggerEnter2D(Collider2D collision)
         {
