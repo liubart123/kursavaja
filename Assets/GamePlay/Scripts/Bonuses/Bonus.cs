@@ -7,6 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using UnityEngine;
 using Assets.GamePlay.Scripts.Building;
+using Photon.Pun;
 
 namespace Assets.GamePlay.Scripts.Bonuses
 {
@@ -35,11 +36,15 @@ namespace Assets.GamePlay.Scripts.Bonuses
 
         protected virtual void OnTriggerEnter2D(Collider2D collision)
         {
+            if (OnlineManager.DoNotOwnCalculations)
+                return;
             collision.gameObject?.GetComponent<Enemy>()?.DoDamage(this);
         }
 
         public override void Initialize()
         {
+            if (OnlineManager.DoNotOwnCalculations)
+                return;
             base.Initialize();
             healthController = GetComponent<HealthController>();
             healthController.Initialize();

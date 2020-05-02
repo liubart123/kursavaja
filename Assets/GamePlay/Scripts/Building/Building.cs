@@ -1,6 +1,7 @@
 ﻿using Assets.GamePlay.Scripts.Bonuses;
 using Assets.GamePlay.Scripts.Building.interfaces.HealthContorller;
 using Assets.GamePlay.Scripts.Enemies;
+using Photon.Pun;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -37,8 +38,15 @@ namespace Assets.GamePlay.Scripts.Building {
 
         public virtual void Die()
         {
-            GetBlock().passability = 1;
-            Destroy(this.gameObject);
+            GetBlock().passability = 1; 
+            if (OnlineManager.CreateNetworkObjects)
+            {
+                PhotonNetwork.Destroy(this.gameObject);
+            }
+            else
+            {
+                Destroy(this.gameObject);
+            }
         }
     }
 }

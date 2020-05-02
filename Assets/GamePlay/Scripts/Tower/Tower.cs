@@ -15,6 +15,7 @@ using Assets.GamePlay.Scripts.BulletEffects;
 using Assets.GamePlay.Scripts.Building.interfaces.HealthContorller;
 using Assets.GamePlay.Scripts.Tower.auxil;
 using Assets.GamePlay.Scripts.Tower.Interfaces.BonusConveyor;
+using Photon.Pun;
 
 namespace Assets.GamePlay.Scripts.Tower
 {
@@ -111,6 +112,8 @@ namespace Assets.GamePlay.Scripts.Tower
         }
         public override void Initialize()
         {
+            if (OnlineManager.DoNotOwnCalculations)
+                return;
             initialized = true;
 
             targetPool = transform.GetComponentInChildren<TargetPool>();
@@ -138,6 +141,8 @@ namespace Assets.GamePlay.Scripts.Tower
         }
         public void FixedUpdate()
         {
+            if (OnlineManager.DoNotOwnCalculations)
+                return;
             if (initialized)
             {
                 Reload();

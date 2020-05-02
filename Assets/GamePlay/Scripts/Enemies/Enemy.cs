@@ -14,6 +14,7 @@ using UnityEngine;
 using static Assets.GamePlay.Scripts.Damage.DamageManager;
 using Assets.GamePlay.Scripts.Building;
 using Assets.GamePlay.Scripts.Bonuses;
+using Photon.Pun;
 
 namespace Assets.GamePlay.Scripts.Enemies
 {
@@ -137,6 +138,8 @@ namespace Assets.GamePlay.Scripts.Enemies
         }
         public virtual void FixedUpdate()
         {
+            if (OnlineManager.DoNotOwnCalculations)
+                return;
             CreateDirection();
             Move();
             listOfEffects.ForEach(el => el.Affect(this));
@@ -158,11 +161,19 @@ namespace Assets.GamePlay.Scripts.Enemies
         {
             eventsWhenThisDie?.Invoke(this);
             //Destroy(gameObject);
-            Destroy(this.gameObject);
+            if (OnlineManager.CreateNetworkObjects)
+            {
+                PhotonNetwork.Destroy(this.gameObject);
+            }else
+            {
+                Destroy(this.gameObject);
+            }
             //gameObject.SetActive(false);
         }
         public virtual void Initialize()
         {
+            if (OnlineManager.DoNotOwnCalculations)
+                return;
             //health
             SetChildsOfGameobjects();
             Health = maxHealth;

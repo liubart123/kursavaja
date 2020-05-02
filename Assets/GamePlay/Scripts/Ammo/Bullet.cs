@@ -2,6 +2,7 @@
 using Assets.GamePlay.Scripts.Enemies;
 using Assets.GamePlay.Scripts.Other.Cloneable;
 using Assets.GamePlay.Scripts.Other.TimeForLiving;
+using Photon.Pun;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -50,6 +51,8 @@ namespace Assets.GamePlay.Scripts.Ammo
         public bool destroyOnCollision;
         private void OnTriggerEnter2D(Collider2D collision)
         {
+            if (OnlineManager.DoNotOwnCalculations)
+                return;
             Enemy enemy = collision.gameObject.GetComponent<Enemy>();
             if (enemy != null)
             {

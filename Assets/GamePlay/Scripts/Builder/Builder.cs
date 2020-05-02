@@ -1,7 +1,9 @@
-﻿using Assets.GamePlay.Scripts.Building;
+﻿using Assets;
+using Assets.GamePlay.Scripts.Building;
 using Assets.GamePlay.Scripts.Player;
 using Assets.GamePlay.Scripts.storageTower;
 using Assets.GamePlay.Scripts.Tower;
+using Photon.Pun;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -31,7 +33,15 @@ public class Builder : MonoBehaviour
     {
         if (!block.HasBuilding())
         {
-            GameObject res = Instantiate(b.gameObject, block.transform.position, block.transform.rotation);
+            GameObject res;
+            if (OnlineManager.CreateNetworkObjects)
+            {
+                res = PhotonNetwork.Instantiate(b.gameObject.name, block.transform.position, block.transform.rotation);
+
+            }
+            else { 
+                res = Instantiate(b.gameObject, block.transform.position, block.transform.rotation);
+            }
             res.transform.parent = block.transform;
             res.GetComponent<Building>().owner = owner;
             res.GetComponent<Building>().Initialize();

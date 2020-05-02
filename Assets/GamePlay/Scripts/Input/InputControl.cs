@@ -62,6 +62,11 @@ public class InputControl : MonoBehaviour
         guiControl = pl.guiControl;
         WaveManager.OnWaveStart += OperationsCancelation;
     }
+    private void OnDestroy()
+    {
+        WaveManager.OnWaveStart -= OperationsCancelation;
+
+    }
     // Update is called once per frame
     public virtual void Update()
     {

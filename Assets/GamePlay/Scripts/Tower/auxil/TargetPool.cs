@@ -1,4 +1,5 @@
 ﻿using Assets.GamePlay.Scripts.Enemies;
+using Photon.Pun;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,10 +17,14 @@ namespace Assets.GamePlay.Scripts.Tower.auxil
         public List<Enemy> TargetsInRange { get; protected set; }
         protected virtual void Start()
         {
+            if (OnlineManager.DoNotOwnCalculations)
+                return;
             TargetsInRange = new List<Enemy>();
         }
         protected virtual void OnTriggerEnter2D(Collider2D collision)
         {
+            if (OnlineManager.DoNotOwnCalculations)
+                return;
             Enemy enemy = collision.GetComponent<Enemy>();
             if (enemy != null && !TargetsInRange.Contains(enemy))
             {
@@ -29,6 +34,8 @@ namespace Assets.GamePlay.Scripts.Tower.auxil
         }
         protected virtual void OnTriggerExit2D(Collider2D collision)
         {
+            if (OnlineManager.DoNotOwnCalculations)
+                return;
             Enemy enemy = collision.GetComponent<Enemy>();
             if (enemy != null && TargetsInRange.Contains(enemy))
             {

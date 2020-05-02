@@ -31,7 +31,7 @@ namespace Assets.GamePlay.Scripts.Player
         public MapSerDeser mapSerDeser;
         public MapController mapController;
 
-        public void Start()
+        public virtual void Start()
         {
             towerClassCollection.Initialize(this);
             possibleCombinations.Initialize(this);
@@ -49,7 +49,7 @@ namespace Assets.GamePlay.Scripts.Player
 
             EnemiesPull.Initialize();
 
-            mapSerDeser.LoadMapLevel();
+            //mapSerDeser.LoadMapLevel();
         }
         private void InitializeTowers()
         {
