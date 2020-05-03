@@ -12,7 +12,7 @@ namespace Assets.GamePlay.Scripts.Building {
     {
         public Player.Player owner;
         public Builder.EBuilding typeOfBuilding;
-
+        public bool requireBasement;
 
         // Start is called before the first frame update
         void Start()
@@ -27,7 +27,7 @@ namespace Assets.GamePlay.Scripts.Building {
         }
         public virtual void Initialize()
         {
-            GetBlock().passability = 1;
+            //GetBlock().passability = 1;
         }
 
         //атрымаць блёк на якім пабудаваны будынак
@@ -38,7 +38,7 @@ namespace Assets.GamePlay.Scripts.Building {
 
         public virtual void Die()
         {
-            GetBlock().passability = 1; 
+            //GetBlock().passability = 1; 
             if (OnlineManager.CreateNetworkObjects)
             {
                 PhotonNetwork.Destroy(this.gameObject);

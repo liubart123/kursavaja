@@ -137,7 +137,7 @@ namespace Assets.GamePlay.Scripts.Tower
 
 
             base.Initialize();
-            GetBlock().passability = Mathf.Infinity;
+            //GetBlock().passability = Mathf.Infinity;
         }
         public void FixedUpdate()
         {

@@ -6,8 +6,11 @@ using UnityEngine.EventSystems;
 
 public class Block : MonoBehaviour
 {
-    public float passability;
+    public float passability;   //рыяльнае значэнне
+    public float passabilityFromUnity;  //значэнне па змаўчанні
     public Vector2Int indexes;
+    public bool isBasement;
+    public ETypeOfBlock typeOfBlock;
     // Start is called before the first frame update
     public bool HasBuilding()
     {
@@ -42,5 +45,17 @@ public class Block : MonoBehaviour
     {
         GetComponent<SpriteRenderer>().color = defaultColor;
     }
+    public void ResetPassability()
+    {
+        passability = passabilityFromUnity;
+    }
+    public enum ETypeOfBlock { 
+        normal,
+        basement
+    }
 
+    private void Start()
+    {
+        ResetPassability();
+    }
 }

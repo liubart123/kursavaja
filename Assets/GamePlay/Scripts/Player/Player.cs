@@ -14,6 +14,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 namespace Assets.GamePlay.Scripts.Player
 {
@@ -30,6 +31,7 @@ namespace Assets.GamePlay.Scripts.Player
         public BuildingsStorage buildingsStorage;
         public MapSerDeser mapSerDeser;
         public MapController mapController;
+        public BlocksGenerator blocksGenerator;
 
         public virtual void Start()
         {
@@ -44,12 +46,17 @@ namespace Assets.GamePlay.Scripts.Player
             buildingsStorage?.Initialize(this);
             mapSerDeser.Initialize(this);
             mapController?.Initialize(this);
-
-            FindObjectOfType<BlocksGenerator>()?.Initialize();
+            blocksGenerator?.Initialize(this);
 
             EnemiesPull.Initialize();
 
-            mapSerDeser.LoadMapLevel();
+            if (SceneManager.GetActiveScene().name == "LevelRedactorScene")
+            {
+
+            } else
+            {
+                mapSerDeser.LoadMapLevel();
+            }
         }
         private void InitializeTowers()
         {

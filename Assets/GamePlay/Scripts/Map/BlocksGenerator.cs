@@ -1,23 +1,31 @@
-﻿using Photon.Pun;
+﻿using Assets;
+using Assets.GamePlay.Scripts.Player;
+using Photon.Pun;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
+using static Block;
 
 public class BlocksGenerator : MonoBehaviour
 {
     public static int width = 60;
     public static int height = 40;
     public GameObject blockObject;
+    public GameObject[] typesOfBlocks;
     public static GameObject[,] blockArray;
     public Vector2 startPos;
     public Vector2 BlockSize;
+    public ETypeOfBlock typeOfBlockToBuild;
+    private Player owner;
     // Start is called before the first frame update
     void Start()
     {
         //GenerateBlocks();
     }
-    public void Initialize()
+    public void Initialize(Player pl)
     {
+        owner = pl;
         if (OnlineManager.CreateNetworkObjects)
             return;
         GenerateBlocks();
@@ -41,6 +49,13 @@ public class BlocksGenerator : MonoBehaviour
                 blockArray[i, j].transform.SetParent(transform);
                 blockArray[i, j].GetComponent<Block>().indexes = new Vector2Int(i, j);
             }
+        }
+    }
+    public static void DeleteAllBlocks()
+    {
+        foreach(var b in blockArray)
+        {
+            Destroy(b);
         }
     }
     public static Block GetBlock(Vector2Int indexes)
@@ -72,4 +87,36 @@ public class BlocksGenerator : MonoBehaviour
         return GetGameObjectBlock(pos)?.GetComponent<Block>();
     }
 
+    public GameObject CreateBlock(ETypeOfBlock t)
+    {
+        GameObject res = Instantiate(typesOfBlocks[(int)t]);
+        res.transform.SetParent(transform);
+        return res;
+    }
+    public GameObject CreateBlock(ETypeOfBlock t, Vector2Int index)
+    {
+        if (blockArray[index.x, index.y] != null)
+        {
+            Destroy(blockArray[index.x, index.y]);
+        }
+        Vector2 pos = startPos;
+        pos.x += index.x * BlockSize.x;
+        pos.y += index.y * BlockSize.y;
+        GameObject res = CreateBlock(t);
+        res.transform.position = pos;
+        res.GetComponent<Block>().indexes = index;
+        blockArray[index.x,index.y] = res;
+        return res;
+    }
+
+    public void ChangeTypeOfBlock(Block bl)
+    {
+        Vector2Int indexes = bl.indexes;
+        CreateBlock(typeOfBlockToBuild, indexes);
+    }
+    public void SetTypeOfBlockToBuild(Dropdown dp)
+    {
+        owner.inputControl.TypeOfAction = InputControl.ETypeOfInputAction.changingBlockType;
+        typeOfBlockToBuild=(ETypeOfBlock)dp.value;
+    }
 }

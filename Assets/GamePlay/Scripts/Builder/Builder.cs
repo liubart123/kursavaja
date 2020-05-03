@@ -33,19 +33,23 @@ public class Builder : MonoBehaviour
     {
         if (!block.HasBuilding())
         {
-            GameObject res;
-            if (OnlineManager.CreateNetworkObjects)
+            if ((block.isBasement == true && b.requireBasement == true) ||
+                (block.isBasement == false && b.requireBasement == false))
             {
-                res = PhotonNetwork.Instantiate(b.gameObject.name, block.transform.position, block.transform.rotation);
-
+                GameObject res;
+                if (OnlineManager.CreateNetworkObjects)
+                {
+                    res = PhotonNetwork.Instantiate(b.gameObject.name, block.transform.position, block.transform.rotation);
+                }
+                else
+                {
+                    res = Instantiate(b.gameObject, block.transform.position, block.transform.rotation);
+                }
+                res.transform.parent = block.transform;
+                res.GetComponent<Building>().owner = owner;
+                res.GetComponent<Building>().Initialize();
+                OnBuilding?.Invoke(res.GetComponent<Building>());
             }
-            else { 
-                res = Instantiate(b.gameObject, block.transform.position, block.transform.rotation);
-            }
-            res.transform.parent = block.transform;
-            res.GetComponent<Building>().owner = owner;
-            res.GetComponent<Building>().Initialize();
-            OnBuilding?.Invoke(res.GetComponent<Building>());
             //if (towerStorage != null)
             //{
             //    towerStorage.RemoveBuilding(res.GetComponent<Building>().typeOfBuilding);

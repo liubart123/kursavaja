@@ -42,3 +42,12 @@ TagManager:
   - name: Default
     uniqueID: 0
     locked: 0
+  - name: blocks
+    uniqueID: 2909939803
+    locked: 0
+  - name: buildings
+    uniqueID: 546895203
+    locked: 0
+  - name: enemies
+    uniqueID: 119674455
+    locked: 0
