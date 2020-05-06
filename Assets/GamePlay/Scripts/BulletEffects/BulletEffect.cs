@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using UnityEngine;
 
 namespace Assets.GamePlay.Scripts.BulletEffects
 {
@@ -45,6 +46,37 @@ namespace Assets.GamePlay.Scripts.BulletEffects
             immidiateDamage,
             periodicDamage,
             slowing
+        }
+
+        public virtual string Serialize()
+        {
+            return JsonUtility.ToJson(new EffectToSer(typeOfEffect,this));
+        }
+        public static BulletEffect DeSerialize(string json)
+        {
+            var efSer = JsonUtility.FromJson<EffectToSer>(json);
+            //switch (efSer.typeOfEffect)
+            //{
+            //    case ETypeOfBulletEffect.immidiateDamage:
+
+            //}
+            return efSer.effect;
+        }
+        [Serializable]
+        protected class EffectToSer
+        {
+            public ETypeOfBulletEffect typeOfEffect;
+            [SerializeReference]
+            public BulletEffect effect;
+            public EffectToSer()
+            {
+
+            }
+            public EffectToSer(ETypeOfBulletEffect typeOfEffect, BulletEffect effect)
+            {
+                this.typeOfEffect = typeOfEffect;
+                this.effect = effect;
+            }
         }
     }
 }

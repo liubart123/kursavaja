@@ -14,11 +14,11 @@ namespace Assets.GamePlay.Scripts.Map
             var towers = FindObjectsOfType<Tower.Tower>();
             foreach(var t in towers)
             {
-                t.classCollection.OnBonusTowerClassChange();
+                t.classCollection.ChangeCombinations();
             }
         }
-        Player.Player owner;
-        public void Initialize(Player.Player pl)
+        Player.MyPlayer owner;
+        public void Initialize(Player.MyPlayer pl)
         {
             owner = pl;
             if (pl.bonusesBuilder!=null)

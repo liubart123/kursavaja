@@ -56,6 +56,6 @@ public class Block : MonoBehaviour
 
     private void Start()
     {
-        ResetPassability();
+        //ResetPassability();
     }
 }

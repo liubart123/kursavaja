@@ -9,12 +9,14 @@ using static Assets.GamePlay.Scripts.TowerClasses.TowerClasseGenerator;
 
 namespace Assets.GamePlay.Scripts.TowerClasses.TowerCombinations
 {
+    [Serializable]
     public class TowerCombination : TowerClass
     {
+        [SerializeReference]
         //collection of classes that must be gathered to creaete combination
-        public ICollection<TowerClass> towerClasses;
+        public ICollection<ETowerClass> towerClasses;
 
-        public TowerCombination(string name, ICollection<TowerClass> towerClasses, ETypeOfCombination type, Color color, params BulletEffect[] effects) : base (ETowerClass.combination, name, effects)
+        public TowerCombination(string name, ICollection<ETowerClass> towerClasses, ETypeOfCombination type, Color color, params BulletEffect[] effects) : base (ETowerClass.combination, name, effects)
         {
             this.towerClasses = towerClasses;
             this.TowerClassColor = color;

@@ -11,7 +11,7 @@ using UnityEngine;
 
 public class Builder : MonoBehaviour
 {
-    public Player owner;
+    public MyPlayer owner;
     [SerializeField]
     protected EBuilding currentBuilding;
 
@@ -29,24 +29,33 @@ public class Builder : MonoBehaviour
         BuildBuildingOnBlock(block, arrayOfBuildings[(int)typeOfBuilding].GetComponent<Building>());
     }
     public Action<Building> OnBuilding;
-    public void BuildBuildingOnBlock(Block block, Building b)
+    PhotonView photonView;
+    public void BuildBuildingOnBlock(Block block, Building b, bool isPlayerBuilding = true)
     {
+        if (OnlineManager.CreateNetworkObjects)
+        {
+            photonView.RPC("BuildBuildingOnBlockForOtherPlayers", RpcTarget.Others,
+                new Vector3(block.indexes.x, block.indexes.y, 0), b.typeOfBuilding);
+        }
         if (!block.HasBuilding())
         {
             if ((block.isBasement == true && b.requireBasement == true) ||
                 (block.isBasement == false && b.requireBasement == false))
             {
                 GameObject res;
-                if (OnlineManager.CreateNetworkObjects)
-                {
-                    res = PhotonNetwork.Instantiate(b.gameObject.name, block.transform.position, block.transform.rotation);
-                }
-                else
-                {
-                    res = Instantiate(b.gameObject, block.transform.position, block.transform.rotation);
-                }
+                //if (OnlineManager.CreateNetworkObjects)
+                //{
+                //    res = PhotonNetwork.Instantiate(b.gameObject.name, block.transform.position, block.transform.rotation);
+                //}
+                //else
+                //{
+                //    res = Instantiate(b.gameObject, block.transform.position, block.transform.rotation);
+                //}
+                res = Instantiate(b.gameObject, block.transform.position, block.transform.rotation);
+
                 res.transform.parent = block.transform;
-                res.GetComponent<Building>().owner = owner;
+                if (isPlayerBuilding)
+                    res.GetComponent<Building>().owner = owner;
                 res.GetComponent<Building>().Initialize();
                 OnBuilding?.Invoke(res.GetComponent<Building>());
             }
@@ -66,11 +75,19 @@ public class Builder : MonoBehaviour
         BuildBuildingOnBlock(block, arrayOfBuildings[(int)typeOfBuilding].GetComponent<Building>());
     }
 
+    [PunRPC]
+    public void BuildBuildingOnBlockForOtherPlayers(Vector3 block, int typeOfBuild)
+    {
+        Block b = BlocksGenerator.GetBlock(new Vector2Int((int)block.x, (int)block.y));
+        Building bd = arrayOfBuildings[typeOfBuild].GetComponent<Building>();
+        BuildBuildingOnBlock(b, bd, false);
+    }
     public void Initialize()
     {
+        photonView = GetComponent<PhotonView>();
         //towerStorage = FindObjectOfType<BuildingsStorage>();
     }
-    public void Initialize(Player pl)
+    public void Initialize(MyPlayer pl)
     {
         owner = pl;
         Initialize();

@@ -28,7 +28,9 @@ namespace Assets.GamePlay.Scripts.Tower.Interfaces.ClassesCollection
         }
         
         public abstract void OnBonusTowerClassChange();//змяненне канвеера бонусаў
-        
+        public abstract void ChangeCombinations();   //перагялдзець атрыманыя тавэрам камбінацыі
+
+
         public abstract void OnOtherTowersChange();//змяненне бліжайшых тавэроў
         public virtual void MakeInfluenceOnOtherTowers(bool isThisTowerDead = false)
         {

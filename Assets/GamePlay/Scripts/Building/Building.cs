@@ -10,7 +10,7 @@ using UnityEngine;
 namespace Assets.GamePlay.Scripts.Building {
     public abstract class Building : MonoBehaviour
     {
-        public Player.Player owner;
+        public Player.MyPlayer owner;
         public Builder.EBuilding typeOfBuilding;
         public bool requireBasement;
 

@@ -17,17 +17,17 @@ public class BlocksGenerator : MonoBehaviour
     public Vector2 startPos;
     public Vector2 BlockSize;
     public ETypeOfBlock typeOfBlockToBuild;
-    private Player owner;
+    private MyPlayer owner;
     // Start is called before the first frame update
     void Start()
     {
         //GenerateBlocks();
     }
-    public void Initialize(Player pl)
+    public void Initialize(MyPlayer pl)
     {
         owner = pl;
-        if (OnlineManager.CreateNetworkObjects)
-            return;
+        //if (OnlineManager.CreateNetworkObjects)
+        //    return;
         GenerateBlocks();
     }
     // Update is called once per frame

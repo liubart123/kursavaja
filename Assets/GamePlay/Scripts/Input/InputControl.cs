@@ -10,7 +10,7 @@ using UnityEngine.UI;
 
 public class InputControl : MonoBehaviour
 {
-    public Player owner;
+    public MyPlayer owner;
     protected CameraMove cameraMove;
     protected new Camera camera;
     protected ETypeOfInputAction typeOfAction;
@@ -57,7 +57,7 @@ public class InputControl : MonoBehaviour
         camera = FindObjectOfType<Camera>();
         //guiControl = FindObjectOfType<GuiControl>();
     }
-    public virtual void Initialize(Player pl)
+    public virtual void Initialize(MyPlayer pl)
     {
         owner = pl;
         guiControl = pl.guiControl;

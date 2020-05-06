@@ -117,7 +117,7 @@ namespace Assets.GamePlay.Scripts.Tower
             initialized = true;
 
             targetPool = transform.GetComponentInChildren<TargetPool>();
-            owner = FindObjectOfType<Player.Player>();
+            owner = FindObjectOfType<Player.MyPlayer>();
             TargetChooser = GetComponent<TargetChooser>();
             AimTaker = GetComponent<AimTaker>();
             TowerRotater = GetComponent<TowerRotater>();
@@ -177,5 +177,15 @@ namespace Assets.GamePlay.Scripts.Tower
                 b.UnLightBlock();
             }
         }
+        //public void Update()
+        //{
+        //    if (Input.GetKeyDown(KeyCode.Space))
+        //    {
+        //        //string json = JsonUtility.ToJson(classCollection.defaultTowerClass.BulletEffects.ElementAt(0));
+        //        //var ef = JsonUtility.FromJson<BulletEffectImmidiateDamageRaw>(json);
+        //        string json = classCollection.defaultTowerClass.BulletEffects.ElementAt(0).Serialize();
+        //        var asd = BulletEffect.DeSerialize(json);
+        //    }
+        //}
     }
 }

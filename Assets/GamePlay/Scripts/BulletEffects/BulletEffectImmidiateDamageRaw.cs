@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using UnityEngine;
 using static Assets.GamePlay.Scripts.Damage.DamageManager;
 
 namespace Assets.GamePlay.Scripts.BulletEffects
@@ -42,6 +43,10 @@ namespace Assets.GamePlay.Scripts.BulletEffects
         public override BulletEffect Clone()
         {
             return new BulletEffectImmidiateDamageRaw(effectivity, kindOfDamage);
+        }
+        public override string Serialize()
+        {
+            return JsonUtility.ToJson(new EffectToSer(typeOfEffect, this));
         }
     }
 }

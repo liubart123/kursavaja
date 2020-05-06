@@ -84,7 +84,7 @@ namespace Assets.GamePlay.Scripts.Tower.Interfaces.ClassesCollection
 
         protected CombinationGenerator combinationGenerator;
         //змяніць камбінацыі тавэра
-        protected void ChangeCombinations()
+        public override void ChangeCombinations()
         {
             combinationGenerator = GetComponent<Tower>().owner.possibleCombinations;
             towerCombinations = combinationGenerator.ConvertClassesToCombination(GetAllClasses());
@@ -95,16 +95,15 @@ namespace Assets.GamePlay.Scripts.Tower.Interfaces.ClassesCollection
         //set default tower class
         protected void SetClasses()
         {
-            TowerClasseGenerator towerClassCollection = GetComponent<Tower>().owner.towerClassCollection;
-            defaultTowerClass = towerClassCollection.GetTowerClass(idOfTowerClasess[0]);
+            defaultTowerClass = classGenerator.GetTowerClass(idOfTowerClasess[0]);
             //ownTowerClass = towerClassCollection.GetTowerClass(typeof(PeriodicTowerClassBlue));
             otherTowerClasses = new List<TowerClass>();
 
-            for (int i=1;i< idOfTowerClasess.Length; i++)
-            {
-                towerClassCollection.GetTowerClass(idOfTowerClasess[i]);
+            //for (int i=1;i< idOfTowerClasess.Length; i++)
+            //{
+            //    classGenerator.GetTowerClass(idOfTowerClasess[i]);
 
-            }
+            //}
 
             //otherTowerClasses.Add(towerClassCollection.GetTowerClass(typeof(TowerClassRaw4)));
             //otherTowerClasses.Add(towerClassCollection.GetTowerClass(typeof(TowerClassRaw2)));
@@ -114,12 +113,12 @@ namespace Assets.GamePlay.Scripts.Tower.Interfaces.ClassesCollection
 
         public override void Initialize()
         {
+            tower = GetComponent<Tower>();
+            classGenerator = tower.owner.towerClassCollection;
             SetClasses();
             OnOtherTowersChange();
             MakeInfluenceOnOtherTowers();
             ChangeCombinations();
-            classGenerator = FindObjectOfType<TowerClasseGenerator>();
-            tower = GetComponent<Tower>();
         }
 
         public override ICollection<BulletEffect> GetAllEffects()
@@ -128,14 +127,14 @@ namespace Assets.GamePlay.Scripts.Tower.Interfaces.ClassesCollection
             var classes = GetAllClasses();
             foreach (var cl in classes)
             {
-                foreach (var eff in cl.BulletEffects)
+                foreach (var eff in cl.bulletEffects)
                 {
                     res.Add(eff.Clone());
                 }
             }
             foreach (var cl in towerCombinations)
             {
-                foreach (var eff in cl.BulletEffects)
+                foreach (var eff in cl.bulletEffects)
                 {
                     res.Add(eff.Clone());
                 }

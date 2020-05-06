@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using UnityEngine;
 using static Assets.GamePlay.Scripts.Damage.DamageManager;
+using static Assets.GamePlay.Scripts.TowerClasses.TowerClasseGenerator;
 using static Assets.GamePlay.Scripts.TowerClasses.TowerCombinations.TowerCombination;
 
 namespace Assets.GamePlay.Scripts.TowerClasses.TowerCombinations
@@ -13,8 +14,9 @@ namespace Assets.GamePlay.Scripts.TowerClasses.TowerCombinations
     // для генерацыі камбінацый з клясаў. У кожнага гульца свой экзэмпляр гэтага кляса
     public class CombinationGenerator : MonoBehaviour
     {
-        List<TowerCombination> possibleCombinations = new List<TowerCombination>();
-        Player.Player owner;
+        [SerializeReference]
+        public List<TowerCombination> possibleCombinations = new List<TowerCombination>();
+        Player.MyPlayer owner;
 
         private float damage = 500;
         private float periodicDamage = 1;
@@ -22,17 +24,17 @@ namespace Assets.GamePlay.Scripts.TowerClasses.TowerCombinations
         //стварыць магчымыя камбінацыі
         protected void CreateStartCombinations()
         {
-            owner = GetComponent<Player.Player>();
+            owner = GetComponent<Player.MyPlayer>();
             //var classes = new List<TowerClass>();
             //classes.Add(owner.towerClassCollection.GetTowerClass(TowerClasseGenerator.ETowerClass.damageGreen));
             //classes.Add(owner.towerClassCollection.GetTowerClass(TowerClasseGenerator.ETowerClass.damageRed));
-            TowerCombination tc1 = new TowerCombination("I", new List<TowerClass>(), ETypeOfCombination.i, Color.cyan,
+            TowerCombination tc1 = new TowerCombination("I", new List<ETowerClass>(), ETypeOfCombination.i, Color.cyan,
                 new BulletEffectSlowingRaw(slowing));
-            TowerCombination tc2 = new TowerCombination("II", new List<TowerClass>(), ETypeOfCombination.ii, Color.magenta,
+            TowerCombination tc2 = new TowerCombination("II", new List<ETowerClass>(), ETypeOfCombination.ii, Color.magenta,
                 new BulletEffectImmidiateDamageRaw(damage,EKindOfDamage.blue));
-            TowerCombination tc3 = new TowerCombination("III", new List<TowerClass>(), ETypeOfCombination.iii, Color.yellow,
+            TowerCombination tc3 = new TowerCombination("III", new List<ETowerClass>(), ETypeOfCombination.iii, Color.yellow,
                 new BulletEffectPeriodicDamageRaw(periodicDamage,EKindOfDamage.green));
-            TowerCombination tc4 = new TowerCombination("IV", new List<TowerClass>(), ETypeOfCombination.iv, Color.green,
+            TowerCombination tc4 = new TowerCombination("IV", new List<ETowerClass>(), ETypeOfCombination.iv, Color.green,
                 new BulletEffectPeriodicDamageRaw(periodicDamage, EKindOfDamage.red));
 
             possibleCombinations.Add(tc1);
@@ -44,7 +46,7 @@ namespace Assets.GamePlay.Scripts.TowerClasses.TowerCombinations
         {
             CreateStartCombinations();
         }
-        public void Initialize(Player.Player pl)
+        public void Initialize(Player.MyPlayer pl)
         {
             owner = pl;
             Initialize();
@@ -65,7 +67,7 @@ namespace Assets.GamePlay.Scripts.TowerClasses.TowerCombinations
                 bool res = true;
                 foreach (var cl in comb.towerClasses)
                 {
-                    if (!classes.Contains(cl))
+                    if (!classes.Contains(owner.towerClassCollection.GetTowerClass(cl)))
                     {
                         res = false;
                         break;
