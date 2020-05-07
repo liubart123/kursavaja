@@ -17,4 +17,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/OnlinePlayScene.unity
     guid: 47acb337358d4a146a672fbed93669be
+  - enabled: 1
+    path: Assets/Scenes/LevelChoosingScene.unity
+    guid: 789d78de28085b44e99d189bd465d25e
   m_configObjects: {}
