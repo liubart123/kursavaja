@@ -30,12 +30,12 @@ public class Builder : MonoBehaviour
     }
     public Action<Building> OnBuilding;
     PhotonView photonView;
-    public void BuildBuildingOnBlock(Block block, Building b, bool isPlayerBuilding = true)
+    public void BuildBuildingOnBlock(Block block, Building b, string ownerName = "")
     {
         if (OnlineManager.CreateNetworkObjects)
         {
             photonView.RPC("BuildBuildingOnBlockForOtherPlayers", RpcTarget.Others,
-                new Vector3(block.indexes.x, block.indexes.y, 0), b.typeOfBuilding);
+                new Vector3(block.indexes.x, block.indexes.y, 0), b.typeOfBuilding, owner.playerName);
         }
         if (!block.HasBuilding())
         {
@@ -54,8 +54,14 @@ public class Builder : MonoBehaviour
                 res = Instantiate(b.gameObject, block.transform.position, block.transform.rotation);
 
                 res.transform.parent = block.transform;
-                if (isPlayerBuilding)
-                    res.GetComponent<Building>().owner = owner;
+                if (ownerName=="")  //будынак створаны гульцэом на гэтым кампутары
+                    res.GetComponent<Building>().Owner = owner;
+                else
+                {
+                    //створаны іншымі гульцамі
+                    res.GetComponent<Building>().OwnerName = ownerName;
+                    res.GetComponent<Building>().Owner = owner.players.GetPlayerByName(ownerName);
+                }
                 res.GetComponent<Building>().Initialize();
                 OnBuilding?.Invoke(res.GetComponent<Building>());
             }
@@ -76,11 +82,11 @@ public class Builder : MonoBehaviour
     }
 
     [PunRPC]
-    public void BuildBuildingOnBlockForOtherPlayers(Vector3 block, int typeOfBuild)
+    public void BuildBuildingOnBlockForOtherPlayers(Vector3 block, int typeOfBuild, string ownerName)
     {
         Block b = BlocksGenerator.GetBlock(new Vector2Int((int)block.x, (int)block.y));
         Building bd = arrayOfBuildings[typeOfBuild].GetComponent<Building>();
-        BuildBuildingOnBlock(b, bd, false);
+        BuildBuildingOnBlock(b, bd, ownerName);
     }
     public void Initialize()
     {

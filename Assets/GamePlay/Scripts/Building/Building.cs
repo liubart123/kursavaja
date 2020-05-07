@@ -1,6 +1,7 @@
 ﻿using Assets.GamePlay.Scripts.Bonuses;
 using Assets.GamePlay.Scripts.Building.interfaces.HealthContorller;
 using Assets.GamePlay.Scripts.Enemies;
+using Assets.GamePlay.Scripts.Player;
 using Photon.Pun;
 using System;
 using System.Collections;
@@ -10,7 +11,14 @@ using UnityEngine;
 namespace Assets.GamePlay.Scripts.Building {
     public abstract class Building : MonoBehaviour
     {
-        public Player.MyPlayer owner;
+        private MyPlayer owner;
+        public MyPlayer Owner;
+        private string ownerName;
+        public string OwnerName { get { return ownerName; }
+            set { 
+                ownerName = value; 
+            }
+        }
         public Builder.EBuilding typeOfBuilding;
         public bool requireBasement;
 

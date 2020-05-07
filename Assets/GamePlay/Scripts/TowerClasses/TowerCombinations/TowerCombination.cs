@@ -9,10 +9,8 @@ using static Assets.GamePlay.Scripts.TowerClasses.TowerClasseGenerator;
 
 namespace Assets.GamePlay.Scripts.TowerClasses.TowerCombinations
 {
-    [Serializable]
     public class TowerCombination : TowerClass
     {
-        [SerializeReference]
         //collection of classes that must be gathered to creaete combination
         public ICollection<ETowerClass> towerClasses;
 
@@ -27,6 +25,37 @@ namespace Assets.GamePlay.Scripts.TowerClasses.TowerCombinations
         public enum ETypeOfCombination
         {
             i,ii,iii,iv
+        }
+
+        public void Deserialize(TowerCombinationSer ser)
+        {
+            towerClasses = new List<ETowerClass>();
+            foreach(var clas in ser.towerClasses)
+            {
+                towerClasses.Add((ETowerClass)clas);
+            }
+            typeOfCombination = (ETypeOfCombination)ser.typeOfCombination;
+            bulletEffects = ser.effects;
+        }
+    }
+
+    [Serializable]
+    public class TowerCombinationSer
+    {
+        [SerializeReference]
+        public List<int> towerClasses;
+        public int typeOfCombination;
+        [SerializeReference]
+        public List<BulletEffect> effects;
+        public TowerCombinationSer()
+        {
+
+        }
+        public TowerCombinationSer(TowerCombination comb)
+        {
+            towerClasses = comb.towerClasses.Select(el => (int)el).ToList();
+            typeOfCombination = (int)comb.typeOfCombination;
+            effects = comb.bulletEffects.ToList();
         }
     }
 }

@@ -161,19 +161,11 @@ namespace Assets.GamePlay.Scripts.Enemies
         {
             eventsWhenThisDie?.Invoke(this);
             //Destroy(gameObject);
-            if (OnlineManager.CreateNetworkObjects)
-            {
-                PhotonNetwork.Destroy(this.gameObject);
-            }else
-            {
-                Destroy(this.gameObject);
-            }
+            Destroy(this.gameObject);
             //gameObject.SetActive(false);
         }
         public virtual void Initialize()
         {
-            if (OnlineManager.DoNotOwnCalculations)
-                return;
             //health
             SetChildsOfGameobjects();
             Health = maxHealth;

@@ -117,7 +117,7 @@ namespace Assets.GamePlay.Scripts.Tower
             initialized = true;
 
             targetPool = transform.GetComponentInChildren<TargetPool>();
-            owner = FindObjectOfType<Player.MyPlayer>();
+            //Owner = FindObjectOfType<Player.MyPlayer>();
             TargetChooser = GetComponent<TargetChooser>();
             AimTaker = GetComponent<AimTaker>();
             TowerRotater = GetComponent<TowerRotater>();

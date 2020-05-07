@@ -86,7 +86,7 @@ namespace Assets.GamePlay.Scripts.Tower.Interfaces.ClassesCollection
         //змяніць камбінацыі тавэра
         public override void ChangeCombinations()
         {
-            combinationGenerator = GetComponent<Tower>().owner.possibleCombinations;
+            combinationGenerator = GetComponent<Tower>().Owner.possibleCombinations;
             towerCombinations = combinationGenerator.ConvertClassesToCombination(GetAllClasses());
         }
         private void Start()
@@ -114,7 +114,11 @@ namespace Assets.GamePlay.Scripts.Tower.Interfaces.ClassesCollection
         public override void Initialize()
         {
             tower = GetComponent<Tower>();
-            classGenerator = tower.owner.towerClassCollection;
+            classGenerator = tower.Owner.towerClassCollection;
+            if (classGenerator == null)
+            {
+                classGenerator = FindObjectOfType<TowerClasseGenerator>();
+            }
             SetClasses();
             OnOtherTowersChange();
             MakeInfluenceOnOtherTowers();

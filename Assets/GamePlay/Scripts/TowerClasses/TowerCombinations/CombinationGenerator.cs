@@ -1,4 +1,5 @@
 ﻿using Assets.GamePlay.Scripts.BulletEffects;
+using Assets.GamePlay.Scripts.Player;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -17,6 +18,7 @@ namespace Assets.GamePlay.Scripts.TowerClasses.TowerCombinations
         [SerializeReference]
         public List<TowerCombination> possibleCombinations = new List<TowerCombination>();
         Player.MyPlayer owner;
+        MyPlayer playerWithClassCollection;
 
         private float damage = 500;
         private float periodicDamage = 1;
@@ -24,7 +26,7 @@ namespace Assets.GamePlay.Scripts.TowerClasses.TowerCombinations
         //стварыць магчымыя камбінацыі
         protected void CreateStartCombinations()
         {
-            owner = GetComponent<Player.MyPlayer>();
+            //owner = GetComponent<Player.MyPlayer>();
             //var classes = new List<TowerClass>();
             //classes.Add(owner.towerClassCollection.GetTowerClass(TowerClasseGenerator.ETowerClass.damageGreen));
             //classes.Add(owner.towerClassCollection.GetTowerClass(TowerClasseGenerator.ETowerClass.damageRed));
@@ -49,6 +51,12 @@ namespace Assets.GamePlay.Scripts.TowerClasses.TowerCombinations
         public void Initialize(Player.MyPlayer pl)
         {
             owner = pl;
+            if (!owner.isItRealPlayer)
+                playerWithClassCollection = FindObjectOfType<Players>().owner;
+            else
+            {
+                playerWithClassCollection = owner;
+            }
             Initialize();
         }
         public TowerCombination GetTowerCombination(ETypeOfCombination t)
@@ -67,7 +75,7 @@ namespace Assets.GamePlay.Scripts.TowerClasses.TowerCombinations
                 bool res = true;
                 foreach (var cl in comb.towerClasses)
                 {
-                    if (!classes.Contains(owner.towerClassCollection.GetTowerClass(cl)))
+                    if (!classes.Contains(playerWithClassCollection.towerClassCollection.GetTowerClass(cl)))
                     {
                         res = false;
                         break;
@@ -81,5 +89,31 @@ namespace Assets.GamePlay.Scripts.TowerClasses.TowerCombinations
             return resultCombs;
         }
 
+        public void Deserialize(CombinationGeneratorSer ser)
+        {
+
+            for (int i = 0; i < ser.combinations.Count; i++)
+            {
+                possibleCombinations.ElementAt(i).Deserialize(
+                    ser.combinations.ElementAt(i));
+            }
+        }
+    }
+    [Serializable]
+    public class CombinationGeneratorSer
+    {
+        [SerializeReference]
+        public List<TowerCombinationSer> combinations = new List<TowerCombinationSer>();
+        public CombinationGeneratorSer()
+        {
+
+        }
+        public CombinationGeneratorSer(CombinationGenerator gen)
+        {
+            foreach(var comb in gen.possibleCombinations)
+            {
+                combinations.Add(new TowerCombinationSer(comb));
+            }
+        }
     }
 }

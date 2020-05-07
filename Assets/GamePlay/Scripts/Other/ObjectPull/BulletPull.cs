@@ -58,14 +58,8 @@ namespace Assets.GamePlay.Scripts.Other.ObjectPull
         protected Bullet CreateObjectAndAddToPull()
         {
             Bullet temp;
-            if (OnlineManager.CreateNetworkObjects)
-            {
-                temp = PhotonNetwork.Instantiate(objectOfPull.name, Vector2.zero, transform.rotation).GetComponent<Bullet>();
-            }
-            else
-            {
-                temp = Instantiate(objectOfPull, Vector2.zero, transform.rotation).GetComponent<Bullet>();
-            }
+            temp = Instantiate(objectOfPull, Vector2.zero, transform.rotation).GetComponent<Bullet>();
+
             temp.gameObject.AddComponent<BulletForPull>().SetPull(this);
             temp.gameObject.SetActive(false);
             temp.transform.SetParent(ParentForPullObjects.transform);
