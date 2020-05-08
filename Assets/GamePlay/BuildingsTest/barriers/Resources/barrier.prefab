@@ -95,7 +95,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2fb253230bf7c324e9e70e46c51f6bb1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  owner: {fileID: 0}
+  Owner: {fileID: 0}
+  destroyableInPlayingMode: 1
   typeOfBuilding: 0
   requireBasement: 0
 --- !u!114 &3524052748693609432

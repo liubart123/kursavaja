@@ -53,4 +53,15 @@ public class LevelChoosingManager : MonoBehaviour
         LevelManager.nameOfLevel = obj.transform.GetChild(0).GetComponent<Text>().text;
         sceneManager.LoadPlayScene();
     }
+
+    public void ResetLevel(GameObject obj)
+    {
+        LevelManager.typeOfMap = LevelManager.ETypeOfLoadMap.newLevel;
+        OnLevelSelection(obj);
+    }
+    public void LoadLevel(GameObject obj)
+    {
+        LevelManager.typeOfMap = LevelManager.ETypeOfLoadMap.progress;
+        OnLevelSelection(obj);
+    }
 }

@@ -42,7 +42,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 6016857133596013734}
-  - {fileID: 5393884483166656366}
+  - {fileID: 8113816315329538878}
   - {fileID: 9171417064703032383}
   m_Father: {fileID: 0}
   m_RootOrder: 0
@@ -109,7 +109,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ff8fd49e0a0821f4aa3e9e4b61d35eea, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  owner: {fileID: 0}
+  Owner: {fileID: 0}
+  destroyableInPlayingMode: 1
   typeOfBuilding: 5
   requireBasement: 1
   bullet: {fileID: 0}
@@ -278,6 +279,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c9c7d23194009d04dbb6d34426a06755, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  realPlayer: {fileID: 0}
   objectForDrawingLines: {fileID: 0}
 --- !u!114 &-1505632928782564949
 MonoBehaviour:
@@ -564,7 +566,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 478471d0b64c30b4ebcd7248793b21c1, type: 3}
---- !u!4 &5393884483166656366 stripped
+--- !u!4 &8113816315329538878 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4197633781531655968, guid: 478471d0b64c30b4ebcd7248793b21c1,
     type: 3}

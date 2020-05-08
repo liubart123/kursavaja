@@ -29,7 +29,12 @@ namespace Assets.GamePlay.Scripts.storageTower
         public GameObject towerButton;
         public Text textForMoneyValue;
         protected Builder builder;
-       
+
+        private void Awake()
+        {
+            var temp = Money;
+            Money = temp;
+        }
 
         protected Player.MyPlayer owner;
 
@@ -74,6 +79,7 @@ namespace Assets.GamePlay.Scripts.storageTower
                         }
                     }
                     building.cost += building.costIncrease;
+                    OnBuildingSelection(null);
                     UpdateStoragePanel();
                     break;
                 }
@@ -103,13 +109,24 @@ namespace Assets.GamePlay.Scripts.storageTower
             }
         }
 
+        private BuildingInStorage prevBuilding;
         //выбар будынка для будаўніцтва
         public virtual void OnBuildingSelection(BuildingInStorage b)
         {
+            if (b == null)
+            {
+                if (prevBuilding != null)
+                {
+                    b = prevBuilding;
+                }
+                else
+                    return;
+            }
             if (b.cost > Money)
             {
                 return;
             }
+            prevBuilding = b;
             builder.SetBuilding(builder.arrayOfBuildings.FirstOrDefault(
                 el => el.GetComponent<Building.Building>().typeOfBuilding == b.building).
                 GetComponent<Building.Building>());

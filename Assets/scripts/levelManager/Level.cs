@@ -72,4 +72,10 @@ public class Level : MonoBehaviour
         owner.mapSerDeser.SaveMap(pathBeforeSaving + LevelManager.nameOfLevel + nameOfSavingProgress + nameOfFileType);
 
     }
+    public GameObject gameOverPanel;
+    public void GameOver()
+    {
+        owner.guiControl.CloseAllPanels();
+        gameOverPanel.SetActive(true);
+    }
 }

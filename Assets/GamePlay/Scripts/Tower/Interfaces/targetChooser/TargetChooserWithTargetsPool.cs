@@ -18,7 +18,7 @@ namespace Assets.GamePlay.Scripts.Tower.Interfaces.targetChooser
         private object locker = new object();
         public override Enemy ChooseTarget(TargetChooserParameters args)
         {
-            if (pool.TargetsInRange.Count == 0)
+            if (pool==null || pool.TargetsInRange == null || pool.TargetsInRange.Count == 0)
             {
                 return null;
             } else

@@ -59,8 +59,8 @@ public class InputControlPlay : InputControl
                             Building building = currentBlock.GetBuilding()?.GetComponent<Building>();
                             if (building != null)
                             {
-                                owner.buildingsStorage.DestroyBuilding(building.typeOfBuilding);
-                                building.Die();
+                                owner.builder.DestroyBuilding(building);
+                                //building.Die();
                             }
                         }
                         else /*(typeOfAction == ETypeOfInputAction.showTowerInfo)*/

@@ -81,7 +81,6 @@ namespace Assets.GamePlay.Scripts.Waves
             }
             OnWaveStart?.Invoke();
             IsThereWave = true;
-            rnd = new System.Random(waveCounter);
             waveCounter++;
         }
 
@@ -147,6 +146,7 @@ namespace Assets.GamePlay.Scripts.Waves
 
         public void StartWaveForAllClients()
         {
+            rnd = new System.Random(waveCounter+rnd.Next());
             float[] countVector = null, cooldownVector = null, delayVector = null;
             CreateParametersForSpawns(out countVector, out cooldownVector, out delayVector);
             if (PhotonNetwork.IsConnected)
@@ -155,7 +155,7 @@ namespace Assets.GamePlay.Scripts.Waves
                 StartWave(countVector, cooldownVector, delayVector);
         }
 
-        private System.Random rnd;
+        private System.Random rnd = new System.Random(DateTime.Now.Second);
         private float GetRandomFloat(float min, float max)
         {
             return (float)(rnd.NextDouble()%(max-min)+min);

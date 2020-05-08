@@ -348,7 +348,7 @@ namespace Assets.GamePlay.Scripts.GUI.TowerCombinationPanel
                 }
             }
             RefreshCell(selectedCell);
-            owner.players.UpdatePlayerForOtherPlayers();
+            owner.players?.UpdatePlayerForOtherPlayers();
             MapController.CalculateTowerClassesForAll();
         }
         //змяніць камбінацыі тавэроў, згодна з ячэйкай

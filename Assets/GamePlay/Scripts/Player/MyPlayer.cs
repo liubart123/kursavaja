@@ -1,4 +1,5 @@
 ﻿using Assets.GamePlay.Scripts.Bonuses;
+using Assets.GamePlay.Scripts.DemageToPlayerController;
 using Assets.GamePlay.Scripts.Enemies;
 using Assets.GamePlay.Scripts.GUI;
 using Assets.GamePlay.Scripts.GUI.TowerCombinationPanel;
@@ -45,6 +46,7 @@ namespace Assets.GamePlay.Scripts.Player
         public PhotonView photonView;
         public BonusConveyorManager bonusConveyorManager;
         public Level level;
+        public FinanceControllAfterWaves financeControllAfterWaves;
 
         public virtual void Start()
         {
@@ -71,6 +73,7 @@ namespace Assets.GamePlay.Scripts.Player
             bonusConveyorManager?.Initialize(this);
             players?.Initialize(this);
             level?.Initialize(this);
+            financeControllAfterWaves?.Initialize(this);
 
             EnemiesPull.Initialize();
 

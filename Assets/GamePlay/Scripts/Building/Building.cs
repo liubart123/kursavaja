@@ -14,6 +14,7 @@ namespace Assets.GamePlay.Scripts.Building {
         private MyPlayer owner;
         public MyPlayer Owner;
         private string ownerName;
+        public bool destroyableInPlayingMode;
         public string OwnerName { get { return ownerName; }
             set { 
                 ownerName = value; 

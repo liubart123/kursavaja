@@ -96,8 +96,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fdebaec1f2cc2f9499462eb895bcf409, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  owner: {fileID: 0}
-  ownerName: 
+  Owner: {fileID: 0}
   typeOfBuilding: 1
   requireBasement: 0
   enemyToSpawn: {fileID: 7525201203828952646, guid: a8770b4ce2741614ca638fa094cbbac0,

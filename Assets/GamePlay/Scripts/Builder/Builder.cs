@@ -112,5 +112,29 @@ public class Builder : MonoBehaviour
         enemySpawnerCherry,
         bonus
     }
+    //паспрабаваць выдаліць будынак
+    public void DestroyBuilding(Building b, bool playingMode = true)
+    {
+        //выдаляецца безумоўна, калі зараз рэжым рэдактавання ўзроўня
+        if (playingMode == false || (b.Owner==owner && b.destroyableInPlayingMode == true))
+        {
+            owner.buildingsStorage.DestroyBuilding(b.typeOfBuilding);
+            b.Die();
+            if (PhotonNetwork.IsConnected)
+            {
+                photonView.RPC("DestroyBuildingForAllPlayers", RpcTarget.Others,
+                    new Vector3(b.GetBlock().indexes.x, b.GetBlock().indexes.y, 0));
+            }
+        }
+    }
+    [PunRPC]
+    public void DestroyBuildingForAllPlayers(Vector3 index)
+    {
+        Building b = BlocksGenerator.GetBlock(new Vector2Int((int)index.x, (int)index.y))?.GetComponent<Building>();
+        if (b != null)
+        {
+            b.Die();
+        }
+    }
     public GameObject[] arrayOfBuildings;
 }
