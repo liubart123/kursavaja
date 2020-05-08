@@ -20,4 +20,10 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/LevelChoosingScene.unity
     guid: 789d78de28085b44e99d189bd465d25e
+  - enabled: 1
+    path: Assets/Scenes/OnlineWaitingScene.unity
+    guid: 50a80ca7ed8434c439de97b69f840ae2
+  - enabled: 1
+    path: Assets/Scenes/LevelOnlineChoosingScene.unity
+    guid: 00fb2cd1597c05c41ba96f08becae613
   m_configObjects: {}

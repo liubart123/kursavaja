@@ -10,7 +10,10 @@ public class MySceneManager : MonoBehaviour
         MainMenu,
         PlayScene, 
         OnlinePlayScene,
-        LevelChoosingScene
+        LevelChoosingScene,
+        NewOnlineScene,
+        LevelOnlineChoosingScene,
+        OnlineWaitingScene
     }
 
     public void LoadLevelRedactorScene()
@@ -32,5 +35,18 @@ public class MySceneManager : MonoBehaviour
     public void LoadLevelChoosingScene()
     {
         SceneManager.LoadScene(ESceneNames.LevelChoosingScene.ToString());
+    }
+    public void LoadNewOnlineScene()
+    {
+        SceneManager.LoadScene(ESceneNames.NewOnlineScene.ToString());
+    }
+    
+    public void LoadLevelOnlineChoosingScene()
+    {
+        SceneManager.LoadScene(ESceneNames.LevelOnlineChoosingScene.ToString());
+    }
+    public void LoadOnlineWaitingScene()
+    {
+        SceneManager.LoadScene(ESceneNames.OnlineWaitingScene.ToString());
     }
 }

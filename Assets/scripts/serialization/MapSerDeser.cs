@@ -175,11 +175,11 @@ namespace Assets.scripts.serialization
         [Serializable]
         public class BlockForSerialization
         {
-            public ETypeOfBlock typeOfBlock;
+            public int typeOfBlock;
             public Vector2Int index;
             public BlockForSerialization(Block b)
             {
-                typeOfBlock = b.typeOfBlock;
+                typeOfBlock = (int)b.typeOfBlock;
                 index=b.indexes;
             }
         }
@@ -224,6 +224,13 @@ namespace Assets.scripts.serialization
                 waveManager.waveCounter = waveCounter;
 
             }
+        }
+        public static WaveManagerSer DeserializeWaveManager(string fileName)
+        {
+            string filePath = Path.Combine(Application.persistentDataPath, fileName);
+            string json = File.ReadAllText(filePath);
+            WholeSave save = JsonUtility.FromJson(json, typeof(WholeSave)) as WholeSave;
+            return save.waveManager;
         }
 
         protected void DeserializeMap(string filePath)
@@ -295,6 +302,82 @@ namespace Assets.scripts.serialization
             }
 
             MapController.CalculateTowerClassesForAll();
+        }
+        public void DeserializeMapFromJson(string json)
+        {
+            ICollection<Enemy> enemies = FindObjectsOfType<Enemy>();
+            foreach (var e in enemies)
+            {
+                e.Die();
+            }
+            ICollection<Building> buildings = FindObjectsOfType<Building>();
+            foreach (var b in buildings)
+            {
+                b.Die();
+            }
+
+            //string json = File.ReadAllText(filePath);
+            WholeSave save = JsonUtility.FromJson(json, typeof(WholeSave)) as WholeSave;
+
+            foreach (var block in save.blocks)
+            {
+                owner.blocksGenerator.CreateBlock(block.typeOfBlock, block.index);
+            }
+
+            foreach (var b in save.buildings)
+            {
+                Block block = BlocksGenerator.blockArray[b.indexes.x, b.indexes.y].GetComponent<Block>();
+                builder.ReBuildBuildingOnBlock(block, b.typeOfBuilding);
+                if (b.bonusType != EBonusType.neutral)
+                {
+                    bonusesBuilder.ChangeTypeOfBonus(b.bonusType,
+                        block.GetBuilding().GetComponent<Bonus>(), false);
+                }
+            }
+
+
+            //creating conveyors
+            foreach (var b in save.buildings)
+            {
+                if (b.bonusIndexes != null)
+                {
+                    Block block = BlocksGenerator.blockArray[b.indexes.x, b.indexes.y].GetComponent<Block>();
+                    Tower tower = block.GetBuilding().GetComponent<Tower>();
+                    foreach (var ind in b.bonusIndexes)
+                    {
+                        var bonus = BlocksGenerator.blockArray[ind.x, ind.y]
+                            .GetComponent<Block>().GetBuilding()
+                            .GetComponent<Bonus>();
+                        tower.bonusConveyor.AddBonus(bonus);
+                    }
+                }
+            }
+
+            towerCombinationPanel.DeserializeCells(save.cellsForTowerCombinationPanel);
+            towerCombinationPanel.RefreshAllCells();
+
+            //building storage
+            var storage = owner.buildingsStorage;
+            if (storage != null && save.storages != null && save.storages.ElementAt(0) != null)
+            {
+                storage.DeserializeBuildings(save.storages.ElementAt(0).buildingsInStorage);
+                storage.Money = save.storages.ElementAt(0).money;
+            }
+
+
+            var waveManager = FindObjectOfType<WaveManager>();
+            if (waveManager != null && save.waveManager != null)
+            {
+                save.waveManager.ChangeRealManager(waveManager);
+            }
+
+            MapController.CalculateTowerClassesForAll();
+        }
+
+        public string GetJsonOfSavedMap(string fileName)
+        {
+            string filePath = Path.Combine(Application.persistentDataPath, fileName);
+            return File.ReadAllText(filePath);
         }
 
         private void Start()

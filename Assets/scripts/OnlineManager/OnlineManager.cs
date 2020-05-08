@@ -12,6 +12,8 @@ namespace Assets
     {
         public static bool DoNotOwnCalculations = false;
         public static bool CreateNetworkObjects = false;
+        public static bool GameWasStarted = false;
+
 
         private void Update()
         {

@@ -758,6 +758,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 27cd7e76610f1484f881792a37cdf588, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  gameOverPanel: {fileID: 0}
 --- !u!1 &1828211632
 GameObject:
   m_ObjectHideFlags: 0
@@ -955,6 +956,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1867249679}
     m_Modifications:
+    - target: {fileID: 1999802546330143127, guid: 658c9aeb0435830469c595ef0bbd66f5,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 4
+      objectReference: {fileID: 0}
     - target: {fileID: 2789147275534673760, guid: 658c9aeb0435830469c595ef0bbd66f5,
         type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target

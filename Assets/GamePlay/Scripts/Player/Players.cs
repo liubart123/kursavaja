@@ -22,6 +22,8 @@ namespace Assets.GamePlay.Scripts.Player
         {
             owner = pl;
             photonView = GetComponent<PhotonView>();
+
+            AddPlayerForOthersPlayers();
         }
         public MyPlayer GetPlayerByName(string name)
         {

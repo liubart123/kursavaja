@@ -27,6 +27,8 @@ namespace Assets.GamePlay.Scripts.Player
     {
         [HideInInspector]
         public string playerName="defaultName";
+        [HideInInspector]
+        public string nickName = "player)";
         public GameObject onlinePlayer;
 
         public bool isItRealPlayer; //ці з'яўляецца гэты экзэмпляр гульцом гэтага кампутара
@@ -47,6 +49,8 @@ namespace Assets.GamePlay.Scripts.Player
         public BonusConveyorManager bonusConveyorManager;
         public Level level;
         public FinanceControllAfterWaves financeControllAfterWaves;
+        public OnlineConnector onlineConnector;
+        public MySceneManager sceneManager;
 
         public virtual void Start()
         {
@@ -82,26 +86,41 @@ namespace Assets.GamePlay.Scripts.Player
             {
                 level.StartMap();
                 //mapSerDeser.LoadMapLevel();
-            } else if (SceneManager.GetActiveScene().name == ESceneNames.OnlinePlayScene.ToString())
-            {
-                Launcher launcher = FindObjectOfType<Launcher>();
-                if (launcher != null)
-                {
-                    launcher.Initialize(this);
-                }
-                if (PhotonNetwork.IsConnected)
-                {
-                    //GameObject op = PhotonNetwork.Instantiate(onlinePlayer.name,transform.position,transform.rotation);
-                    //op.GetComponent<OnlinePlayer>().player = this;
-                    playerName = PhotonNetwork.NickName;
-                }
-                //mapSerDeser.LoadMapLevel();
+            } 
+            //else if (SceneManager.GetActiveScene().name == ESceneNames.OnlinePlayScene.ToString())
+            //{
+            //    OnlineConnector launcher = FindObjectOfType<OnlineConnector>();
+            //    if (launcher != null)
+            //    {
+            //        launcher.Initialize(this);
+            //    }
+            //    if (PhotonNetwork.IsConnected)
+            //    {
+            //        //GameObject op = PhotonNetwork.Instantiate(onlinePlayer.name,transform.position,transform.rotation);
+            //        //op.GetComponent<OnlinePlayer>().player = this;
+            //        playerName = PhotonNetwork.NickName;
+            //    }
+            //    //mapSerDeser.LoadMapLevel();
 
-            }
+            //}
             else if (SceneManager.GetActiveScene().name == ESceneNames.LevelRedactorScene.ToString())
             {
                 level.LoadCleanMap();
 
+            }
+            else if (SceneManager.GetActiveScene().name == ESceneNames.NewOnlineScene.ToString())
+            {
+                level.LoadCleanMap();
+                onlineConnector?.Initialize(this);
+                onlineConnector.Connect();
+                playerName = LevelManager.nickName;
+                if (LevelManager.typeOfMap == LevelManager.ETypeOfLoadMap.hostLevel)
+                {
+                    //onlineConnector.CreateRoom();
+                } else
+                {
+                    //onlineConnector.JoinRoom();
+                }
             }
             else
             {

@@ -58,6 +58,10 @@ public class Level : MonoBehaviour
     {
         owner.mapSerDeser.LoadMapLevel(pathBeforeSaving + LevelManager.nameOfLevel + nameOfSavingLevel + nameOfFileType);
     }
+    public static string GetTheEndOfPathForLevelSave(string name)
+    {
+        return pathBeforeSaving + name + nameOfSavingLevel + nameOfFileType;
+    }
     public void LoadProgress()
     {
         owner.mapSerDeser.LoadMap(pathBeforeSaving + LevelManager.nameOfLevel + nameOfSavingProgress + nameOfFileType);

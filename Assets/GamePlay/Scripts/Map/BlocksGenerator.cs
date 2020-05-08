@@ -109,6 +109,11 @@ public class BlocksGenerator : MonoBehaviour
         return res;
     }
 
+    public GameObject CreateBlock(int t, Vector2Int index)
+    {
+        return CreateBlock((ETypeOfBlock)t,index);
+    }
+
     public void ChangeTypeOfBlock(Block bl)
     {
         Vector2Int indexes = bl.indexes;
