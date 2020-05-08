@@ -14,6 +14,8 @@ namespace Assets
         public static bool CreateNetworkObjects = false;
         public static bool GameWasStarted = false;
 
+        public static bool BuildForAllPlayers = false;
+
 
         private void Update()
         {

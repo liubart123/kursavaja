@@ -85,10 +85,17 @@ namespace Assets.scripts.serialization
                 save.buildings.Add(serBuilding);
             }
 
-            save.blocks = new List<BlockForSerialization>();
-            foreach (var block in BlocksGenerator.blockArray)
+            save.blocks = new BlocksForSerialization(BlocksGenerator.width, BlocksGenerator.height);
+            Block temp;
+            for (int i = 0; i < BlocksGenerator.width; i++)
             {
-                save.blocks.Add(new BlockForSerialization(block.GetComponent<Block>()));
+                for (int j = 0; j < BlocksGenerator.height; j++)
+                {
+                    temp = BlocksGenerator.blockArray[i, j].GetComponent<Block>();
+                    //save.blocks.index[(i * BlocksGenerator.height + j)*2] = temp.indexes.x;
+                    //save.blocks.index[(i * BlocksGenerator.height + j) * 2 + 1] = temp.indexes.y;
+                    save.blocks.typeOfBlock[i* BlocksGenerator.height + j] = (int)temp.typeOfBlock;
+                }
             }
 
             var waveManager = FindObjectOfType<WaveManager>();
@@ -150,7 +157,7 @@ namespace Assets.scripts.serialization
             [SerializeReference]
             public CellSerializable[] cellsForTowerCombinationPanel;
             [SerializeReference]
-            public List<BlockForSerialization> blocks;
+            public BlocksForSerialization blocks;
             [SerializeReference]
             public List<StorageSerialization> storages;
             [SerializeReference]
@@ -173,14 +180,15 @@ namespace Assets.scripts.serialization
             }
         }
         [Serializable]
-        public class BlockForSerialization
+        public class BlocksForSerialization
         {
-            public int typeOfBlock;
-            public Vector2Int index;
-            public BlockForSerialization(Block b)
+            public int[] typeOfBlock;
+            public BlocksForSerialization()
             {
-                typeOfBlock = (int)b.typeOfBlock;
-                index=b.indexes;
+            }
+            public BlocksForSerialization(int width,int height)
+            {
+                typeOfBlock = new int[width* height];
             }
         }
         [Serializable]
@@ -247,61 +255,7 @@ namespace Assets.scripts.serialization
             }
 
             string json = File.ReadAllText(filePath);
-            WholeSave save = JsonUtility.FromJson(json, typeof(WholeSave)) as WholeSave;
-
-            foreach(var block in save.blocks)
-            {
-                owner.blocksGenerator.CreateBlock(block.typeOfBlock, block.index);
-            }
-
-            foreach (var b in save.buildings)
-            {
-                Block block = BlocksGenerator.blockArray[b.indexes.x, b.indexes.y].GetComponent<Block>();
-                builder.ReBuildBuildingOnBlock(block, b.typeOfBuilding);
-                if (b.bonusType != EBonusType.neutral)
-                {
-                    bonusesBuilder.ChangeTypeOfBonus(b.bonusType,
-                        block.GetBuilding().GetComponent<Bonus>(), false);
-                }
-            }
-
-
-            //creating conveyors
-            foreach (var b in save.buildings)
-            {
-                if (b.bonusIndexes != null)
-                {
-                    Block block = BlocksGenerator.blockArray[b.indexes.x, b.indexes.y].GetComponent<Block>();
-                    Tower tower = block.GetBuilding().GetComponent<Tower>();
-                    foreach (var ind in b.bonusIndexes)
-                    {
-                        var bonus = BlocksGenerator.blockArray[ind.x, ind.y]
-                            .GetComponent<Block>().GetBuilding()
-                            .GetComponent<Bonus>();
-                        tower.bonusConveyor.AddBonus(bonus);
-                    }
-                }
-            }
-
-            towerCombinationPanel.DeserializeCells(save.cellsForTowerCombinationPanel);
-            towerCombinationPanel.RefreshAllCells();
-
-            //building storage
-            var storage = owner.buildingsStorage;
-            if (storage != null && save.storages != null && save.storages.ElementAt(0)!=null)
-            {
-                storage.DeserializeBuildings(save.storages.ElementAt(0).buildingsInStorage);
-                storage.Money = save.storages.ElementAt(0).money;
-            }
-
-
-            var waveManager = FindObjectOfType<WaveManager>();
-            if (waveManager != null && save.waveManager != null)
-            {
-                save.waveManager.ChangeRealManager(waveManager);
-            }
-
-            MapController.CalculateTowerClassesForAll();
+            DeserializeMapFromJson(json);
         }
         public void DeserializeMapFromJson(string json)
         {
@@ -319,10 +273,19 @@ namespace Assets.scripts.serialization
             //string json = File.ReadAllText(filePath);
             WholeSave save = JsonUtility.FromJson(json, typeof(WholeSave)) as WholeSave;
 
-            foreach (var block in save.blocks)
+            for (int i = 0; i < BlocksGenerator.width; i++)
             {
-                owner.blocksGenerator.CreateBlock(block.typeOfBlock, block.index);
+                for (int j = 0; j < BlocksGenerator.height; j++)
+                {
+                    owner.blocksGenerator.CreateBlock(
+                        save.blocks.typeOfBlock[i* BlocksGenerator.height + j],
+                        new Vector2Int(i,j));
+                    //new Vector2Int(
+                    //    save.blocks.index[(i * BlocksGenerator.height + j) * 2],
+                    //    save.blocks.index[(i * BlocksGenerator.height + j) * 2 + 1]));
+        }
             }
+
 
             foreach (var b in save.buildings)
             {

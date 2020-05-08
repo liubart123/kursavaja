@@ -98,7 +98,7 @@ LightmapSettings:
     m_TrainingDataDestination: TrainingData
     m_LightProbeSampleCountMultiplier: 4
   m_LightingDataAsset: {fileID: 0}
-  m_UseShadowmask: 1
+  m_UseShadowmask: 0
 --- !u!196 &4
 NavMeshSettings:
   serializedVersion: 2
@@ -252,6 +252,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerName: defaultName
+  nickName: player)
   onlinePlayer: {fileID: 8830743949651579239, guid: 1f19d1bda73eb3d42bf067544dfc50fa,
     type: 3}
   isItRealPlayer: 1
@@ -270,6 +271,10 @@ MonoBehaviour:
   players: {fileID: 309070935}
   photonView: {fileID: 852586501}
   bonusConveyorManager: {fileID: 1165417530}
+  level: {fileID: 0}
+  financeControllAfterWaves: {fileID: 0}
+  onlineConnector: {fileID: 0}
+  sceneManager: {fileID: 0}
 --- !u!4 &15494128
 Transform:
   m_ObjectHideFlags: 0
@@ -1794,6 +1799,7 @@ MonoBehaviour:
   delayForSpawn: 100
   minSpawnCooldown: 60
   maxSpawnCooldown: 200
+  waveCounter: 0
 --- !u!4 &207546948
 Transform:
   m_ObjectHideFlags: 0
@@ -4501,8 +4507,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 460020180}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 31.6, y: 28.4, z: 31.863235}
-  m_LocalScale: {x: 90, y: 90, z: 1}
+  m_LocalPosition: {x: 30.2, y: 20.14, z: 31.863235}
+  m_LocalScale: {x: 60.371998, y: 40.950447, z: 1}
   m_Children: []
   m_Father: {fileID: 761932173}
   m_RootOrder: 1
@@ -8181,6 +8187,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2314d906948c2d2469a3820beaae19af, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  connectStatus: {fileID: 0}
+  roomStatus: {fileID: 0}
+  playersStatus: {fileID: 0}
+  statusPanel: {fileID: 0}
+  photonView: {fileID: 0}
+  mapSerDeser: {fileID: 0}
 --- !u!4 &852586500
 Transform:
   m_ObjectHideFlags: 0

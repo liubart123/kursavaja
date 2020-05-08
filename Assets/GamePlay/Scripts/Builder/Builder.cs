@@ -20,11 +20,11 @@ public class Builder : MonoBehaviour
         currentBuilding = b.typeOfBuilding;
         owner.inputControl.TypeOfAction = InputControl.ETypeOfInputAction.build;
     }
-    public void BuildBuildingOnBlock(Block block)
+    public void BuildBuildingOnBlock(Block block, bool buildForOtherPlayers = false)
     {
         BuildBuildingOnBlock(block, arrayOfBuildings[(int)currentBuilding].GetComponent<Building>());
     }
-    public void BuildBuildingOnBlock(Block block, EBuilding typeOfBuilding)
+    public void BuildBuildingOnBlock(Block block, EBuilding typeOfBuilding, bool buildForOtherPlayers = false)
     {
         BuildBuildingOnBlock(block, arrayOfBuildings[(int)typeOfBuilding].GetComponent<Building>());
     }
@@ -32,7 +32,7 @@ public class Builder : MonoBehaviour
     PhotonView photonView;
     public void BuildBuildingOnBlock(Block block, Building b, string ownerName = "")
     {
-        if (OnlineManager.CreateNetworkObjects)
+        if (OnlineManager.BuildForAllPlayers)
         {
             photonView.RPC("BuildBuildingOnBlockForOtherPlayers", RpcTarget.Others,
                 new Vector3(block.indexes.x, block.indexes.y, 0), b.typeOfBuilding, owner.playerName);

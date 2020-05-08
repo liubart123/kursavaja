@@ -9,6 +9,7 @@ using Assets.GamePlay.Scripts.storageTower;
 using Assets.GamePlay.Scripts.Tower.Interfaces.BonusConveyor;
 using Assets.GamePlay.Scripts.TowerClasses;
 using Assets.GamePlay.Scripts.TowerClasses.TowerCombinations;
+using Assets.Photon.MyScripts;
 using Assets.scripts.serialization;
 using Photon.Pun;
 using PunTesting;
@@ -110,10 +111,13 @@ namespace Assets.GamePlay.Scripts.Player
             }
             else if (SceneManager.GetActiveScene().name == ESceneNames.NewOnlineScene.ToString())
             {
-                level.LoadCleanMap();
-                onlineConnector?.Initialize(this);
-                onlineConnector.Connect();
-                playerName = LevelManager.nickName;
+                //level.LoadCleanMap();
+                MapForOnline.LoadSavedMap();
+                //onlineConnector?.Initialize(this);
+                //onlineConnector.Connect();
+                //playerName = LevelManager.nickName;
+                nickName = PhotonNetwork.LocalPlayer.NickName;
+                playerName = PhotonNetwork.LocalPlayer.UserId;
                 if (LevelManager.typeOfMap == LevelManager.ETypeOfLoadMap.hostLevel)
                 {
                     //onlineConnector.CreateRoom();
