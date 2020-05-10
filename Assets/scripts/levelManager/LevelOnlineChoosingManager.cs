@@ -9,6 +9,12 @@ using UnityEngine.UI;
 public class LevelOnlineChoosingManager : LevelChoosingManager
 {
     public InputField roomNameText, nickNameText;
+    public override void Start()
+    {
+        LevelManager.nameOfRoom = "";
+        LevelManager.nickName = "";
+        base.Start();
+    }
     protected override void UpdateLevelsPanel()
     {
         base.UpdateLevelsPanel();
@@ -25,6 +31,7 @@ public class LevelOnlineChoosingManager : LevelChoosingManager
         LevelManager.nameOfRoom = roomNameText.text;
         LevelManager.nickName = nickNameText.text;
         LevelManager.nameOfLevel = "";
+        LevelManager.typeOfMap = LevelManager.ETypeOfLoadMap.clientLevel;
         sceneManager.LoadOnlineWaitingScene();
     }
     public void HostLevel(GameObject obj)

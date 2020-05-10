@@ -6,6 +6,7 @@ using Photon.Pun;
 using Photon.Realtime;
 using System.Collections;
 using System.Collections.Generic;
+using System.Threading;
 using UnityEngine;
 using UnityEngine.UI;
 using static Assets.scripts.serialization.MapSerDeser;
@@ -16,7 +17,7 @@ namespace PunTesting
     //кляс для стварэння злучэння з гульцамі
     public class OnlineConnector : MonoBehaviourPunCallbacks
     {
-        public Text connectStatus, roomStatus, playersStatus;
+        public Text connectStatus, roomStatus, playersStatus, status;
         public GameObject statusPanel;
         public PhotonView photonView;
         public MapSerDeser mapSerDeser;
@@ -81,6 +82,8 @@ namespace PunTesting
         /// </summary>
         public void Connect(string nickName = null)
         {
+            if (PhotonNetwork.IsConnected)
+                PhotonNetwork.Disconnect();
             if (nickName == null || nickName == "")
             {
                 PhotonNetwork.NickName = "player_" + Random.Range(0, 20000).ToString();
@@ -91,7 +94,7 @@ namespace PunTesting
                 PhotonNetwork.NickName = nickName;
             }
 
-
+            status.text = "connecting...";
             PhotonNetwork.ConnectUsingSettings();
             PhotonNetwork.GameVersion = gameVersion;
         }
@@ -99,6 +102,7 @@ namespace PunTesting
         {
             if (PhotonNetwork.IsConnected)
                 PhotonNetwork.Disconnect();
+            //FindObjectOfType<MySceneManager>().LoadMainMenuScene();
         }
 
 
@@ -111,9 +115,11 @@ namespace PunTesting
             //Debug.Log("we connected to the server");
             if (LevelManager.typeOfMap == LevelManager.ETypeOfLoadMap.clientLevel)
             {
+                status.text = "joining room...";
                 JoinRoom();
             }
             else if (LevelManager.typeOfMap == LevelManager.ETypeOfLoadMap.hostLevel) {
+                status.text = "creating room...";
                 CreateRoom();
             }
         }
@@ -176,6 +182,7 @@ namespace PunTesting
         public override void OnPlayerEnteredRoom(Player other)
         {
             UpdatePlayersCount();
+            status.text = other.NickName + "joined room";
             Debug.Log(other.NickName + "join room");
             //Debug.LogFormat("OnPlayerEnteredRoom() {0}", other.NickName); // not seen if you're the player connecting
 
@@ -185,10 +192,18 @@ namespace PunTesting
 
             }
         }
-
-        public override void OnPlayerLeftRoom(Player other)
+        private void Update()
         {
             UpdatePlayersCount();
+        }
+        public override void OnPlayerLeftRoom(Player other)
+        {
+            if (other.IsMasterClient)
+            {
+                Disconnect();
+            }
+            UpdatePlayersCount();
+            status.text = other.NickName + "left room";
             Debug.Log(other.NickName + " left room");
             //Debug.LogFormat("OnPlayerLeftRoom() {0}", other.NickName); // seen when other disconnects
 
@@ -203,7 +218,8 @@ namespace PunTesting
         }
         private void UpdatePlayersCount()
         {
-            playersStatus.text = "players count: " + PhotonNetwork.CountOfPlayers;
+            if (PhotonNetwork.CurrentRoom!=null)
+                playersStatus.text = "room players count: " + PhotonNetwork.CurrentRoom.PlayerCount;
             //foreach (var pl in PhotonNetwork.CurrentRoom.Players)
             //{
             //    //playersStatus.text+="\n"+pl.

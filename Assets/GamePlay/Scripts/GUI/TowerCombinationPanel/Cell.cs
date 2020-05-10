@@ -13,7 +13,6 @@ using static Assets.GamePlay.Scripts.TowerClasses.TowerClasseGenerator;
 
 namespace Assets.GamePlay.Scripts.GUI.TowerCombinationPanel
 {
-    [Serializable]
     public class Cell : MonoBehaviour
     {
         public Vector2Int indexes;
@@ -21,12 +20,7 @@ namespace Assets.GamePlay.Scripts.GUI.TowerCombinationPanel
         public ETowerClass typeOfClass;
         [SerializeField]
         public int idOfCombination = -1;
-        [SerializeReference]
         public BulletEffect bulletEffect;
-
-        private void Start()
-        {
-        }
 
         public override string ToString()
         {
@@ -58,11 +52,15 @@ namespace Assets.GamePlay.Scripts.GUI.TowerCombinationPanel
     [Serializable]
     public class CellSerializable
     {
+        [HideInInspector]
         public Vector2Int indexes;
+        [HideInInspector]
         public ETowerClass typeOfClass;
+        [HideInInspector]
         public bool isThereClass = false;
         [SerializeReference]
         public BulletEffect bulletEffect;
+        [HideInInspector]
         public int idOfCombination;
         public CellSerializable(Cell cell)
         {

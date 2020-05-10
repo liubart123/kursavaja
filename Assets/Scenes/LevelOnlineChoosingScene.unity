@@ -134,6 +134,7 @@ GameObject:
   - component: {fileID: 129399950}
   - component: {fileID: 129399949}
   - component: {fileID: 129399948}
+  - component: {fileID: 129399952}
   m_Layer: 5
   m_Name: Panel (1)
   m_TagString: Untagged
@@ -155,10 +156,10 @@ RectTransform:
   m_Father: {fileID: 1031130759}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 1}
-  m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 970.3, y: -317.00006}
-  m_SizeDelta: {x: 1940.6, y: 591.2}
+  m_AnchorMin: {x: 0.5, y: 0}
+  m_AnchorMax: {x: 0.5, y: 1}
+  m_AnchoredPosition: {x: 0, y: 0.5}
+  m_SizeDelta: {x: 0, y: -1}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &129399948
 MonoBehaviour:
@@ -238,6 +239,20 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 129399946}
   m_CullTransparentMesh: 0
+--- !u!114 &129399952
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 129399946}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3245ec927659c4140ac4f8d17403cc18, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_HorizontalFit: 1
+  m_VerticalFit: 0
 --- !u!1 &214787614
 GameObject:
   m_ObjectHideFlags: 0
@@ -1179,7 +1194,6 @@ GameObject:
   - component: {fileID: 1031130764}
   - component: {fileID: 1031130763}
   - component: {fileID: 1031130762}
-  - component: {fileID: 1031130761}
   - component: {fileID: 1031130760}
   m_Layer: 5
   m_Name: Panel
@@ -1223,7 +1237,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Content: {fileID: 129399947}
-  m_Horizontal: 1
+  m_Horizontal: 0
   m_Vertical: 0
   m_MovementType: 1
   m_Elasticity: 0.1
@@ -1233,38 +1247,13 @@ MonoBehaviour:
   m_Viewport: {fileID: 1031130759}
   m_HorizontalScrollbar: {fileID: 1936359646}
   m_VerticalScrollbar: {fileID: 0}
-  m_HorizontalScrollbarVisibility: 0
+  m_HorizontalScrollbarVisibility: 1
   m_VerticalScrollbarVisibility: 0
   m_HorizontalScrollbarSpacing: 0
   m_VerticalScrollbarSpacing: 0
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls: []
---- !u!114 &1031130761
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1031130758}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 30649d3a9faa99c48a7b1166b86bf2a0, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_Padding:
-    m_Left: 50
-    m_Right: 0
-    m_Top: 30
-    m_Bottom: 0
-  m_ChildAlignment: 4
-  m_Spacing: 100
-  m_ChildForceExpandWidth: 1
-  m_ChildForceExpandHeight: 1
-  m_ChildControlWidth: 0
-  m_ChildControlHeight: 0
-  m_ChildScaleWidth: 0
-  m_ChildScaleHeight: 0
 --- !u!114 &1031130762
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2351,22 +2340,22 @@ PrefabInstance:
     - target: {fileID: 7618310758798081540, guid: b6e96c45f1480b1418d58a27a7a1e033,
         type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 0
+      value: -906.2
       objectReference: {fileID: 0}
     - target: {fileID: 7618310758798081540, guid: b6e96c45f1480b1418d58a27a7a1e033,
         type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 0
+      value: -764.6
       objectReference: {fileID: 0}
     - target: {fileID: 7618310758798081540, guid: b6e96c45f1480b1418d58a27a7a1e033,
         type: 3}
       propertyPath: m_SizeDelta.x
-      value: 0
+      value: -1812.3
       objectReference: {fileID: 0}
     - target: {fileID: 7618310758798081540, guid: b6e96c45f1480b1418d58a27a7a1e033,
         type: 3}
       propertyPath: m_SizeDelta.y
-      value: 0
+      value: -1529.3
       objectReference: {fileID: 0}
     - target: {fileID: 7618310758798081540, guid: b6e96c45f1480b1418d58a27a7a1e033,
         type: 3}
@@ -2493,7 +2482,7 @@ MonoBehaviour:
   m_HandleRect: {fileID: 808628754}
   m_Direction: 0
   m_Value: 0
-  m_Size: 0.9893847
+  m_Size: 1
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:

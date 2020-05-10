@@ -32,7 +32,7 @@ public class Builder : MonoBehaviour
     PhotonView photonView;
     public void BuildBuildingOnBlock(Block block, Building b, string ownerName = "")
     {
-        if (OnlineManager.BuildForAllPlayers)
+        if (PhotonNetwork.IsConnected)
         {
             photonView.RPC("BuildBuildingOnBlockForOtherPlayers", RpcTarget.Others,
                 new Vector3(block.indexes.x, block.indexes.y, 0), b.typeOfBuilding, owner.playerName);

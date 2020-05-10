@@ -22,6 +22,7 @@ namespace Assets.GamePlay.Scripts.GUI.TowerCombinationPanel
         protected CombinationGenerator combinationGenerator;
         protected TowerClasseGenerator classGenerator;
         public GameObject table;    //аб'кт табліцы ячэек
+        public GameObject cell;    //аб'кт ячэйкі
         public Text textForCountOfFreeCells;    //поле, куды запісваць колькасць свабодных ячэяк
         protected Cell selectedCell;
         private int countOfFreeCells;
@@ -72,11 +73,28 @@ namespace Assets.GamePlay.Scripts.GUI.TowerCombinationPanel
             {
                 for (int j = 0; j < tableSize; j++)
                 {
-                    //var temp = Instantiate(cell, transform.GetChild(1)).GetComponent<Cell>();
+                    //var temp = Instantiate(cell, transform.GetChild(2)).GetComponent<Cell>();
                     var temp = table.transform.GetChild(i*tableSize+j).gameObject.GetComponent<Cell>();
                     temp.indexes = new Vector2Int(i, j);
                     cells[i, j] = temp;
+                    //if (i == 0 && j == 0)
+                    //{
+                    //    temp.idOfCombination = 0;
+                    //}else if (i == 0 && j == tableSize-1)
+                    //{
+                    //    temp.idOfCombination = 1;
+                    //}
+                    //else if (i == tableSize-1 && j == 0)
+                    //{
+                    //    temp.idOfCombination = 2;
+                    //}
+                    //else if (i == tableSize-1 && j == tableSize-1)
+                    //{
+                    //    temp.idOfCombination = 3;
+                    //}
                     RefreshCell(temp);
+                    //table.transform.GetChild(i * tableSize + j).gameObject.GetComponent<Cell>().indexes = temp.indexes;
+
                 }
             }
         }
@@ -163,6 +181,7 @@ namespace Assets.GamePlay.Scripts.GUI.TowerCombinationPanel
         }
         //выбраць цякучую ячэйку
         public void SelectCell(Cell cell) {
+            //cell.indexes = new Vector2Int(123, 321);
             selectedCell = cell;
             RefreshCellInfo(cell);
         }
@@ -171,18 +190,18 @@ namespace Assets.GamePlay.Scripts.GUI.TowerCombinationPanel
         {
             if (cell.towerClass != null)
             {
-                cell.gameObject.GetComponent<Image>().color = cell.towerClass.TowerClassColor;
+                cell.transform.GetChild(0).gameObject.GetComponent<Text>().color = cell.towerClass.TowerClassColor;
                 cell.transform.GetChild(0).gameObject.GetComponent<Text>().text =
                     cell.towerClass.TowerClassName;
             } else if (cell.bulletEffect!=null)
             {
-                cell.gameObject.GetComponent<Image>().color = Color.white;
+                cell.transform.GetChild(0).gameObject.GetComponent<Text>().color = Color.white;
                 cell.transform.GetChild(0).gameObject.GetComponent<Text>().text = 
                     cell.bulletEffect.effectName;
             }
             else
             {
-                cell.gameObject.GetComponent<Image>().color = Color.white;
+                cell.transform.GetChild(0).gameObject.GetComponent<Text>().color = Color.white;
                 cell.transform.GetChild(0).gameObject.GetComponent<Text>().text = "";
             }
             if (cell.idOfCombination == -1)

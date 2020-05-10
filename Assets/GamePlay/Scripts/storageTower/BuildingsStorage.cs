@@ -51,9 +51,9 @@ namespace Assets.GamePlay.Scripts.storageTower
             UpdateStoragePanel();
             builder.OnBuilding = (b) =>
             {
-                BuildBuilding(b.typeOfBuilding);
+                BuildBuilding(b);
             };
-            Money = 500;
+            //Money = 500;
         }
 
         public void Initialize(Player.MyPlayer pl)
@@ -63,11 +63,16 @@ namespace Assets.GamePlay.Scripts.storageTower
             Initialize();
         }
         //пры будаўніцтве будынка
-        public void BuildBuilding(EBuilding b)
+        public void BuildBuilding(Building.Building b)
         {
+            if (b.Owner.isItRealPlayer ==false)  //калі бедынак будуецца не гэтым гульцом, то гэта не ўплывае на сховішча
+            {
+                return;
+            }
+            EBuilding bType = b.typeOfBuilding;
             foreach (var building in buildings)
             {
-                if (building.building == b)
+                if (building.building == bType)
                 {
                     Money -= building.cost;
                     UpdateStoragePanel();

@@ -11,7 +11,7 @@ public class LevelChoosingManager : MonoBehaviour
     public MySceneManager sceneManager;
     public GameObject level;
     public GameObject levelPanel;
-    void Start()
+    public virtual void Start()
     {
         UpdateLevelsPanel();
         LevelManager.nameOfLevel = LevelManager.defaultNameOfLevel;
