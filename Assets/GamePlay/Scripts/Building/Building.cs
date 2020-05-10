@@ -47,15 +47,7 @@ namespace Assets.GamePlay.Scripts.Building {
 
         public virtual void Die()
         {
-            //GetBlock().passability = 1; 
-            if (OnlineManager.CreateNetworkObjects)
-            {
-                PhotonNetwork.Destroy(this.gameObject);
-            }
-            else
-            {
-                Destroy(this.gameObject);
-            }
+            Destroy(this.gameObject);
         }
     }
 }

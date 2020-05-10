@@ -27,19 +27,19 @@ namespace Assets.GamePlay.Scripts.GUI
             ClosePanels();
             infoTowerPanel.SetActive(true);
 
-            infoTowerPanel.transform.GetChild(0).GetChild(0).gameObject.GetComponent<Text>().text = tower.towerName;
+            infoTowerPanel.transform.GetChild(1).GetChild(0).gameObject.GetComponent<Text>().text = tower.towerName;
             //ачышчаецца форма для інфы
-            Transform panelForClasses = infoTowerPanel.transform.GetChild(1);
+            Transform panelForClasses = infoTowerPanel.transform.GetChild(2);
             for (int i = panelForClasses.childCount-1; i >= 0; i--)
             {
                 panelForClasses.GetChild(i).gameObject.SetActive(false);
             }
-            Transform panelForConveyor= infoTowerPanel.transform.GetChild(3);
+            Transform panelForConveyor= infoTowerPanel.transform.GetChild(4);
             for (int i = panelForConveyor.childCount - 1; i >= 0; i--)
             {
                 panelForConveyor.GetChild(i).gameObject.SetActive(false);
             }
-            Transform panelForCombinations = infoTowerPanel.transform.GetChild(5);
+            Transform panelForCombinations = infoTowerPanel.transform.GetChild(6);
             for (int i = panelForCombinations.childCount - 1; i >= 0; i--)
             {
                 panelForCombinations.GetChild(i).gameObject.SetActive(false);
@@ -49,7 +49,7 @@ namespace Assets.GamePlay.Scripts.GUI
             var classes = tower.classCollection.GetAllClasses();
             for (int i = 0; i < classes.Count; i++)
             {
-                GameObject towerClass = infoTowerPanel.transform.GetChild(1).GetChild(i).gameObject;
+                GameObject towerClass = infoTowerPanel.transform.GetChild(2).GetChild(i).gameObject;
                 towerClass.SetActive(true);
                 //towerClass.transform.GetChild(0).gameObject.GetComponent<Text>().text = classes.ElementAt(i).TowerClassName;
 
@@ -60,7 +60,7 @@ namespace Assets.GamePlay.Scripts.GUI
             var combinations = tower.classCollection.GetAllCombinations();
             for (int i = 0; i < combinations.Count; i++)
             {
-                GameObject towerClass = infoTowerPanel.transform.GetChild(5).GetChild(i).gameObject;
+                GameObject towerClass = infoTowerPanel.transform.GetChild(6).GetChild(i).gameObject;
                 towerClass.SetActive(true);
                 //towerClass.transform.GetChild(0).gameObject.GetComponent<Text>().text = combinations.ElementAt(i).TowerClassName;
 

@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 7073537113665595662}
   - component: {fileID: -2794314516503596460}
   - component: {fileID: 8826631207442117365}
+  - component: {fileID: -8699283242514551193}
   m_Layer: 0
   m_Name: enemySpanwerCherry
   m_TagString: Untagged
@@ -96,8 +97,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fdebaec1f2cc2f9499462eb895bcf409, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  owner: {fileID: 0}
-  ownerName: 
+  Owner: {fileID: 0}
+  destroyableInPlayingMode: 0
   typeOfBuilding: 9
   requireBasement: 0
   enemyToSpawn: {fileID: 50945234438042526, guid: 7426ad052e6503f4282d10b1b51bdf9c,
@@ -144,3 +145,16 @@ MonoBehaviour:
   viewIdField: 0
   InstantiationId: 0
   isRuntimeInstantiated: 0
+--- !u!114 &-8699283242514551193
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7073537113665595657}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1805e80a550b4494199fdb594a07c9ee, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  text: enemy spawner

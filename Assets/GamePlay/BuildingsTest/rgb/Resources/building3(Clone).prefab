@@ -108,6 +108,7 @@ GameObject:
   - component: {fileID: -68397284257316877}
   - component: {fileID: -2713464822369677895}
   - component: {fileID: -257046095991674574}
+  - component: {fileID: 4143184357359659691}
   m_Layer: 15
   m_Name: building3(Clone)
   m_TagString: Untagged
@@ -143,7 +144,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6c514f790075b4b408392080f5091829, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  owner: {fileID: 0}
+  Owner: {fileID: 0}
+  destroyableInPlayingMode: 0
   typeOfBuilding: 10
   requireBasement: 0
   bonusType: 2
@@ -200,6 +202,19 @@ MonoBehaviour:
   viewIdField: 0
   InstantiationId: 0
   isRuntimeInstantiated: 0
+--- !u!114 &4143184357359659691
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6759434840894764146}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1805e80a550b4494199fdb594a07c9ee, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  text: bonus
 --- !u!1 &7516738172750776713
 GameObject:
   m_ObjectHideFlags: 0

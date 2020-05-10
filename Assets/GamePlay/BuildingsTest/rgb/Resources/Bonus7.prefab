@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 6925126091136998867}
   - component: {fileID: -4308259870419192498}
   - component: {fileID: 8087943499386878013}
+  - component: {fileID: 488219976771893489}
   m_Layer: 15
   m_Name: Bonus7
   m_TagString: Untagged
@@ -48,7 +49,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6c514f790075b4b408392080f5091829, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  owner: {fileID: 0}
+  Owner: {fileID: 0}
+  destroyableInPlayingMode: 0
   typeOfBuilding: 10
   requireBasement: 0
   bonusType: 1
@@ -105,6 +107,19 @@ MonoBehaviour:
   viewIdField: 0
   InstantiationId: 0
   isRuntimeInstantiated: 0
+--- !u!114 &488219976771893489
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1301228599647647078}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1805e80a550b4494199fdb594a07c9ee, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  text: bonus
 --- !u!1 &5652996199548177978
 GameObject:
   m_ObjectHideFlags: 0

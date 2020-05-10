@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 7073537113665595662}
   - component: {fileID: 8385231333988618915}
   - component: {fileID: 5031996744288993349}
+  - component: {fileID: 4339202215265084598}
   m_Layer: 0
   m_Name: enemySpanwer
   m_TagString: Untagged
@@ -97,6 +98,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Owner: {fileID: 0}
+  destroyableInPlayingMode: 0
   typeOfBuilding: 1
   requireBasement: 0
   enemyToSpawn: {fileID: 7525201203828952646, guid: a8770b4ce2741614ca638fa094cbbac0,
@@ -143,3 +145,16 @@ MonoBehaviour:
   viewIdField: 0
   InstantiationId: 0
   isRuntimeInstantiated: 0
+--- !u!114 &4339202215265084598
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7073537113665595657}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1805e80a550b4494199fdb594a07c9ee, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  text: enemy spawner

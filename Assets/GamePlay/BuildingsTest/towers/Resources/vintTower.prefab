@@ -85,6 +85,7 @@ GameObject:
   - component: {fileID: 1389666526688051931}
   - component: {fileID: -1045274656762833645}
   - component: {fileID: -4235010818579855151}
+  - component: {fileID: 64506445958385471}
   m_Layer: 13
   m_Name: vintTower
   m_TagString: Untagged
@@ -364,6 +365,19 @@ MonoBehaviour:
   viewIdField: 0
   InstantiationId: 0
   isRuntimeInstantiated: 0
+--- !u!114 &64506445958385471
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1240990542167552234}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1805e80a550b4494199fdb594a07c9ee, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  text: tower
 --- !u!1 &2170233582718116815
 GameObject:
   m_ObjectHideFlags: 0

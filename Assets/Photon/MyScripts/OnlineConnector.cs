@@ -225,7 +225,7 @@ namespace PunTesting
         private void LoadLevelFromOtherPlayer(string json)
         {
             MapForOnline.jsonOfMapToLoad = json;
-            PhotonNetwork.LoadLevel(MySceneManager.ESceneNames.NewOnlineScene.ToString());
+            PhotonNetwork.LoadLevel(MySceneManager.ESceneNames.PlayScene.ToString());
             //owner.mapSerDeser.DeserializeMapFromJson(json);
             //statusPanel.SetActive(false);
         }

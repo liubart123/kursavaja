@@ -85,25 +85,17 @@ namespace Assets.GamePlay.Scripts.Player
 
             if (SceneManager.GetActiveScene().name == ESceneNames.PlayScene.ToString())
             {
-                level.StartMap();
-                //mapSerDeser.LoadMapLevel();
+                if (LevelManager.typeOfMap == LevelManager.ETypeOfLoadMap.hostLevel
+                    || LevelManager.typeOfMap == LevelManager.ETypeOfLoadMap.clientLevel)
+                {
+                    MapForOnline.LoadSavedMap();
+                    nickName = PhotonNetwork.LocalPlayer.NickName;
+                    playerName = PhotonNetwork.LocalPlayer.UserId;
+                }else
+                {
+                    level.StartMap();
+                }
             } 
-            //else if (SceneManager.GetActiveScene().name == ESceneNames.OnlinePlayScene.ToString())
-            //{
-            //    OnlineConnector launcher = FindObjectOfType<OnlineConnector>();
-            //    if (launcher != null)
-            //    {
-            //        launcher.Initialize(this);
-            //    }
-            //    if (PhotonNetwork.IsConnected)
-            //    {
-            //        //GameObject op = PhotonNetwork.Instantiate(onlinePlayer.name,transform.position,transform.rotation);
-            //        //op.GetComponent<OnlinePlayer>().player = this;
-            //        playerName = PhotonNetwork.NickName;
-            //    }
-            //    //mapSerDeser.LoadMapLevel();
-
-            //}
             else if (SceneManager.GetActiveScene().name == ESceneNames.LevelRedactorScene.ToString())
             {
                 level.LoadCleanMap();
@@ -112,12 +104,9 @@ namespace Assets.GamePlay.Scripts.Player
             else if (SceneManager.GetActiveScene().name == ESceneNames.NewOnlineScene.ToString())
             {
                 //level.LoadCleanMap();
-                MapForOnline.LoadSavedMap();
                 //onlineConnector?.Initialize(this);
                 //onlineConnector.Connect();
                 //playerName = LevelManager.nickName;
-                nickName = PhotonNetwork.LocalPlayer.NickName;
-                playerName = PhotonNetwork.LocalPlayer.UserId;
                 if (LevelManager.typeOfMap == LevelManager.ETypeOfLoadMap.hostLevel)
                 {
                     //onlineConnector.CreateRoom();

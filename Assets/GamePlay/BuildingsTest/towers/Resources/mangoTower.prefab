@@ -151,6 +151,7 @@ GameObject:
   - component: {fileID: 5904746508916210825}
   - component: {fileID: 1072162967271034225}
   - component: {fileID: -540005874017197564}
+  - component: {fileID: -2040855332490654950}
   m_Layer: 13
   m_Name: mangoTower
   m_TagString: Untagged
@@ -430,6 +431,19 @@ MonoBehaviour:
   viewIdField: 0
   InstantiationId: 0
   isRuntimeInstantiated: 0
+--- !u!114 &-2040855332490654950
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6016857133395971768}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1805e80a550b4494199fdb594a07c9ee, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  text: tower
 --- !u!1 &6016857133596013729
 GameObject:
   m_ObjectHideFlags: 0
