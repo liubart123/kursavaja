@@ -5,15 +5,18 @@ using UnityEngine.SceneManagement;
 
 public class MySceneManager : MonoBehaviour
 {
-    public enum ESceneNames {
+    public enum ESceneNames
+    {
         LevelRedactorScene,
         MainMenu,
-        PlayScene, 
+        PlayScene,
         OnlinePlayScene,
-        LevelChoosingScene,
-        NewOnlineScene,
         LevelOnlineChoosingScene,
-        OnlineWaitingScene
+        NewOnlineScene,
+        LevelMultiplayerChoosingScene,
+        OnlineWaitingScene,
+        authorizationScene,
+        LevelChoosingScene
     }
 
     public void LoadLevelRedactorScene()
@@ -32,21 +35,33 @@ public class MySceneManager : MonoBehaviour
     {
         SceneManager.LoadScene(ESceneNames.OnlinePlayScene.ToString());
     }
-    public void LoadLevelChoosingScene()
+    public void LoadLevelOnlineChoosingScene()
     {
-        SceneManager.LoadScene(ESceneNames.LevelChoosingScene.ToString());
+        SceneManager.LoadScene(ESceneNames.LevelOnlineChoosingScene.ToString());
     }
     public void LoadNewOnlineScene()
     {
         SceneManager.LoadScene(ESceneNames.NewOnlineScene.ToString());
     }
-    
-    public void LoadLevelOnlineChoosingScene()
+
+    public void LoadLevelMultChoosingScene()
     {
-        SceneManager.LoadScene(ESceneNames.LevelOnlineChoosingScene.ToString());
+        SceneManager.LoadScene(ESceneNames.LevelMultiplayerChoosingScene.ToString());
     }
     public void LoadOnlineWaitingScene()
     {
         SceneManager.LoadScene(ESceneNames.OnlineWaitingScene.ToString());
+    }
+    public void LoadAuthoScene()
+    {
+        SceneManager.LoadScene(ESceneNames.authorizationScene.ToString());
+    }
+    public void LoadLevelChoosingScene()
+    {
+        SceneManager.LoadScene(ESceneNames.LevelChoosingScene.ToString());
+    }
+    public static void LoadSene(ESceneNames scene)
+    {
+        SceneManager.LoadScene(scene.ToString());
     }
 }

@@ -1,17 +1,18 @@
 ﻿using Assets.GamePlay.Scripts.Building;
 using Assets.GamePlay.Scripts.Enemies;
 using Assets.GamePlay.Scripts.Player;
+using Assets.scripts.serialization;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using static LevelManager;
 
 public class Level : MonoBehaviour
 {
     MyPlayer owner;
-    public static string pathBeforeSaving = "";
     public static string nameOfSavingProgress = "Progress";
     public static string nameOfSavingLevel = "Level";
-    public static string nameOfFileType = ".txt";
     private string nameOfSave;
     public string NameOfSave {
         get
@@ -23,19 +24,39 @@ public class Level : MonoBehaviour
             LevelManager.nameOfLevel = value;
         } 
     }   //імя сэйва, калі знаходзіцца ў рэдактары ўзроўняў
+
+    public JsonStorage jsonStorage;
+    public JsonStorage jsonRemoteStorage;
+    private static JsonStorage jsonStorageStatic;
     public void Initialize(MyPlayer pl)
     {
         owner = pl;
-       
+        //выбар кляса для кантроля файлаў захавання
+        //ці лакальнае схоівшча, ці ўадаленае
+        if (jsonStorage !=null && jsonRemoteStorage != null)
+        {
+            if (LevelManager.typeOfMap == ETypeOfLoadMap.progress ||
+                LevelManager.typeOfMap == ETypeOfLoadMap.newLevel)
+            {
+                jsonStorageStatic = jsonStorage;
+            }
+            else
+            {
+                jsonStorageStatic = jsonRemoteStorage;
+            }
+        } else if (jsonStorage != null) { jsonStorageStatic = jsonStorage; }
+        else if (jsonRemoteStorage != null) { jsonStorageStatic = jsonRemoteStorage; }
     }
-    //загрузіць мапу ў адпаведнасці з выбарам гульца
+    //загрузіць мапу ў адпаведнасці з выбарам гульца(для кааператыву)
     public void StartMap()
     {
-        if (LevelManager.typeOfMap == LevelManager.ETypeOfLoadMap.newLevel)
+        if (typeOfMap == ETypeOfLoadMap.newLevel ||
+            typeOfMap == ETypeOfLoadMap.newLevelOnline)
         {
             LoadNewLevel();
         }
-        else if (LevelManager.typeOfMap == LevelManager.ETypeOfLoadMap.progress)
+        else if (typeOfMap == ETypeOfLoadMap.progress ||
+            typeOfMap == ETypeOfLoadMap.progressOnline)
         {
             LoadProgress();
         }
@@ -56,25 +77,29 @@ public class Level : MonoBehaviour
     }
     public void LoadNewLevel()
     {
-        owner.mapSerDeser.LoadMapLevel(pathBeforeSaving + LevelManager.nameOfLevel + nameOfSavingLevel + nameOfFileType);
-    }
-    public static string GetTheEndOfPathForLevelSave(string name)
-    {
-        return pathBeforeSaving + name + nameOfSavingLevel + nameOfFileType;
+        jsonStorageStatic.GetJson(LevelManager.nameOfLevel + nameOfSavingLevel,
+            (json) => owner.mapSerDeser.DeserializeMapFromJson(json));
+        //owner.mapSerDeser.LoadMapLevel(pathBeforeSaving + LevelManager.nameOfLevel + nameOfSavingLevel + nameOfFileType);
     }
     public void LoadProgress()
     {
-        owner.mapSerDeser.LoadMap(pathBeforeSaving + LevelManager.nameOfLevel + nameOfSavingProgress + nameOfFileType);
+        jsonStorageStatic.GetJson(LevelManager.nameOfLevel + nameOfSavingProgress,
+            (json)=> owner.mapSerDeser.DeserializeMapFromJson(json));
+        
+        //owner.mapSerDeser.LoadMap(pathBeforeSaving + LevelManager.nameOfLevel + nameOfSavingProgress + nameOfFileType);
     }
     public void SaveLevel()
     {
-        owner.mapSerDeser.SaveMapLevel(pathBeforeSaving + LevelManager.nameOfLevel + nameOfSavingLevel + nameOfFileType);
+        string json = owner.mapSerDeser.SerializeMapToJson();
+        jsonStorageStatic.SaveJson(json, LevelManager.nameOfLevel + nameOfSavingLevel);
+        //owner.mapSerDeser.SaveMapLevel(pathBeforeSaving + LevelManager.nameOfLevel + nameOfSavingLevel + nameOfFileType);
         SaveProgress();
     }
     public void SaveProgress()
     {
-        owner.mapSerDeser.SaveMap(pathBeforeSaving + LevelManager.nameOfLevel + nameOfSavingProgress + nameOfFileType);
-
+        string json = owner.mapSerDeser.SerializeMapToJson();
+        jsonStorageStatic.SaveJson(json, LevelManager.nameOfLevel + nameOfSavingProgress);
+        //owner.mapSerDeser.SaveMap(pathBeforeSaving + LevelManager.nameOfLevel + nameOfSavingProgress + nameOfFileType);
     }
     public GameObject gameOverPanel;
     public void GameOver()

@@ -38,7 +38,6 @@ namespace Assets.scripts.serialization
 
 
         }
-        
         public void LoadMap(string fileName = "save.txt")
         {
             WaveManager.EndWave();
@@ -47,18 +46,26 @@ namespace Assets.scripts.serialization
         }
         protected void SerializeMap(string filePath)
         {
+            //WholeSave save = SerializeMapFromJson();
+            string json = JsonUtility.ToJson(SerializeMapToJson());
+            //string json2 = JsonUtility.ToJson(save.buildings);
+            //string json3 = JsonUtility.ToJson(buildings[0]);
+            File.WriteAllText(filePath, json);
+        }
+        public string SerializeMapToJson() {
             WholeSave save = new WholeSave();
             save.buildings = new List<BuildingToSave>();
 
             save.cellsForTowerCombinationPanel = towerCombinationPanel.GetArrayForSerialization();
-            var storage =  owner.buildingsStorage;
+            var storage = owner.buildingsStorage;
             save.storages = new List<StorageSerialization>();
             save.storages.Add(new StorageSerialization());
             if (storage != null)
             {
                 save.storages.ElementAt(0).money = storage.Money;
                 save.storages.ElementAt(0).buildingsInStorage = storage.GetBuildingsForSerialization();
-            } else
+            }
+            else
             {
                 //дэфолтныя значэнні, калі захоўваецца мапа з лэвэл рэдактара
                 save.storages.ElementAt(0).money = 500;
@@ -94,7 +101,7 @@ namespace Assets.scripts.serialization
                     temp = BlocksGenerator.blockArray[i, j].GetComponent<Block>();
                     //save.blocks.index[(i * BlocksGenerator.height + j)*2] = temp.indexes.x;
                     //save.blocks.index[(i * BlocksGenerator.height + j) * 2 + 1] = temp.indexes.y;
-                    save.blocks.typeOfBlock[i* BlocksGenerator.height + j] = (int)temp.typeOfBlock;
+                    save.blocks.typeOfBlock[i * BlocksGenerator.height + j] = (int)temp.typeOfBlock;
                 }
             }
 
@@ -104,38 +111,14 @@ namespace Assets.scripts.serialization
                 save.waveManager = new WaveManagerSer(waveManager);
             }
 
-            string json = JsonUtility.ToJson(save);
-            //string json2 = JsonUtility.ToJson(save.buildings);
-            //string json3 = JsonUtility.ToJson(buildings[0]);
-            File.WriteAllText(filePath, json);
+            return JsonUtility.ToJson(save);
         }
+
         public void SaveMapLevel(string fileNameLevel = "saveLevel.txt")
         {
-            //var jsonTextFile = Resources.Load<TextAsset>(filePath);
 
             string filePath = Path.Combine(Application.persistentDataPath, fileNameLevel);
             SerializeMap(filePath);
-            //WholeSave save = new WholeSave();
-            //save.buildings = new List<BuildingToSave>();
-
-            //var buildings = FindObjectsOfType<Building>();
-            //foreach (var b in buildings)
-            //{
-            //    if (b.typeOfBuilding == Builder.EBuilding.barrier
-            //        || b.GetType() == typeof(Bonus)
-            //        || b.GetType() == typeof(EnemySpawner))
-            //    {
-            //        save.buildings.Add(new BuildingToSave
-            //        {
-            //            typeOfBuilding = b.typeOfBuilding,
-            //            indexes = b.GetBlock().indexes
-            //        });
-            //    }
-            //}
-            //string json = JsonUtility.ToJson(save);
-            ////string json2 = JsonUtility.ToJson(save.buildings);
-            ////string json3 = JsonUtility.ToJson(buildings[0]);
-            //File.WriteAllText(filePath, json);
         }
         public void LoadMapLevel(string fileNameLevel = "saveLevel.txt")
         {
@@ -233,10 +216,8 @@ namespace Assets.scripts.serialization
 
             }
         }
-        public static WaveManagerSer DeserializeWaveManager(string fileName)
+        public static WaveManagerSer DeserializeWaveManager(string json)
         {
-            string filePath = Path.Combine(Application.persistentDataPath, fileName);
-            string json = File.ReadAllText(filePath);
             WholeSave save = JsonUtility.FromJson(json, typeof(WholeSave)) as WholeSave;
             return save.waveManager;
         }
@@ -283,7 +264,7 @@ namespace Assets.scripts.serialization
                     //new Vector2Int(
                     //    save.blocks.index[(i * BlocksGenerator.height + j) * 2],
                     //    save.blocks.index[(i * BlocksGenerator.height + j) * 2 + 1]));
-        }
+                }
             }
 
 

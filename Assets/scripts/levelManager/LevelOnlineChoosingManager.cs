@@ -1,55 +1,28 @@
-﻿using System;
+﻿using Assets.scripts.serialization;
+using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.IO;
 using UnityEngine;
 using UnityEngine.UI;
+using static Assets.scripts.serialization.MapSerDeser;
 
+//кляс для выбара лэвэлоў
 public class LevelOnlineChoosingManager : LevelChoosingManager
 {
-    public InputField roomNameText, nickNameText;
-    public override void Start()
-    {
-        LevelManager.nameOfRoom = "";
-        LevelManager.nickName = "";
-        base.Start();
-    }
-    protected override void UpdateLevelsPanel()
-    {
-        base.UpdateLevelsPanel();
-    }
     public override void OnLevelSelection(GameObject obj)
     {
-        LevelManager.nameOfRoom = roomNameText.text;
-        LevelManager.nickName = nickNameText.text;
         LevelManager.nameOfLevel = obj.transform.GetChild(0).GetComponent<Text>().text;
-        sceneManager.LoadOnlineWaitingScene();
+        sceneManager.LoadPlayScene();
     }
-    public void FindRoomWithAnyLevel()
+
+    public override void ResetLevel(GameObject obj)
     {
-        LevelManager.nameOfRoom = roomNameText.text;
-        LevelManager.nickName = nickNameText.text;
-        LevelManager.nameOfLevel = "";
-        LevelManager.typeOfMap = LevelManager.ETypeOfLoadMap.clientLevel;
-        sceneManager.LoadOnlineWaitingScene();
-    }
-    public void HostLevel(GameObject obj)
-    {
-        LevelManager.typeOfMap = LevelManager.ETypeOfLoadMap.hostLevel;
+        LevelManager.typeOfMap = LevelManager.ETypeOfLoadMap.newLevelOnline;
         OnLevelSelection(obj);
     }
-    public void JoinLevel(GameObject obj)
+    public override void LoadLevel(GameObject obj)
     {
-        LevelManager.typeOfMap = LevelManager.ETypeOfLoadMap.clientLevel;
+        LevelManager.typeOfMap = LevelManager.ETypeOfLoadMap.progressOnline;
         OnLevelSelection(obj);
-    }
-    public void SetNickName(InputField text)
-    {
-        LevelManager.nickName = text.text;
-    }
-    public void SetRoomName(InputField text)
-    {
-        LevelManager.nameOfRoom = text.text;
     }
 }

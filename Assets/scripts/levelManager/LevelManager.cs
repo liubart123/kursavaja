@@ -14,7 +14,10 @@ public class LevelManager
     {
         newLevel,
         progress,
+        newLevelOnline,
+        progressOnline,
         hostLevel,  //загружаецца ўзровень для анлайна і чакае гульцоў
         clientLevel //можа паключацца да іншых анлайн узроўняў
+
     }
 }

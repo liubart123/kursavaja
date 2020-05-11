@@ -226,14 +226,16 @@ namespace PunTesting
             //}
         }
 
+        public JsonStorage jsonStorage;
+
         //пачаць гульню, зачыніць пакой
         public void StartLevel()
         {
             if (PhotonNetwork.IsMasterClient)
             {
                 PhotonNetwork.CurrentRoom.IsOpen = false;
-                string json = mapSerDeser.GetJsonOfSavedMap(Level.GetTheEndOfPathForLevelSave(LevelManager.nameOfLevel));
-                photonView.RPC("LoadLevelFromOtherPlayer", RpcTarget.All, json);
+                jsonStorage.GetJson(LevelManager.nameOfLevel + Level.nameOfSavingProgress,
+                    (json) => photonView.RPC("LoadLevelFromOtherPlayer", RpcTarget.All, json));
             }
         }
 
