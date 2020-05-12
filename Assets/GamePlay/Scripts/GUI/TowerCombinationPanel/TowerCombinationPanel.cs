@@ -21,6 +21,8 @@ namespace Assets.GamePlay.Scripts.GUI.TowerCombinationPanel
     {
         protected CombinationGenerator combinationGenerator;
         protected TowerClasseGenerator classGenerator;
+        public Sprite[] spritesForEffects;
+        public Color[] colorsForEffects;
         public GameObject table;    //аб'кт табліцы ячэек
         public GameObject cell;    //аб'кт ячэйкі
         public Text textForCountOfFreeCells;    //поле, куды запісваць колькасць свабодных ячэяк
@@ -171,6 +173,7 @@ namespace Assets.GamePlay.Scripts.GUI.TowerCombinationPanel
             {
                 selectedCell.bulletEffect = currentData.effect;
                 selectedCell.towerClass = null;
+                selectedCell.colorOfEffect = currentData.colorOfEffect;
 
                 //selectedCell.bulletEffectType = currentData.effect.typeOfEffect;
                 //selectedCell.valueOfEffect = currentData.effect.Effectivity;
@@ -191,18 +194,25 @@ namespace Assets.GamePlay.Scripts.GUI.TowerCombinationPanel
             if (cell.towerClass != null)
             {
                 cell.transform.GetChild(0).gameObject.GetComponent<Text>().color = cell.towerClass.TowerClassColor;
+                cell.transform.GetChild(0).gameObject.SetActive(true);
+                cell.transform.GetChild(2).gameObject.SetActive(false);
                 cell.transform.GetChild(0).gameObject.GetComponent<Text>().text =
                     cell.towerClass.TowerClassName;
             } else if (cell.bulletEffect!=null)
             {
                 cell.transform.GetChild(0).gameObject.GetComponent<Text>().color = Color.white;
-                cell.transform.GetChild(0).gameObject.GetComponent<Text>().text = 
-                    cell.bulletEffect.effectName;
+                cell.transform.GetChild(0).gameObject.SetActive(false);
+                cell.transform.GetChild(2).gameObject.SetActive(true);
+                cell.transform.GetChild(2).gameObject.GetComponent<Image>().sprite =
+                    spritesForEffects[(int)cell.bulletEffect.typeOfEffect];
+                cell.transform.GetChild(2).gameObject.GetComponent<Image>().color = cell.colorOfEffect;
             }
             else
             {
                 cell.transform.GetChild(0).gameObject.GetComponent<Text>().color = Color.white;
                 cell.transform.GetChild(0).gameObject.GetComponent<Text>().text = "";
+                cell.transform.GetChild(0).gameObject.SetActive(false);
+                cell.transform.GetChild(2).gameObject.SetActive(false);
             }
             if (cell.idOfCombination == -1)
             {
@@ -239,12 +249,14 @@ namespace Assets.GamePlay.Scripts.GUI.TowerCombinationPanel
                                 new BulletEffects.BulletEffectImmidiateDamageRaw(
                                     float.Parse(valueOfEffect.text),
                                     (EKindOfDamage)dropdownTypeOfDamage.value);
+                            currentData.colorOfEffect = colorsForEffects[dropdownTypeOfDamage.value];
                             break;
                         case 1:
                             currentData.effect =
                                 new BulletEffects.BulletEffectPeriodicDamageRaw(
                                     float.Parse(valueOfEffect.text),
                                     (EKindOfDamage)dropdownTypeOfDamage.value);
+                            currentData.colorOfEffect = colorsForEffects[dropdownTypeOfDamage.value];
                             break;
                         case 2:
                             currentData.effect =
@@ -272,6 +284,7 @@ namespace Assets.GamePlay.Scripts.GUI.TowerCombinationPanel
             public BulletEffects.BulletEffect effect;
             public EKindOfDamage typeOfDamage;
             public float effectValue;
+            public Color colorOfEffect;
         }
 
         public Text cellInfo;
@@ -303,6 +316,7 @@ namespace Assets.GamePlay.Scripts.GUI.TowerCombinationPanel
                     cells[i, j].bulletEffect = cellsS[i * tableSize + j].bulletEffect;
                     cells[i, j].indexes = cellsS[i * tableSize + j].indexes;
                     cells[i, j].idOfCombination = cellsS[i * tableSize + j].idOfCombination;
+                    cells[i, j].colorOfEffect = cellsS[i * tableSize + j].colorOfEffect;
                     if (cellsS[i * tableSize + j].isThereClass)
                     {
                         cells[i, j].towerClass = classGenerator.GetTowerClass(cells[i, j].typeOfClass);

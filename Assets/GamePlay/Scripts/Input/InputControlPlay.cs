@@ -21,6 +21,10 @@ public class InputControlPlay : InputControl
     // Update is called once per frame
     public void CreateNewBonusConveyor()
     {
+        if (prevTower == null || prevTower.Owner== null || prevTower.Owner.isItRealPlayer == false)
+        {
+            return;
+        }
         TypeOfAction = ETypeOfInputAction.creatingBonusConveyor;
         prevTower?.bonusConveyor.ResetConveyor();
         ShowTowerInfo(prevTower);

@@ -77,12 +77,16 @@ public class Level : MonoBehaviour
     }
     public void LoadNewLevel()
     {
+        if (typeOfMap == ETypeOfLoadMap.hostLevel || typeOfMap == ETypeOfLoadMap.clientLevel)
+            return;
         jsonStorageStatic.GetJson(LevelManager.nameOfLevel + nameOfSavingLevel,
             (json) => owner.mapSerDeser.DeserializeMapFromJson(json));
         //owner.mapSerDeser.LoadMapLevel(pathBeforeSaving + LevelManager.nameOfLevel + nameOfSavingLevel + nameOfFileType);
     }
     public void LoadProgress()
     {
+        if (typeOfMap == ETypeOfLoadMap.hostLevel || typeOfMap == ETypeOfLoadMap.clientLevel)
+            return;
         jsonStorageStatic.GetJson(LevelManager.nameOfLevel + nameOfSavingProgress,
             (json)=> owner.mapSerDeser.DeserializeMapFromJson(json));
         
@@ -90,6 +94,8 @@ public class Level : MonoBehaviour
     }
     public void SaveLevel()
     {
+        if (typeOfMap == ETypeOfLoadMap.hostLevel || typeOfMap == ETypeOfLoadMap.clientLevel)
+            return;
         string json = owner.mapSerDeser.SerializeMapToJson();
         jsonStorageStatic.SaveJson(json, LevelManager.nameOfLevel + nameOfSavingLevel);
         //owner.mapSerDeser.SaveMapLevel(pathBeforeSaving + LevelManager.nameOfLevel + nameOfSavingLevel + nameOfFileType);
@@ -97,6 +103,8 @@ public class Level : MonoBehaviour
     }
     public void SaveProgress()
     {
+        if (typeOfMap == ETypeOfLoadMap.hostLevel || typeOfMap == ETypeOfLoadMap.clientLevel)
+            return;
         string json = owner.mapSerDeser.SerializeMapToJson();
         jsonStorageStatic.SaveJson(json, LevelManager.nameOfLevel + nameOfSavingProgress);
         //owner.mapSerDeser.SaveMap(pathBeforeSaving + LevelManager.nameOfLevel + nameOfSavingProgress + nameOfFileType);

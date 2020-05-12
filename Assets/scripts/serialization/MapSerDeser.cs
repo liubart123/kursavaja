@@ -240,6 +240,10 @@ namespace Assets.scripts.serialization
         }
         public void DeserializeMapFromJson(string json)
         {
+            if (json == null || json == "")
+            {
+                return;
+            }
             ICollection<Enemy> enemies = FindObjectsOfType<Enemy>();
             foreach (var e in enemies)
             {

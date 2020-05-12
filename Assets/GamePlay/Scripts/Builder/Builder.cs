@@ -32,8 +32,9 @@ public class Builder : MonoBehaviour
     PhotonView photonView;
     public void BuildBuildingOnBlock(Block block, Building b, string ownerName = "")
     {
-        if (PhotonNetwork.IsConnected)
+        if (PhotonNetwork.IsConnected && ownerName =="")
         {
+            //калі кааператыў і гулец будуе будынак, то пабудаваць будынак у астатніх гульцоў
             photonView.RPC("BuildBuildingOnBlockForOtherPlayers", RpcTarget.Others,
                 new Vector3(block.indexes.x, block.indexes.y, 0), b.typeOfBuilding, owner.playerName);
         }
@@ -130,7 +131,7 @@ public class Builder : MonoBehaviour
     [PunRPC]
     public void DestroyBuildingForAllPlayers(Vector3 index)
     {
-        Building b = BlocksGenerator.GetBlock(new Vector2Int((int)index.x, (int)index.y))?.GetComponent<Building>();
+        Building b = BlocksGenerator.GetBlock(new Vector2Int((int)index.x, (int)index.y))?.GetBuilding()?.GetComponent<Building>();
         if (b != null)
         {
             b.Die();

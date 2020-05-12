@@ -13,7 +13,14 @@ namespace Assets.GamePlay.Scripts.storageTower
     {
         public void MoneyChange(InputField money)
         {
-            Money = Int32.Parse(money.text);
+            try
+            {
+
+                Money = Int32.Parse(money.text);
+            } catch (Exception e)
+            {
+                Money = 0;
+            }
         }
         public override void Initialize()
         {
@@ -51,13 +58,15 @@ namespace Assets.GamePlay.Scripts.storageTower
             {
                 GameObject temp = panel.transform.GetChild(i).gameObject;
                 if (temp.transform.GetChild(0).gameObject.GetComponent<InputField>() == null)
-                    continue;   
-                temp.GetComponent<BuildingInStorage>().cost =
-                    Int32.Parse(
-                    temp.transform.GetChild(0).gameObject.GetComponent<InputField>().text);
-                temp.GetComponent<BuildingInStorage>().costIncrease =
-                    Int32.Parse(
-                    temp.transform.GetChild(1).gameObject.GetComponent<InputField>().text);
+                    continue;
+                Int32.TryParse(temp.transform.GetChild(0).gameObject.GetComponent<InputField>().text,
+                    out temp.GetComponent<BuildingInStorage>().cost);
+
+                Int32.TryParse(temp.transform.GetChild(1).gameObject.GetComponent<InputField>().text,
+                    out temp.GetComponent<BuildingInStorage>().costIncrease);
+                //temp.GetComponent<BuildingInStorage>().costIncrease =
+                //    Int32.Parse(
+                //    temp.transform.GetChild(1).gameObject.GetComponent<InputField>().text);
             }
         }
         public override List<MapSerDeser.BuildingInStorageSer> GetBuildingsForSerialization()

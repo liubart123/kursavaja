@@ -13,6 +13,7 @@ namespace Assets.GamePlay.Scripts.BulletEffects
     class BulletEffectImmidiateDamageRaw : BulletEffect
     {
         public EKindOfDamage kindOfDamage;
+
         public BulletEffectImmidiateDamageRaw(float intensity, EKindOfDamage kindOfDamage) : base(intensity)
         {
             this.kindOfDamage = kindOfDamage;

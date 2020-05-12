@@ -21,6 +21,7 @@ namespace Assets.GamePlay.Scripts.GUI.TowerCombinationPanel
         [SerializeField]
         public int idOfCombination = -1;
         public BulletEffect bulletEffect;
+        public Color colorOfEffect;
 
         public override string ToString()
         {
@@ -60,6 +61,8 @@ namespace Assets.GamePlay.Scripts.GUI.TowerCombinationPanel
         public bool isThereClass = false;
         [SerializeReference]
         public BulletEffect bulletEffect;
+        [SerializeReference]
+        public Color colorOfEffect;
         [HideInInspector]
         public int idOfCombination;
         public CellSerializable(Cell cell)
@@ -72,6 +75,7 @@ namespace Assets.GamePlay.Scripts.GUI.TowerCombinationPanel
                 isThereClass = true;
             }
             idOfCombination = cell.idOfCombination;
+            colorOfEffect = cell.colorOfEffect;
         }
     }
 }

@@ -8,6 +8,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Threading;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using static Assets.scripts.serialization.MapSerDeser;
 
@@ -83,20 +84,25 @@ namespace PunTesting
         public void Connect(string nickName = null)
         {
             if (PhotonNetwork.IsConnected)
-                PhotonNetwork.Disconnect();
-            if (nickName == null || nickName == "")
             {
-                PhotonNetwork.NickName = "player_" + Random.Range(0, 20000).ToString();
-                //owner.playerName = PhotonNetwork.NickName;
+                //PhotonNetwork.Disconnect();
             }
             else
             {
-                PhotonNetwork.NickName = nickName;
-            }
+                if (nickName == null || nickName == "")
+                {
+                    PhotonNetwork.NickName = "player_" + Random.Range(0, 20000).ToString();
+                    //owner.playerName = PhotonNetwork.NickName;
+                }
+                else
+                {
+                    PhotonNetwork.NickName = nickName;
+                }
 
-            status.text = "connecting...";
-            PhotonNetwork.ConnectUsingSettings();
-            PhotonNetwork.GameVersion = gameVersion;
+                status.text = "connecting...";
+                PhotonNetwork.ConnectUsingSettings();
+                PhotonNetwork.GameVersion = gameVersion;
+            }
         }
         public void Disconnect()
         {
@@ -111,16 +117,20 @@ namespace PunTesting
         public override void OnConnectedToMaster()
         {
             //PhotonNetwork.JoinRandomRoom();
-            connectStatus.text = "connected to server!";
-            //Debug.Log("we connected to the server");
-            if (LevelManager.typeOfMap == LevelManager.ETypeOfLoadMap.clientLevel)
+            if (SceneManager.GetActiveScene().name == MySceneManager.ESceneNames.OnlineWaitingScene.ToString())
             {
-                status.text = "joining room...";
-                JoinRoom();
-            }
-            else if (LevelManager.typeOfMap == LevelManager.ETypeOfLoadMap.hostLevel) {
-                status.text = "creating room...";
-                CreateRoom();
+                connectStatus.text = "connected to server!";
+                //Debug.Log("we connected to the server");
+                if (LevelManager.typeOfMap == LevelManager.ETypeOfLoadMap.clientLevel)
+                {
+                    status.text = "joining room...";
+                    JoinRoom();
+                }
+                else if (LevelManager.typeOfMap == LevelManager.ETypeOfLoadMap.hostLevel)
+                {
+                    status.text = "creating room...";
+                    CreateRoom();
+                }
             }
         }
 
@@ -129,7 +139,8 @@ namespace PunTesting
         {
             //owner.players.RemovePlayerForOtherPlayers();
             //connectStatus.text = "no connection";
-            //owner.sceneManager.LoadLevelOnlineChoosingScene();
+            //Debug.Log("disconnect");
+            //owner.sceneManager.LoadMainMenuScene();
         }
         public override void OnJoinRandomFailed(short returnCode, string message)
         {
@@ -218,7 +229,7 @@ namespace PunTesting
         }
         private void UpdatePlayersCount()
         {
-            if (PhotonNetwork.CurrentRoom!=null)
+            if (PhotonNetwork.CurrentRoom!=null && playersStatus!=null)
                 playersStatus.text = "room players count: " + PhotonNetwork.CurrentRoom.PlayerCount;
             //foreach (var pl in PhotonNetwork.CurrentRoom.Players)
             //{
@@ -243,7 +254,8 @@ namespace PunTesting
         private void LoadLevelFromOtherPlayer(string json)
         {
             MapForOnline.jsonOfMapToLoad = json;
-            PhotonNetwork.LoadLevel(MySceneManager.ESceneNames.PlayScene.ToString());
+            if (PhotonNetwork.IsConnected)
+                PhotonNetwork.LoadLevel(MySceneManager.ESceneNames.PlayScene.ToString());
             //owner.mapSerDeser.DeserializeMapFromJson(json);
             //statusPanel.SetActive(false);
         }

@@ -76,7 +76,6 @@ namespace Assets.GamePlay.Scripts.Player
             mapController?.Initialize(this);
             blocksGenerator?.Initialize(this);
             bonusConveyorManager?.Initialize(this);
-            players?.Initialize(this);
             level?.Initialize(this);
             financeControllAfterWaves?.Initialize(this);
 
@@ -91,7 +90,9 @@ namespace Assets.GamePlay.Scripts.Player
                     MapForOnline.LoadSavedMap();
                     nickName = PhotonNetwork.LocalPlayer.NickName;
                     playerName = PhotonNetwork.LocalPlayer.UserId;
-                }else
+                    players?.Initialize(this);
+                }
+                else
                 {
                     level.StartMap();
                 }
