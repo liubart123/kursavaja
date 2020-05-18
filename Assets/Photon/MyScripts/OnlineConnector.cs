@@ -64,7 +64,7 @@ namespace PunTesting
             //Connect();
         }
 
-
+        
         #endregion
 
 
@@ -104,7 +104,7 @@ namespace PunTesting
                 PhotonNetwork.GameVersion = gameVersion;
             }
         }
-        public void Disconnect()
+        public static void Disconnect()
         {
             if (PhotonNetwork.IsConnected)
                 PhotonNetwork.Disconnect();
@@ -132,6 +132,7 @@ namespace PunTesting
                     CreateRoom();
                 }
             }
+            //Debug.Log("connected");
         }
 
 
@@ -141,6 +142,7 @@ namespace PunTesting
             //connectStatus.text = "no connection";
             //Debug.Log("disconnect");
             //owner.sceneManager.LoadMainMenuScene();
+            Debug.Log("disconnected");
         }
         public override void OnJoinRandomFailed(short returnCode, string message)
         {
@@ -203,9 +205,15 @@ namespace PunTesting
 
             }
         }
+        private int counter = 0;
         private void Update()
         {
             UpdatePlayersCount();
+            //if (counter++ > 100)
+            //{
+            //    counter = 0;
+            //    Debug.Log(PhotonNetwork.NetworkClientState.ToString());
+            //}
         }
         public override void OnPlayerLeftRoom(Player other)
         {

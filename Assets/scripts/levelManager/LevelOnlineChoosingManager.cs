@@ -1,4 +1,5 @@
 ﻿using Assets.scripts.serialization;
+using PunTesting;
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
@@ -24,5 +25,10 @@ public class LevelOnlineChoosingManager : LevelChoosingManager
     {
         LevelManager.typeOfMap = LevelManager.ETypeOfLoadMap.progressOnline;
         OnLevelSelection(obj);
+    }
+    public override void Start()
+    {
+        OnlineConnector.Disconnect();
+        base.Start();
     }
 }

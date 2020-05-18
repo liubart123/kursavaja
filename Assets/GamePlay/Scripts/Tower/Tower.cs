@@ -170,7 +170,9 @@ namespace Assets.GamePlay.Scripts.Tower
         }
         public void HideTowerInfo()
         {
-            bonusConveyor.HideConveyor();
+            bonusConveyor?.HideConveyor();
+            if (classCollection == null)
+                return;
             var blocks = classCollection.GetBlocksInRange();
             foreach (var b in blocks)
             {

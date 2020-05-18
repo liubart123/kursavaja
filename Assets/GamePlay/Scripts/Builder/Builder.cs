@@ -3,6 +3,7 @@ using Assets.GamePlay.Scripts.Building;
 using Assets.GamePlay.Scripts.Player;
 using Assets.GamePlay.Scripts.storageTower;
 using Assets.GamePlay.Scripts.Tower;
+using Assets.scripts.serialization;
 using Photon.Pun;
 using System;
 using System.Collections;
@@ -32,11 +33,22 @@ public class Builder : MonoBehaviour
     PhotonView photonView;
     public void BuildBuildingOnBlock(Block block, Building b, string ownerName = "")
     {
-        if (PhotonNetwork.IsConnected && ownerName =="")
+        if (ownerName == "" && enemySpawners != null && !MapSerDeser.isDeserializing) {
+            //выклікаецца пы будаўніцтве галоўнага гульца, каб не рабіць лішнія праверкі на кожным кліенце
+            if (block.isBasement == false && b.requireBasement == false)
+            {
+                //калі гэты будынак можа паўплываць на шлях спаўнаў
+                if (CheckPathOnThisBlock(block) == false)
+                {
+                    return;
+                }
+            }
+        }
+        if (OnlineManager.BuildForAllPlayers == true && ownerName =="")
         {
             //калі кааператыў і гулец будуе будынак, то пабудаваць будынак у астатніх гульцоў
             photonView.RPC("BuildBuildingOnBlockForOtherPlayers", RpcTarget.Others,
-                new Vector3(block.indexes.x, block.indexes.y, 0), b.typeOfBuilding, owner.playerName);
+            new Vector3(block.indexes.x, block.indexes.y, 0), b.typeOfBuilding, owner.playerName);
         }
         if (!block.HasBuilding())
         {
@@ -44,14 +56,6 @@ public class Builder : MonoBehaviour
                 (block.isBasement == false && b.requireBasement == false))
             {
                 GameObject res;
-                //if (OnlineManager.CreateNetworkObjects)
-                //{
-                //    res = PhotonNetwork.Instantiate(b.gameObject.name, block.transform.position, block.transform.rotation);
-                //}
-                //else
-                //{
-                //    res = Instantiate(b.gameObject, block.transform.position, block.transform.rotation);
-                //}
                 res = Instantiate(b.gameObject, block.transform.position, block.transform.rotation);
 
                 res.transform.parent = block.transform;
@@ -66,10 +70,6 @@ public class Builder : MonoBehaviour
                 res.GetComponent<Building>().Initialize();
                 OnBuilding?.Invoke(res.GetComponent<Building>());
             }
-            //if (towerStorage != null)
-            //{
-            //    towerStorage.RemoveBuilding(res.GetComponent<Building>().typeOfBuilding);
-            //}
         }
     }
     public void ReBuildBuildingOnBlock(Block block, EBuilding typeOfBuilding)
@@ -92,6 +92,7 @@ public class Builder : MonoBehaviour
     public void Initialize()
     {
         photonView = GetComponent<PhotonView>();
+        enemySpawners = null;
         //towerStorage = FindObjectOfType<BuildingsStorage>();
     }
     public void Initialize(MyPlayer pl)
@@ -138,4 +139,32 @@ public class Builder : MonoBehaviour
         }
     }
     public GameObject[] arrayOfBuildings;
+
+    private static EnemySpawner[] enemySpawners;
+    public static void FindAllSpawners()
+    {
+        enemySpawners = FindObjectsOfType<EnemySpawner>();
+    }
+    private bool CheckPathOnThisBlock(Block block)
+    {
+        float oldPassability = block.passability;
+        block.passability = Mathf.Infinity;
+        bool result = true;
+        foreach (var spawn in enemySpawners)
+        {
+            if (spawn.CurrentPath.Contains(block))
+            {
+                result = spawn.CreatePath();
+                if (!result)
+                {
+                    block.passability = oldPassability;
+                    spawn.CreatePath();
+                    break;
+                }
+            }
+        }
+        block.passability = oldPassability;
+        return result;
+    }
+
 }

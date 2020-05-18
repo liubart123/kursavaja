@@ -55,7 +55,6 @@ namespace Assets.GamePlay.Scripts.Player
 
         public virtual void Start()
         {
-
             if (!isItRealPlayer)
             {
                 //калі гэты экзэмпляр прадстаўляе іншага гульца, то нічога не робім
@@ -63,6 +62,7 @@ namespace Assets.GamePlay.Scripts.Player
                 //FindObjectOfType<Players>().UpdatePlayerForOtherPlayers();
                 return;
             }
+            OnlineManager.BuildForAllPlayers = false;
             towerClassCollection?.Initialize(this);
             possibleCombinations?.Initialize(this);
             inputControl?.Initialize(this);
@@ -91,6 +91,7 @@ namespace Assets.GamePlay.Scripts.Player
                     nickName = PhotonNetwork.LocalPlayer.NickName;
                     playerName = PhotonNetwork.LocalPlayer.UserId;
                     players?.Initialize(this);
+                    OnlineManager.BuildForAllPlayers = true;
                 }
                 else
                 {
@@ -132,15 +133,16 @@ namespace Assets.GamePlay.Scripts.Player
         }
         public void Update()
         {
-            if (Input.GetKeyDown(KeyCode.Space))
-            {
-                string json = JsonUtility.ToJson(this);
-                json = JsonUtility.ToJson(possibleCombinations.possibleCombinations);
-                var combSer = new TowerCombinationSer(possibleCombinations.possibleCombinations.ElementAt(1));
-                json = JsonUtility.ToJson(combSer);
-                TowerCombinationSer s = JsonUtility.FromJson<TowerCombinationSer>(json);
-                json = JsonUtility.ToJson(combSer.effects.ElementAt(0));
-            }
+            //if (Input.GetKeyDown(KeyCode.Space))
+            //{
+            //    string json = JsonUtility.ToJson(this);
+            //    json = JsonUtility.ToJson(possibleCombinations.possibleCombinations);
+            //    var combSer = new TowerCombinationSer(possibleCombinations.possibleCombinations.ElementAt(1));
+            //    json = JsonUtility.ToJson(combSer);
+            //    TowerCombinationSer s = JsonUtility.FromJson<TowerCombinationSer>(json);
+            //    json = JsonUtility.ToJson(combSer.effects.ElementAt(0));
+            //}
         }
+
     }
 }

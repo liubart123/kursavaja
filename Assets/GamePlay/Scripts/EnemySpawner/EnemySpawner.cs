@@ -50,7 +50,7 @@ public class EnemySpawner : Building
     {
         enemieCounter = 0;
         ChooseTargetForMoving();
-        CreatePath();
+        //CreatePath();
         isSpawning = true;
     }
     public virtual void FinishSpawning()
@@ -68,7 +68,7 @@ public class EnemySpawner : Building
         else { enemy = Instantiate(enemyToSpawn, transform.position, transform.rotation); }
 
 
-        enemy.GetComponent<Enemy>().pathFromSpawner = currentPath;
+        enemy.GetComponent<Enemy>().pathFromSpawner = CurrentPath;
         enemy.GetComponent<Enemy>().Initialize();
         enemy.gameObject.name = enemiesName + enemieCounter++ + "_" + enemieSpawnerCounter;
 
@@ -82,9 +82,9 @@ public class EnemySpawner : Building
 
 
 
-    //MOVING
+    //PATH
     public EnemyMovingTargetChooser enemyMovingTargetChooser;
-    protected ICollection<Block> currentPath;
+    public ICollection<Block> CurrentPath { get; protected set; }
     protected Building targetToMove;
     public virtual void ChooseTargetForMoving()
     {
@@ -92,19 +92,24 @@ public class EnemySpawner : Building
             new EnemyMovingTargetChooserParameters(transform.position));
         CreatePath();
     }
-    protected virtual void CreatePath()
+    public virtual bool CreatePath()
     {
         if (targetToMove != null)
         {
             PathFinder pf = new PathFinder();
-            currentPath = pf.GetPath(
+            CurrentPath = pf.GetPath(
                 GetBlock(),
                 targetToMove.GetBlock());
+            if (CurrentPath != null)
+            {
+                return true;
+            }
         }
         else
         {
-            currentPath = null;
+            CurrentPath = null;
         }
+        return false;
     }
     public override void Initialize()
     {

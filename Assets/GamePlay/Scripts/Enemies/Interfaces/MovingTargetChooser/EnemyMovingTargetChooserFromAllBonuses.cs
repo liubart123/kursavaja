@@ -15,11 +15,17 @@ namespace Assets.GamePlay.Scripts.Enemies.Interfaces.MovingTargetChooser
         public override Building.Building ChooseTargetForMove(EnemyMovingTargetChooserParameters arg)
         {
             Building.Building result = null;
-            if (bonuses == null) { bonuses = FindObjectsOfType<Bonuses.Bonus>(); }
+            if (bonuses == null || bonuses.Count == 0 || bonuses.ElementAt(0)==null) { 
+                bonuses = FindObjectsOfType<Bonuses.Bonus>(); 
+            }
             //var bonuses = FindObjectsOfType<Bonuses.Bonus>();
             float minDistance = Mathf.Infinity;
             foreach(var b in bonuses)
             {
+                if (b == null)
+                {
+                    continue;
+                }
                 var dist = Vector2.Distance(b.transform.position, arg.enemyPos);
                 if (dist < minDistance)
                 {

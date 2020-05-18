@@ -17,6 +17,7 @@ namespace Assets.GamePlay.Scripts.Map
                 t.classCollection.ChangeCombinations();
             }
         }
+        
         Player.MyPlayer owner;
         public void Initialize(Player.MyPlayer pl)
         {

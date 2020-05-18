@@ -222,6 +222,7 @@ namespace Assets.scripts.serialization
             return save.waveManager;
         }
 
+        public static bool isDeserializing = false;
         protected void DeserializeMap(string filePath)
         {
             ICollection<Enemy> enemies = FindObjectsOfType<Enemy>();
@@ -254,7 +255,7 @@ namespace Assets.scripts.serialization
             {
                 b.Die();
             }
-
+            isDeserializing = true;
             //string json = File.ReadAllText(filePath);
             WholeSave save = JsonUtility.FromJson(json, typeof(WholeSave)) as WholeSave;
 
@@ -319,7 +320,14 @@ namespace Assets.scripts.serialization
                 save.waveManager.ChangeRealManager(waveManager);
             }
 
+            Builder.FindAllSpawners();
+            var bonuses = FindObjectsOfType<Bonus>();
+            foreach(var spawn in FindObjectsOfType<EnemySpawner>())
+            {
+                spawn.ChooseTargetForMoving();
+            }
             MapController.CalculateTowerClassesForAll();
+            isDeserializing = false;
         }
 
         public string GetJsonOfSavedMap(string fileName)

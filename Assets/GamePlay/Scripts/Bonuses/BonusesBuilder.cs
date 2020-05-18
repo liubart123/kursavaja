@@ -13,18 +13,12 @@ namespace Assets.GamePlay.Scripts.Bonuses
     public class BonusesBuilder : MonoBehaviour
     {
         public Sprite[] bonusSprites;
-        private Builder builder;
         public Player.MyPlayer owner;
         private PhotonView photonView;
         public void Initialize(Player.MyPlayer pl)
         {
             owner = pl;
-            builder = owner.builder;
             photonView = GetComponent<PhotonView>();
-        }
-        private void Start()
-        {
-            //builder = FindObjectOfType<Builder>();
         }
         public Action OnBonusChanging;
         public void ChangeTypeOfBonus(EBonusType type, Bonus bonus, bool invokeActionsAfterChanging = true)
@@ -32,7 +26,7 @@ namespace Assets.GamePlay.Scripts.Bonuses
             if (bonus != null)
             {
                 Block blockOfBonus = bonus.GetBlock();
-                if (PhotonNetwork.IsConnected)
+                if (OnlineManager.BuildForAllPlayers == true)
                 {
                     photonView.RPC("ChangeTypeOfBonusForOther",
                         RpcTarget.Others,

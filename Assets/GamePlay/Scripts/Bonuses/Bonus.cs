@@ -13,6 +13,10 @@ namespace Assets.GamePlay.Scripts.Bonuses
 {
     public class Bonus : Building.Building
     {
+        //private void Start()
+        //{
+        //    Debug.Log("bonus was created");
+        //}
         public enum EBonusType
         {
             red,green,blue, neutral
